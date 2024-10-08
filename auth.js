@@ -1,5 +1,6 @@
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
+import { getUserByEmail } from "@/services/user.service";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
     providers: [
@@ -10,12 +11,13 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             },
             authorize: async (credentials) => {
                 //We need logic for user auth (database and such)
-                let user = {
-                    email: credentials.email,
-                    password: credentials.password
-                };
+                const user = await getUserByEmail(credentials.email);
+                if (!user) {
+                    console.log("User not found");
+                    throw new Error(`No user found with email ${credentials.email}`);
+                }
+                console.log("Got user");
 
-                console.log(user);
                 return user;
             }
         })
