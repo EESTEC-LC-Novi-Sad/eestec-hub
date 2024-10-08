@@ -2,9 +2,9 @@ function LoginPage() {
     return (
         <div>
             <form>
-                <input required type="text" placeholder="Username or Email" /><br />
-                <input required type="password" placeholder="Password" /><br />
-                <button type="submit" value="Login" />
+                <input required type="text" name="email" placeholder="Email" /><br />
+                <input required type="password" name="password" placeholder="Password" /><br />
+                <button type="submit">Login</button>
             </form>
         </div >
     )
