@@ -1,3 +1,4 @@
+import * as bcrypt from "bcrypt";
 import dbConnect from "@/app/lib/dbConnect";
 import User from "../models/user";
 
