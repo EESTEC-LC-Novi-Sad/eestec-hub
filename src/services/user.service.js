@@ -22,6 +22,7 @@ async function getUserByEmail(email) {
 * */
 async function createUser(email, password) {
     await dbConnect();
+
     try {
         const user = await User.create({
             email: email,
