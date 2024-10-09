@@ -16,6 +16,27 @@ async function getUserByEmail(email) {
     }
 }
 
+/**
+* @param {String} email 
+* @param {String} password 
+* */
+async function createUser(email, password) {
+    await dbConnect();
+    try {
+        const user = await User.create({
+            email: email,
+            password: password,
+            dateCreated: Date.now().toString()
+        });
+        return user;
+    }
+    catch (error) {
+        console.log("There was an error with creating new user entity: ", error);
+        return null;
+    }
+}
+
 export {
-    getUserByEmail
+    getUserByEmail,
+    createUser
 }
