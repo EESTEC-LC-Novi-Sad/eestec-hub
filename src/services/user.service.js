@@ -29,7 +29,8 @@ async function createUser(email, password) {
         const user = await User.create({
             email: email,
             password: passHash,
-            dateCreated: Date.now().toString()
+            dateCreated: Date.now().toString(),
+            role: 'member'
         });
         return user;
     }
