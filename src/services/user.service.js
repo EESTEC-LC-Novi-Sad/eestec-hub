@@ -1,3 +1,4 @@
+import * as bcrypt from "bcrypt";
 import dbConnect from "@/app/lib/dbConnect";
 import User from "../models/user";
 
@@ -16,6 +17,29 @@ async function getUserByEmail(email) {
     }
 }
 
+/**
+* @param {String} email 
+* @param {String} password 
+* */
+async function createUser(email, password) {
+    await dbConnect();
+    const passHash = await bcrypt.hash(password, 10);
+
+    try {
+        const user = await User.create({
+            email: email,
+            password: passHash,
+            dateCreated: Date.now().toString()
+        });
+        return user;
+    }
+    catch (error) {
+        console.log("There was an error with creating new user entity: ", error);
+        return null;
+    }
+}
+
 export {
-    getUserByEmail
+    getUserByEmail,
+    createUser
 }

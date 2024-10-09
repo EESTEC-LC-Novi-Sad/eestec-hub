@@ -15,6 +15,7 @@ function LoginPage() {
                 <input required type="password" name="password" placeholder="Password" /><br />
                 <button >Login</button>
             </form>
+            <a href="/signup">Signup</a>
         </div >
     )
 }
