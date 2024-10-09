@@ -6,9 +6,10 @@ export default async function Home() {
     if (!session || !session.user) {
         redirect('/login');
     }
+
     return (
         <div>
-            <h1>Hello, EESTEC!</h1>
+            <h1>Hello, {session.user.email}</h1>
             <form action={async () => {
                 "use server";
                 await signOut();
