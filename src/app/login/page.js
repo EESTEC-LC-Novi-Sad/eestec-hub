@@ -1,6 +1,6 @@
 import { signIn } from "../../../auth";
 
-function LoginPage() {
+export default async function LoginPage() {
     return (
         <div>
             <form action={async (formData) => {
@@ -19,5 +19,3 @@ function LoginPage() {
         </div >
     )
 }
-
-export default LoginPage;
