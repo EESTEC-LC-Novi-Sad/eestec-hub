@@ -23,11 +23,12 @@ async function getUserByEmail(email) {
 * */
 async function createUser(email, password) {
     await dbConnect();
+    const passHash = await bcrypt.hash(password, 10);
 
     try {
         const user = await User.create({
             email: email,
-            password: password,
+            password: passHash,
             dateCreated: Date.now().toString()
         });
         return user;
