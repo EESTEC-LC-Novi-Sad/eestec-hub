@@ -1,12 +1,13 @@
 import mongoose from "mongoose";
 import { Schema } from "mongoose";
 
-const project = new Schema({
+const projectSchema = new Schema({
     name: String,
     description: String,
-    coordinatorPositions: [String],
+    available: Boolean,
+    applications: [{ type: Schema.Types.ObjectId, ref: 'Application' }]
 });
 
-const Project = mongoose.models.Project || mongoose.model('Project', project);
+const Project = mongoose.models.Project || mongoose.model('Project', projectSchema);
 
 export default Project;
