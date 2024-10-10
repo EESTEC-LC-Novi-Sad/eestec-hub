@@ -18,19 +18,26 @@ async function getUserByEmail(email) {
 }
 
 /**
-* @param {String} email 
-* @param {String} password 
+* @param {Object} userData 
+* @param {String} userData.firstName
+* @param {String} userData.lastName
+* @param {String} userData.password
+* @param {Date} userData.birthDate
 * */
-async function createUser(email, password) {
+async function createUser(userData) {
     await dbConnect();
-    const passHash = await bcrypt.hash(password, 10);
-
+    const passHash = await bcrypt.hash(userData.password, 10);
     try {
         const user = await User.create({
-            email: email,
+            email: userData.email,
+            firstName: userData.firstName,
+            lastName: userData.lastName,
+            birthDate: userData.birthDate,
             password: passHash,
-            dateCreated: Date.now().toString()
+            dateCreated: new Date(Date.now()),
+            role: 'member'
         });
+        console.log(user);
         return user;
     }
     catch (error) {
