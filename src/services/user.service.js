@@ -34,7 +34,7 @@ async function createUser(userData) {
             lastName: userData.lastName,
             birthDate: userData.birthDate,
             password: passHash,
-            dateCreated: new Date(),
+            dateCreated: new Date(Date.now()),
             role: 'member'
         });
         console.log(user);

@@ -21,9 +21,29 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                 if (!passEqual) {
                     throw new Error("Passwords are not equal");
                 }
-
                 return user;
-            }
+            },
         })
-    ]
+    ],
+    callbacks: {
+        jwt({ token, user }) {
+            if (user) {
+                token.firstName = user.firstName;
+                token.lastName = user.lastName;
+                token.birthDate = user.birthDate;
+                token.dateCreated = user.dateCreated;
+                token.role = user.role;
+            }
+            return token;
+        },
+        session({ session, token }) {
+            session.user.firstName = token.firstName;
+            session.user.lastName = token.lastName;
+            session.user.birthDate = token.birthDate;
+            session.user.dateCreated = token.dateCreatedc;
+            session.user.role = token.role;
+
+            return session;
+        }
+    },
 });

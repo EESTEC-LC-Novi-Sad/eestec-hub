@@ -9,7 +9,7 @@ export default async function Home() {
 
     return (
         <div>
-            <h1>Hello, {session.user.email}</h1>
+            <h1>Hello, {session.user.firstName}</h1>
             <form action={async () => {
                 "use server";
                 await signOut();
