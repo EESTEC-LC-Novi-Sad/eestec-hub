@@ -37,6 +37,7 @@ async function applyToProject(projectId, applicationData) {
 
     const newApplication = await Application.create({
         memberId: session.user.id,
+        projectId,
         motivationalLetter
     });
 
