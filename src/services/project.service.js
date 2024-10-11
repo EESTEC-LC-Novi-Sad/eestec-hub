@@ -41,16 +41,23 @@ async function applyToProject(projectId, applicationData) {
         motivationalLetter
     });
 
-    const project = await Project.findByIdAndUpdate(
+    await Project.findByIdAndUpdate(
         projectId,
         { $push: { applications: newApplication.id } },
         { new: true }
     );
 }
 
+async function getApplicationsForProject(projectId) {
+    await dbConnect();
+    const applications = Application.find({ projectId });
+    return applications;
+}
+
 export {
-    createProject,
     getAllProjects,
-    applyToProject,
-    getProjectById
+    getProjectById,
+    getApplicationsForProject,
+    createProject,
+    applyToProject
 }

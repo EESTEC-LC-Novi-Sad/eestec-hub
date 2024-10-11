@@ -17,6 +17,12 @@ async function getUserByEmail(email) {
     }
 }
 
+async function getUserById(id) {
+    await dbConnect();
+    const user = await User.findById(id);
+    return user;
+}
+
 /**
 * @param {Object} userData 
 * @param {String} userData.firstName
@@ -48,5 +54,6 @@ async function createUser(userData) {
 
 export {
     getUserByEmail,
+    getUserById,
     createUser
 }

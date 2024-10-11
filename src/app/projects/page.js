@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { getAllProjects } from "@/services/project.service"
 import { auth } from "../../../auth";
 
@@ -12,13 +13,14 @@ export default async function ProjectsPage() {
     return (
         <div>
             <h1>Projects page</h1>
-            <a href="/projects/new">Add new project</a><br /><br />
+            <Link href="/projects/new">Add new project</Link><br /><br />
             {
                 projects.map((project, index) => {
                     return <div key={index}>
                         <p>{project.name}</p>
-                        <a href={`/projects/${project.id}`}>Go to project details</a><br />
-                        <a href={`/projects/${project.id}/apply`}>Apply for project</a>
+                        <Link href={`/projects/${project.id}`}>Go to project details</Link><br />
+                        <Link href={`/projects/${project.id}/apply`}>Apply for project</Link><br />
+                        <Link href={`/projects/${project.id}/applications`}>Go to applications</Link>
                         <br /><br />
                     </div>
                 })

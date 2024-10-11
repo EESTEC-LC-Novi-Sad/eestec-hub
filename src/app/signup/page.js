@@ -1,4 +1,5 @@
 import { createUser } from "@/services/user.service";
+import Link from "next/link";
 import { redirect } from "next/navigation";
 
 export default async function SignUp() {
@@ -32,7 +33,7 @@ export default async function SignUp() {
                 <input required type="password" name="rpassword" placeholder="Repeat Password" /><br />
                 <button >Signup</button>
             </form>
-            <a href="/login">Login</a>
+            <Link href="/login">Login</Link>
         </div>
     )
 }

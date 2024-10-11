@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { signIn } from "../../../auth";
 
 export default async function LoginPage() {
@@ -15,7 +16,7 @@ export default async function LoginPage() {
                 <input required type="password" name="password" placeholder="Password" /><br />
                 <button >Login</button>
             </form>
-            <a href="/signup">Signup</a>
+            <Link href="/signup">Signup</Link>
         </div >
     )
 }
