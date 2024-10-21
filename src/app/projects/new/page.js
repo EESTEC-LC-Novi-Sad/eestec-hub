@@ -17,7 +17,7 @@ export default async function NewProjectPage() {
                 const projectData = {
                     name: formData.get("pname"),
                     description: formData.get("description"),
-                    coordinatorPossitions: JSON.parse(formData.get("coordinators")),
+                    coordinatorPositions: JSON.parse(formData.get("coordinators")),
                     applications: []
                 };
 
