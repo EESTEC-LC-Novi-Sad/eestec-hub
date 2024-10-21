@@ -5,6 +5,7 @@ const projectSchema = new Schema({
     name: String,
     description: String,
     available: Boolean,
+    coordinatorPossitions: [String],
     applications: [{ type: Schema.Types.ObjectId, ref: 'Application' }]
 });
 
