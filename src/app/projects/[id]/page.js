@@ -9,6 +9,13 @@ export default async function ProjectByIdPage({ params }) {
             <p><b>Description: </b>{project.description}</p>
             <p><b>Number of applicants: </b>{project.applications.length}</p>
             <p><b>Currently available: </b>{project.available ? "Yes" : "No"}</p>
+            <p><b>Available coordinator positions: </b>{
+                project.coordinatorPositions
+                ? JSON.stringify(project.coordinatorPositions)
+                :'None'
+            }
+            </p>
+            <br/>
             <Link href={`/projects/${params.id}/applications`}>Go to applications</Link><br />
             <Link href={`/projects/${params.id}/apply`}>Apply</Link>
         </div>
