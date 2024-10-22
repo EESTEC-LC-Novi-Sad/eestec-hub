@@ -17,7 +17,7 @@ export default async function ProjectsPage() {
             {
                 projects.map((project, index) => {
                     return <div key={index}>
-                        <p>{project.name}</p>
+                        <p><b>{project.name}</b></p>
                         <Link href={`/projects/${project.id}`}>Go to project details</Link><br />
                         <Link href={`/projects/${project.id}/apply`}>Apply for project</Link><br />
                         <Link href={`/projects/${project.id}/applications`}>Go to applications</Link>
