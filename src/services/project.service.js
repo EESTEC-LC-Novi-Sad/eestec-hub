@@ -33,12 +33,13 @@ async function applyToProject(projectId, applicationData) {
     }
     await dbConnect();
 
-    const { motivationalLetter } = applicationData;
+    const { motivationalLetter, position } = applicationData;
 
     const newApplication = await Application.create({
         memberId: session.user.id,
         projectId,
-        motivationalLetter
+        motivationalLetter,
+        position
     });
 
     await Project.findByIdAndUpdate(

@@ -12,7 +12,10 @@ export default async function ProjectApplicationsPage({ params }) {
                 applications.map(async (app, index) => {
                     const member = await getUserById(app.memberId);
                     return <div key={index}>
-                        <p><b>{member.email} </b>{app.motivationalLetter}</p>
+                        <p> <b>{member.email} </b> 
+                            {app.position?`applied for ${app.position}: `:"applied: "}
+                            {app.motivationalLetter}
+                        </p>
                     </div>
                 })
             }
