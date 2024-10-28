@@ -52,6 +52,15 @@ async function createUser(userData) {
     }
 }
 
+/**
+* @param {String} userRole 
+* */
+async function getUserByRole(userRole) {
+    await dbConnect();
+    const users = await User.find({ role: userRole });
+    return users;
+}
+
 export {
     getUserByEmail,
     getUserById,
