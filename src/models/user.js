@@ -8,7 +8,13 @@ const user = new Schema({
     birthDate: Date,
     password: String,
     dateCreated: Date,
-    role: String
+    role: String,
+    notifications: [
+        {
+            notificationId: { type: Schema.Types.ObjectId, ref: "Notification" },
+            isRead: Boolean
+        }
+    ]
 });
 
 const User = mongoose.models.User || mongoose.model('User', user);
