@@ -1,4 +1,5 @@
 import { redirect } from "next/navigation";
+import { multicastNotification } from "@/services/notification.service";
 import { auth, signOut } from "../../auth";
 
 export default async function Home() {
@@ -16,6 +17,21 @@ export default async function Home() {
             }}>
                 <button>Sign Out</button>
             </form>
-        </div>
+            <form action={async () => {
+                'use server';
+
+                const notificationData = {
+                    text: "This is a test notification",
+                    notificationType: "test notification",
+                    dateReceived: new Date(Date.now()),
+                    link: "www.google.com"
+                }
+                await multicastNotification(notificationData, "board")
+
+            }}>
+                <button>send notification</button>
+
+            </form>
+        </div >
     );
 }
