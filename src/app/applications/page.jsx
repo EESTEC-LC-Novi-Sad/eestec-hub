@@ -1,6 +1,7 @@
 import { getAllApplications } from "@/services/application.service"
 import { getProjectById } from "@/services/project.service";
 import { getUserById } from "@/services/user.service";
+import Link from "next/link";
 
 export default async function ApplicationsPage() {
     const applications = await getAllApplications();
@@ -12,15 +13,16 @@ export default async function ApplicationsPage() {
                     const member = await getUserById(application.memberId);
                     const project = await getProjectById(application.projectId);
                     return <div key={index}>
-                        <p>
-                            <b>{member.email} </b> 
-                            has applied for 
+                        <Link href={`/applications/${application.id}`}>
+                            <b>{member.email} </b>
+                            has applied for
                             {application.position
-                                    ?` ${application.position} @ `
-                                    :" "}
+                                ? ` ${application.position} @ `
+                                : " "}
                             <b>{project.name}:</b>
-                        </p>
-                        <p>{application.motivationalLetter}</p><br /><br />
+                        </Link>
+                        <br />
+                        <br />
                     </div>
                 })
             }
