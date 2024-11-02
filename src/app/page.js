@@ -17,21 +17,6 @@ export default async function Home() {
             }}>
                 <button>Sign Out</button>
             </form>
-            <form action={async () => {
-                'use server';
-
-                const notificationData = {
-                    text: "This is a test notification",
-                    notificationType: "test notification",
-                    dateReceived: new Date(Date.now()),
-                    link: "www.google.com"
-                }
-                await multicastNotification(notificationData, "board")
-
-            }}>
-                <button>send notification</button>
-
-            </form>
         </div >
     );
 }
