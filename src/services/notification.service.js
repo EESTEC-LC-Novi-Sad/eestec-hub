@@ -28,7 +28,14 @@ async function multicastNotification(notificationData, userRole) {
     );
 }
 
+async function getNotificationById(id) {
+    await dbConnect();
+    const notification = await Notification.findById(id);
+    return notification;
+}
+
 export {
-    multicastNotification
+    multicastNotification,
+    getNotificationById
 }
 
