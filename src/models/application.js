@@ -5,7 +5,9 @@ export const applicationSchema = new Schema({
     projectId: { type: Schema.Types.ObjectId, ref: 'Project' },
     memberId: { type: Schema.Types.ObjectId, ref: 'User' },
     motivationalLetter: String,
-    position: String
+    position: String,
+    status: String,
+    responseDate: Date
 });
 
 const Application = mongoose.models.Application

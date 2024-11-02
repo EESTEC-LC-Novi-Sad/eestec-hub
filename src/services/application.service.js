@@ -13,7 +13,16 @@ async function getApplicationById(id) {
     return application;
 }
 
+async function setApplicationStatus(id, status) {
+    await dbConnect();
+    await Application.findByIdAndUpdate(
+        id,
+        { $set: { status: status, responseDate: new Date(Date.now()) } }
+    );
+}
+
 export {
     getAllApplications,
-    getApplicationById
+    getApplicationById,
+    setApplicationStatus
 }
