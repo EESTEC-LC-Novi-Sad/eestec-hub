@@ -7,6 +7,13 @@ async function getAllApplications() {
     return applications;
 }
 
+async function getApplicationById(id) {
+    await dbConnect();
+    const application = await Application.findById(id);
+    return application;
+}
+
 export {
-    getAllApplications
+    getAllApplications,
+    getApplicationById
 }
