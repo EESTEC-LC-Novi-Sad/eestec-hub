@@ -21,6 +21,12 @@ async function getAllProjects() {
     return projects;
 }
 
+async function getProjectsCount() {
+    await dbConnect();
+    const count = Project.countDocuments({});
+    return count;
+}
+
 async function getProjectById(id) {
     await dbConnect();
     const project = await Project.findById(id);
@@ -61,5 +67,6 @@ export {
     getProjectById,
     getApplicationsForProject,
     createProject,
-    applyToProject
+    applyToProject,
+    getProjectsCount
 }
