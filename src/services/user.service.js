@@ -61,8 +61,15 @@ async function getUserByRole(userRole) {
     return users;
 }
 
+async function getAllUserNotifications(userId) {
+    await dbConnect();
+    const user = await User.findById(userId);
+    return user.notifications;
+}
+
 export {
     getUserByEmail,
     getUserById,
-    createUser
+    createUser,
+    getAllUserNotifications
 }
