@@ -1,5 +1,7 @@
+import Link from "next/link";
+
 export default function Notification({ notificationData }) {
     return <div>
-        <p>{notificationData.text}</p>
+        <Link href={notificationData.link}>{notificationData.text}</Link>
     </div>
 }
