@@ -20,6 +20,8 @@ export default async function ApplicationsPage() {
                                 ? ` ${application.position} @ `
                                 : " "}
                             <b>{project.name}:</b>
+                            <p><b>Status: {application.status ?? "pending"}</b>
+                            </p>
                         </Link>
                         <br />
                         <br />
