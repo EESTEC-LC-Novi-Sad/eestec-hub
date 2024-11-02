@@ -1,9 +1,12 @@
 import { redirect } from "next/navigation";
-import { multicastNotification } from "@/services/notification.service";
 import { auth, signOut } from "../../auth";
+import { getAllUserNotifications } from "@/services/user.service";
+import Link from "next/link";
 
 export default async function Home() {
     const session = await auth();
+    const notifications = await getAllUserNotifications(session.user.id);
+    console.log(notifications);
     if (!session || !session.user) {
         redirect('/login');
     }
@@ -11,6 +14,7 @@ export default async function Home() {
     return (
         <div>
             <h1>Hello, {session.user.firstName}</h1>
+            <Link href="/notifications">My notifications: {notifications.length}</Link>
             <form action={async () => {
                 "use server";
                 await signOut();
