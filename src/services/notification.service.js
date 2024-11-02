@@ -15,12 +15,24 @@ async function createNotification(notificationData) {
 /**
 * @param {Object} notificationData
 * @param {String} notificationData.text
+* */
+async function broadcastNotification(notificationData) {
+    await dbConnect();
+    const notification = await createNotification(notificationData);
+
+    await User.updateMany(
+        {},
+        { $push: { notifications: { notificationId: notification.id, isRead: false } } }
+    );
+}
+/**
+* @param {Object} notificationData
+* @param {String} notificationData.text
 * @param {String} userRole
 * */
 async function multicastNotification(notificationData, userRole) {
     await dbConnect();
     const notification = await createNotification(notificationData);
-    console.log(notification);
 
     await User.updateMany(
         { role: userRole },
@@ -28,6 +40,9 @@ async function multicastNotification(notificationData, userRole) {
     );
 }
 
+/**
+* @param {String} id 
+* */
 async function getNotificationById(id) {
     await dbConnect();
     const notification = await Notification.findById(id);
@@ -35,6 +50,7 @@ async function getNotificationById(id) {
 }
 
 export {
+    broadcastNotification,
     multicastNotification,
     getNotificationById
 }
