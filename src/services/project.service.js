@@ -11,7 +11,8 @@ import { auth } from "../../auth";
 * */
 async function createProject(projectData) {
     await dbConnect();
-    await Project.create({ ...projectData });
+    const project = await Project.create({ ...projectData });
+    return project;
 }
 
 async function getAllProjects() {
