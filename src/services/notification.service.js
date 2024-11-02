@@ -15,6 +15,20 @@ async function createNotification(notificationData) {
 /**
 * @param {Object} notificationData
 * @param {String} notificationData.text
+* @param {String} userId 
+* */
+async function sendNotificationById(userId, notificationData) {
+    await dbConnect();
+    const notification = await createNotification(notificationData);
+    await User.findByIdAndUpdate(
+        userId,
+        { $push: { notifications: { notificationId: notification.id, isRead: false } } }
+    );
+}
+
+/**
+* @param {Object} notificationData
+* @param {String} notificationData.text
 * */
 async function broadcastNotification(notificationData) {
     await dbConnect();
@@ -50,6 +64,7 @@ async function getNotificationById(id) {
 }
 
 export {
+    sendNotificationById,
     broadcastNotification,
     multicastNotification,
     getNotificationById
