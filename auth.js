@@ -34,6 +34,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                 token.birthDate = user.birthDate;
                 token.dateCreated = user.dateCreated;
                 token.role = user.role;
+                token.notifications = user.notifications;
             }
             return token;
         },
@@ -44,6 +45,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             session.user.birthDate = token.birthDate;
             session.user.dateCreated = token.dateCreatedc;
             session.user.role = token.role;
+            session.user.notifications = token.notifications;
 
             return session;
         }
