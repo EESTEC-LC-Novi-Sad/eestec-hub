@@ -6,6 +6,9 @@ import Link from "next/link";
 
 export default async function Home() {
     const session = await auth();
+    if (!session || !session.user) {
+        redirect('/login');
+    }
     const notifications = await getAllUserNotifications(session.user.id);
     const projectCount = await getProjectsCount();
     console.log(notifications);
