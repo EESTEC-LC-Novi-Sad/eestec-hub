@@ -6,7 +6,7 @@ export default async function ApplyProjectPage({ params }) {
     return (
         <div>
             <h1>Apply to {project.name}</h1>
-            <br/>
+            <br />
             <form action={async (formData) => {
                 "use server";
                 const applicationData = {
@@ -17,16 +17,17 @@ export default async function ApplyProjectPage({ params }) {
                 redirect('/projects');
             }}>
                 <label for="position">Applying for:</label>
-                <br/>
+                <br />
                 <select id="position" name="position">
                     <option value="">--Please select a position--</option>
                     {project.coordinatorPositions.map((c, index) => {
                         return <option name={c.toLowerCase()} key={index}>{c}</option>
                     })}
                 </select>
-                <br/><br/>
+                <br /><br />
                 <textarea required name="motivation" placeholder="Your motivation for this project" />
-                <br/>
+                <input type="hidden" />
+                <br />
                 <button type="submit">Apply</button>
             </form>
         </div>

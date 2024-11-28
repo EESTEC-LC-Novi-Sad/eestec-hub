@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { getApplicationsForProject, getProjectById } from "@/services/project.service"
 import { getUserById } from "@/services/user.service";
 
@@ -11,12 +12,14 @@ export default async function ProjectApplicationsPage({ params }) {
             {
                 applications.map(async (app, index) => {
                     const member = await getUserById(app.memberId);
-                    return <div key={index}>
-                        <p> <b>{member.email} </b> 
-                            {app.position?`applied for ${app.position}: `:"applied: "}
-                            {app.motivationalLetter}
-                        </p>
-                    </div>
+                    return <Link href={`/applications/${app.id}`} key={index}>
+                        <div>
+                            <p> <b>{member.email} </b>
+                                {app.position ? `applied for ${app.position}: ` : `applied: ${app.motivationalLetter.slice(0, 20)}...`}
+                            </p>
+                            <p><b>Status: {app.status ?? "pending"}</b></p>
+                        </div>
+                    </Link>
                 })
             }
         </div >
