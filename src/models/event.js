@@ -6,6 +6,7 @@ const eventSchema = new Schema({
     description: String,
     startDate: Date,
     endDate: Date,
+    location: String,
     code: String,
     attendees: [{type: Schema.Types.ObjectId, ref: "User"}]
 });
