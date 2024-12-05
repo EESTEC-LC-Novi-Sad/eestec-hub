@@ -19,7 +19,6 @@ export default async function NewEventPage() {
                     startDate: formData.get("start-date"),
                     endDate: formData.get("end-date"),
                     location: formData.get("location"),
-                    code: "1234523",
                     attendees: []
                 };
                 const event = await createEvent(eventData);
