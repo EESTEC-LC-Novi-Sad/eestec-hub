@@ -1,5 +1,6 @@
 import { getAllEvents } from "@/services/events.service";
 import { auth } from "../../../auth";
+import Link from "next/link";
 
 export default async function EventsPage() {
     const session = await auth();
@@ -13,7 +14,12 @@ export default async function EventsPage() {
             {
                 events.map((e, index) => {
                     return <div key={index}>
-                        <p>{e.name}</p>
+                        <Link href={`events/${e.id}`}>
+                            <p>
+                                <b>{e.name}</b> - starts at {" "}
+                                {e.startDate.toLocaleString('en-GB', { timeZone: 'UTC' })}
+                            </p>
+                        </Link>
                     </div>
                 })
             }
