@@ -16,7 +16,7 @@ export default async function NotificationsPage() {
     return (
         <div>
             <h1>Notifications page</h1><br />
-            {notifications.map((n, index) => {
+            {notifications.reverse().map((n, index) => {
                 return <div key={index}><Notification notificationData={n} /><br /></div>
             })}
         </div>
