@@ -7,9 +7,10 @@ export default async function EventByIdPage({ params }) {
         <div>
             <p><b>Event name:</b> {event.name}</p>
             <p><b>Event description:</b> {event.description}</p>
-            <p><b>Event start date:</b> {event.startDate.toLocaleString('en-GB', { timeZone: 'UTC' })}</p>
-            <p><b>Event end date:</b> {event.endDate.toLocaleString('en-GB', { timeZone: 'UTC' })}</p>
+            <p><b>Event start date:</b> {event.startDate.toLocaleString('en-GB')}</p>
+            <p><b>Event end date:</b> {event.endDate.toLocaleString('en-GB')}</p>
             <p><b>Event join code:</b> {event.code} (hide this for members)</p>
+            <p><b>Event attendees:</b> {event.attendees.length}</p>
             <Link href={`/events/${event.id}/join`}>Click here to join event</Link>
         </div>
     )
