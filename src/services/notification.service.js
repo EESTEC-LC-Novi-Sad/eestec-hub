@@ -27,8 +27,7 @@ async function sendNotificationById(userId, notificationData) {
 }
 
 /**
-* @param {Object} notificationData
-* @param {String} notificationData.text
+* @param {{text: String, notificationType: String, dateReceived: Date, link: string}} notificationData
 * */
 async function broadcastNotification(notificationData) {
     await dbConnect();
