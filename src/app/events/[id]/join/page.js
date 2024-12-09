@@ -22,10 +22,10 @@ export default async function JoinEventPage({ params }) {
                     return;
                 }
 
-                const joinedEvent = joinEvent(event.id, session.user.id);
+                const joinedEvent = await joinEvent(event.id, session.user.id);
                 if (!joinedEvent) {
                     console.log("Couldn't join event :(");
-                    return;
+                    redirect('/events');
                 }
                 console.log("Successfuly joined event");
                 redirect('/events');
