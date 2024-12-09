@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import { auth } from "../../../../auth";
 import { createEvent } from "@/services/events.service";
+import { broadcastNotification } from "@/services/notification.service";
 
 export default async function NewEventPage() {
     const session = await auth();
@@ -22,15 +23,15 @@ export default async function NewEventPage() {
                     attendees: []
                 };
                 const event = await createEvent(eventData);
+                broadcastNotification(
+                    {
+                        text: `New event: ${eventData.name} at ${eventData.startDate.toLocaleString('en-GB')}`,
+                        notificationType: 'New events',
+                        dateReceived: new Date(Date.now()),
+                        link: `/events/${event.id}`
+                    }
+                );
                 redirect("/events");
-                /*
-                await broadcastNotification({
-                    text: `New project is available: ${formData.get("pname")}`,
-                    notificationType: "New projects",
-                    dateReceived: new Date(Date.now()),
-                    link: `/projects/${proj.id}`
-                });
-*/
             }}>
                 <input required type="text" name="ename" placeholder="Event Name" /><br />
                 <br />
