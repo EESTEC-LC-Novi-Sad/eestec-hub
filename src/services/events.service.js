@@ -27,12 +27,19 @@ async function getEventById(id) {
 async function joinEvent(eventId, userId) {
     await dbConnect();
     const user = await User.findById(userId);
+
     if (!user) {
         console.log(`User with id=${userId} doesn't exist`);
+        return;
+    }
+    const event = await Event.findById(eventId);
+
+    if (event.startDate > Date.now() || event.endDate < Date.now()) {
+        return;
     }
 
-    const event = await Event.findByIdAndUpdate(eventId, { $addToSet: { attendees: user.id } });
-    return event;
+    const updatedEvent = await Event.findByIdAndUpdate(eventId, { $addToSet: { attendees: user.id } });
+    return updatedEvent;
 }
 
 export {
