@@ -7,8 +7,8 @@ export default async function TeamsPage() {
         <div>
             {teams.map((team, index) => {
                 return (
-                    <Link href={`/teams/${team.id}`}>
-                        <div key={index}>
+                    <Link key={index} href={`/teams/${team.id}`}>
+                        <div>
                             <p>{team.name}</p>
                         </div>
                     </Link>
