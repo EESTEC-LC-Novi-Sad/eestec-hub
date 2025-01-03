@@ -13,41 +13,48 @@ import ProjectsIcon from "@/app/icons/ProjectsIcon";
 import TeamsIcon from "@/app/icons/TeamsIcon";
 import EventsIcon from "@/app/icons/EventsIcon";
 import ApplicationsIcon from "@/app/icons/ApplicationsIcon";
+import LinkButton from "../LinkButton";
 
 export default function Header() {
     const pathname = usePathname();
     const [isOpen, setIsOpen] = useState(false);
 
-    const closeMenu = () => {
-      setIsOpen(false);
-    }
-    const openMenu = () => {
-      setIsOpen(true);
-    }
+    const closeMenu = () => setIsOpen(false); 
+    const openMenu = () => setIsOpen(true); 
+
+    const MenuLink = ({href, children}) => 
+      <li onClick={closeMenu} className="rounded mb-2 mx-2 p-1 hover:bg-gray-200">
+        <Link className="flex" href={href}>{children}</Link>
+      </li>
 
     const noHeaderRoutes = ["/login", "/signup"];
+
     return (
       <div>
-        { noHeaderRoutes.includes(pathname) ? <div></div>
-          : <div className="flex justify-between mb-4 py-4 border border-solid border-gray-300">
-              <div className={`${isOpen ? "visible" : "hidden"} border border-solid border-gray-300 rounded py-4 w-72 absolute top-0 bg-white`}>
-                  <Button onClick={closeMenu} className="absolute right-4 top-4"><CloseIcon/></Button>
-                  <ul className="mt-10">
-                    <li onClick={closeMenu} className="rounded mb-2 mx-2 p-1 hover:bg-gray-200"><Link className="flex" href="/"><HomeIcon className="mr-1"/> Home</Link></li>
-                    <li onClick={closeMenu} className="rounded mb-2 mx-2 p-1 hover:bg-gray-200"><Link className="flex" href="/projects"><ProjectsIcon className="mr-1"/> Projects</Link></li>
-                    <li onClick={closeMenu} className="rounded mb-2 mx-2 p-1 hover:bg-gray-200"><Link className="flex" href="/teams"><TeamsIcon className="mr-1"/>Teams</Link></li>
-                    <li onClick={closeMenu} className="rounded mb-2 mx-2 p-1 hover:bg-gray-200"><Link className="flex" href="/events"><EventsIcon className="mr-1"/>Events</Link></li>
-                    <li onClick={closeMenu} className="rounded mb-2 mx-2 p-1 hover:bg-gray-200"><Link className="flex" href="/applications"><ApplicationsIcon className="mr-1"/>Applications</Link></li> {/* This should be hidden for non-admins */}
+        { noHeaderRoutes.includes(pathname) 
+          ? <div></div>
+          : <div>
+          <div onClick={closeMenu} className={`${isOpen ? "visible" : "hidden"} absolute w-full h-screen bg-gray-950/50`}></div>
+            <div className="flex justify-between items-center mb-4 py-2 border border-solid border-gray-300">
+                <div className={`${isOpen ? "visible" : "hidden"} border border-solid border-gray-300 rounded py-4 w-72 absolute top-0 bg-white`}>
+                    <Button onClick={closeMenu} className="absolute right-4 top-4"><CloseIcon/></Button>
+                    <ul className="mt-10">
+                      <MenuLink href="/"><HomeIcon className="mr-1"/> Home</MenuLink>            
+                      <MenuLink href="/projects"><ProjectsIcon className="mr-1"/> Projects</MenuLink>
+                      <MenuLink href="/teams"><TeamsIcon className="mr-1"/> Teams</MenuLink>
+                      <MenuLink href="/events"><EventsIcon className="mr-1"/> Events</MenuLink>
+                      <MenuLink href="/applications"><ApplicationsIcon className="mr-1"/> Applications</MenuLink> {/* This should be hidden for non-admins */}
+                    </ul>
+                </div>
+                <Button className="mx-2" onClick={openMenu}><MenuIcon/></Button>
+                <div>
+                  <ul className="flex items-center">
+                    <li onClick={closeMenu} className="mx-2"><LinkButton className="flex" href="/notifications"><NotificationIcon className="mr-1"/> Notifications</LinkButton></li>
+                    <li onClick={closeMenu} className="mx-2"><LinkButton className="flex" href="/profile"><ProfileIcon/></LinkButton></li>
                   </ul>
-              </div>
-              <Button className="mx-2" onClick={openMenu}><MenuIcon/></Button>
-              <div>
-                <ul className="flex">
-                  <li onClick={closeMenu} className="mx-2"><Link href="/notifications"><NotificationIcon/></Link></li>
-                  <li onClick={closeMenu} className="mx-2"><Link href="/profile"><ProfileIcon/></Link></li>
-                </ul>
-              </div>
+                </div>
             </div> 
+          </div>
         }
       </div>
     )
