@@ -12,6 +12,13 @@ const geistMono = localFont({
     weight: "100 900",
 });
 
+const libreBaskerville = localFont({
+    src: [{
+            path: "./fonts/LibreBaskerville-Regular.ttf",
+            variable: "--font-libre-baskerville",
+        }]
+});
+
 export const metadata = {
     title: "EESTEC Hub",
     description: "Made for and by EESETC LC Novi Sad",
@@ -21,7 +28,7 @@ export default function RootLayout({ children }) {
     return (
         <html lang="en">
             <body
-                className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+                className={`${geistSans.variable} ${geistMono.variable} ${libreBaskerville.variable} antialiased`}
             >
                 {children}
             </body>

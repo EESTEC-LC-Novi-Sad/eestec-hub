@@ -9,10 +9,12 @@
     --foreground: #171717;
     */
     --foreground: black;
+    --font-libre-baskerville: 'Libre Baskerville', serif;
 }
 
 body {
     color: var(--foreground);
+    font-family: var(--font-libre-baskerville);
 }
 
 /*
