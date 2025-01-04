@@ -17,6 +17,23 @@ import ApplicationsIcon from "@/app/icons/ApplicationsIcon";
 import LinkButton from "../LinkButton";
 import { logOut } from "@/app/lib/actions";
 
+function ModalDiv({children, onClick, isOpen, className, isLeft}) { 
+  const translate = isLeft ? "-translate-x-full" : "translate-x-full";
+  return <div 
+    onClick={onClick} 
+    className={`transform ${isOpen ? "translate-x-0": translate} 
+        transition-transform 
+        border border-solid border-gray-300 rounded 
+        w-72 absolute bg-white ${className}`}>{children}
+  </div>
+}
+
+function MenuLink({href, children, onClick}) { 
+  return <li onClick={onClick} className="rounded mb-2 mx-2 p-1 hover:bg-gray-200">
+    <Link className="flex" href={href}>{children}</Link>
+  </li>
+}
+
 export default function Header() {
     const pathname = usePathname();
     const { data: session } = useSession();
@@ -28,22 +45,8 @@ export default function Header() {
     const closeProfileMenu = () => setIsProfileMenuOpen(false);
     const openProfileMenu = () => setIsProfileMenuOpen(true);
 
-    const MenuLink = ({href, children, onClick}) => 
-      <li onClick={onClick} className="rounded mb-2 mx-2 p-1 hover:bg-gray-200">
-        <Link className="flex" href={href}>{children}</Link>
-      </li>
-
-    const ModalDiv = ({children, onClick, isOpen, className}) => 
-      <div 
-          onClick={onClick} 
-          className={`${isOpen ? "visible": "hidden"} 
-                      border border-solid border-gray-300 rounded 
-                      w-72 absolute bg-white ${className}`}>{children}
-      </div>
-    const pageHeader = pathname === "/" 
-        ? "Dashboard" 
+    const pageHeader = pathname === "/" ? "Dashboard" 
         : pathname.charAt(1).toUpperCase() + pathname.slice(2).split("/")[0];
-
 
     const noHeaderRoutes = ["/login", "/signup"];
 
@@ -55,7 +58,7 @@ export default function Header() {
             <div onClick={closeMenu} className={`${isMenuOpen ? "visible" : "hidden"} absolute w-full h-screen bg-gray-950/50`}></div>
             <div onClick={closeProfileMenu} className={`${isProfileMenuOpen ? "visible" : "hidden"} absolute w-full h-screen bg-gray-950/50`}></div>
             <div className="flex justify-between items-center mb-4 py-2 border border-solid border-gray-300">
-                <ModalDiv isOpen={isMenuOpen} className="top-0 py-4">
+                <ModalDiv isLeft={true} isOpen={isMenuOpen} className="top-0 py-4">
                     <Button onClick={closeMenu} className="absolute right-4 top-4"><CloseIcon/></Button>
                     <h2 className="ml-4"><b>EESTEC Hub</b></h2>
                     <ul className="mt-6">
@@ -75,7 +78,7 @@ export default function Header() {
                     <li className="mx-2"><LinkButton className="flex" href="/notifications"><NotificationIcon className="mr-1"/> Notifications</LinkButton></li>
                     <li className="mx-2"><Button onClick={openProfileMenu}><ProfileIcon/></Button></li>
                   </ul>
-                  <ModalDiv isOpen={isProfileMenuOpen} className="top-0 right-0 py-4">
+                  <ModalDiv isLeft={false} isOpen={isProfileMenuOpen} className="top-0 right-0 py-4">
                     <Button onClick={closeProfileMenu} className="absolute right-4 top-4"><CloseIcon/></Button>
                     <h2 className="ml-3 mr-6 px-1"><b>{session?.user?.email ?? "Unknown email"}</b></h2>
                     <h2 className="ml-3 mr-6 px-1">

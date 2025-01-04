@@ -15,6 +15,7 @@
 body {
     color: var(--foreground);
     font-family: var(--font-libre-baskerville);
+    overflow-x: clip;;
 }
 
 /*
