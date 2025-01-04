@@ -31,6 +31,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                 token.id = user.id;
                 token.firstName = user.firstName;
                 token.lastName = user.lastName;
+                token.username = user.username;
                 token.birthDate = user.birthDate;
                 token.dateCreated = user.dateCreated;
                 token.role = user.role;
@@ -39,6 +40,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         },
         session({ session, token }) {
             session.user.id = token.id;
+            session.user.username = token.username;
             session.user.firstName = token.firstName;
             session.user.lastName = token.lastName;
             session.user.birthDate = token.birthDate;

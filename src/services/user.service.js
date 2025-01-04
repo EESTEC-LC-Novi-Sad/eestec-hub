@@ -3,6 +3,17 @@ import dbConnect from "@/app/lib/dbConnect";
 import User from "../models/user";
 
 /**
+* @typedef {Object} UserData
+* @property {String} email
+* @property {String} username
+* @property {String} password
+* @property {String} firstName
+* @property {String} lastName
+* @property {Date} birthDate
+* */
+
+
+/**
 * @param {String} email 
 * */
 async function getUserByEmail(email) {
@@ -17,6 +28,12 @@ async function getUserByEmail(email) {
     }
 }
 
+async function getUserByUsername(username) {
+    await dbConnect();
+    const user = await User.findOne({ username });
+    return user;
+}
+
 async function getUserById(id) {
     await dbConnect();
     const user = await User.findById(id);
@@ -24,11 +41,7 @@ async function getUserById(id) {
 }
 
 /**
-* @param {Object} userData 
-* @param {String} userData.firstName
-* @param {String} userData.lastName
-* @param {String} userData.password
-* @param {Date} userData.birthDate
+* @param {UserData} userData
 * */
 async function createUser(userData) {
     await dbConnect();
@@ -36,6 +49,7 @@ async function createUser(userData) {
     try {
         const user = await User.create({
             email: userData.email,
+            username: userData.username,
             firstName: userData.firstName,
             lastName: userData.lastName,
             birthDate: userData.birthDate,
@@ -43,7 +57,6 @@ async function createUser(userData) {
             dateCreated: new Date(Date.now()),
             role: 'member'
         });
-        console.log(user);
         return user;
     }
     catch (error) {
@@ -70,6 +83,7 @@ async function getAllUserNotifications(userId) {
 export {
     getUserByEmail,
     getUserById,
+    getUserByUsername,
     createUser,
     getAllUserNotifications
 }
