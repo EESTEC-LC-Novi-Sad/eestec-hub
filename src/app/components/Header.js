@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { useSession } from "next-auth/react";
-import Button from "../Button";
+import Button from "./Button";
 import MenuIcon from "@/app/icons/MenuIcon";
 import CloseIcon from "@/app/icons/CloseIcon";
 import ProfileIcon from "@/app/icons/ProfileIcon";
@@ -14,7 +14,7 @@ import ProjectsIcon from "@/app/icons/ProjectsIcon";
 import TeamsIcon from "@/app/icons/TeamsIcon";
 import EventsIcon from "@/app/icons/EventsIcon";
 import ApplicationsIcon from "@/app/icons/ApplicationsIcon";
-import LinkButton from "../LinkButton";
+import LinkButton from "./LinkButton";
 import { logOut } from "@/app/lib/actions";
 
 function ModalDiv({children, onClick, isOpen, className, isLeft}) { 
