@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getAllProjects } from "@/services/project.service"
 import { auth } from "../../../auth";
+import { redirect } from "next/navigation";
 
 export default async function ProjectsPage() {
     const session = await auth();
