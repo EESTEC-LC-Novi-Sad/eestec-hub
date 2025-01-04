@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
+import { useSession } from "next-auth/react";
 import Button from "../Button";
 import MenuIcon from "@/app/icons/MenuIcon";
 import CloseIcon from "@/app/icons/CloseIcon";
@@ -14,44 +15,83 @@ import TeamsIcon from "@/app/icons/TeamsIcon";
 import EventsIcon from "@/app/icons/EventsIcon";
 import ApplicationsIcon from "@/app/icons/ApplicationsIcon";
 import LinkButton from "../LinkButton";
+import { logOut } from "@/app/lib/actions";
 
 export default function Header() {
     const pathname = usePathname();
+    const { data: session } = useSession();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
 
     const closeMenu = () => setIsMenuOpen(false); 
     const openMenu = () => setIsMenuOpen(true); 
+    const closeProfileMenu = () => setIsProfileMenuOpen(false);
+    const openProfileMenu = () => setIsProfileMenuOpen(true);
 
-    const MenuLink = ({href, children}) => 
-      <li onClick={closeMenu} className="rounded mb-2 mx-2 p-1 hover:bg-gray-200">
+    const MenuLink = ({href, children, onClick}) => 
+      <li onClick={onClick} className="rounded mb-2 mx-2 p-1 hover:bg-gray-200">
         <Link className="flex" href={href}>{children}</Link>
       </li>
+
+    const ModalDiv = ({children, onClick, isOpen, className}) => 
+      <div 
+          onClick={onClick} 
+          className={`${isOpen ? "visible": "hidden"} 
+                      border border-solid border-gray-300 rounded 
+                      w-72 absolute bg-white ${className}`}>{children}
+      </div>
+    const pageHeader = pathname === "/" 
+        ? "Dashboard" 
+        : pathname.charAt(1).toUpperCase() + pathname.slice(2).split("/")[0];
+
 
     const noHeaderRoutes = ["/login", "/signup"];
 
     return (
       <div>
         { noHeaderRoutes.includes(pathname) 
-          ? <div></div>
-          : <div>
-          <div onClick={closeMenu} className={`${isMenuOpen ? "visible" : "hidden"} absolute w-full h-screen bg-gray-950/50`}></div>
+          ? <div></div> : 
+          <div>
+            <div onClick={closeMenu} className={`${isMenuOpen ? "visible" : "hidden"} absolute w-full h-screen bg-gray-950/50`}></div>
+            <div onClick={closeProfileMenu} className={`${isProfileMenuOpen ? "visible" : "hidden"} absolute w-full h-screen bg-gray-950/50`}></div>
             <div className="flex justify-between items-center mb-4 py-2 border border-solid border-gray-300">
-                <div className={`${isMenuOpen ? "visible" : "hidden"} border border-solid border-gray-300 rounded py-4 w-72 absolute top-0 bg-white`}>
+                <ModalDiv isOpen={isMenuOpen} className="top-0 py-4">
                     <Button onClick={closeMenu} className="absolute right-4 top-4"><CloseIcon/></Button>
-                    <ul className="mt-10">
-                      <MenuLink href="/"><HomeIcon className="mr-1"/> Home</MenuLink>            
-                      <MenuLink href="/projects"><ProjectsIcon className="mr-1"/> Projects</MenuLink>
-                      <MenuLink href="/teams"><TeamsIcon className="mr-1"/> Teams</MenuLink>
-                      <MenuLink href="/events"><EventsIcon className="mr-1"/> Events</MenuLink>
-                      <MenuLink href="/applications"><ApplicationsIcon className="mr-1"/> Applications</MenuLink> {/* This should be hidden for non-admins */}
+                    <h2 className="ml-4"><b>EESTEC Hub</b></h2>
+                    <ul className="mt-6">
+                      <MenuLink onClick={closeMenu} href="/"><HomeIcon className="mr-1"/> Home</MenuLink>            
+                      <MenuLink onClick={closeMenu} href="/projects"><ProjectsIcon className="mr-1"/> Projects</MenuLink>
+                      <MenuLink onClick={closeMenu} href="/teams"><TeamsIcon className="mr-1"/> Teams</MenuLink>
+                      <MenuLink onClick={closeMenu} href="/events"><EventsIcon className="mr-1"/> Events</MenuLink>
+                      <MenuLink onClick={closeMenu} href="/applications"><ApplicationsIcon className="mr-1"/> Applications</MenuLink> {/* This should be hidden for non-admins */}
                     </ul>
+                </ModalDiv>
+                <div className="flex items-center">
+                  <Button className="mx-2" onClick={openMenu}><MenuIcon/></Button>
+                  <h1><b>{pageHeader}</b></h1>
                 </div>
-                <Button className="mx-2" onClick={openMenu}><MenuIcon/></Button>
                 <div>
                   <ul className="flex items-center">
-                    <li onClick={closeMenu} className="mx-2"><LinkButton className="flex" href="/notifications"><NotificationIcon className="mr-1"/> Notifications</LinkButton></li>
-                    <li onClick={closeMenu} className="mx-2"><LinkButton className="flex" href="/profile"><ProfileIcon/></LinkButton></li>
+                    <li className="mx-2"><LinkButton className="flex" href="/notifications"><NotificationIcon className="mr-1"/> Notifications</LinkButton></li>
+                    <li className="mx-2"><Button onClick={openProfileMenu}><ProfileIcon/></Button></li>
                   </ul>
+                  <ModalDiv isOpen={isProfileMenuOpen} className="top-0 right-0 py-4">
+                    <Button onClick={closeProfileMenu} className="absolute right-4 top-4"><CloseIcon/></Button>
+                    <h2 className="ml-3 mr-6 px-1"><b>{session?.user?.email ?? "Unknown email"}</b></h2>
+                    <h2 className="ml-3 mr-6 px-1">
+                      {`${session?.user?.firstName} ${session?.user?.lastName}` ?? "Unknown name"}
+                    </h2>
+                    <ul className="mt-6">
+                      <MenuLink onClick={closeProfileMenu} href="/profile"><ProfileIcon className="mx-1"/> Your profile</MenuLink>
+                      <MenuLink onClick={closeProfileMenu} href="#"><ProjectsIcon className="mx-1"/>Your projects</MenuLink>
+                      <MenuLink onClick={closeProfileMenu} href="#"><TeamsIcon className="mx-1"/>Your teams</MenuLink>
+                      <MenuLink onClick={closeProfileMenu} href="#"><EventsIcon className="mx-1"/>Your events</MenuLink>
+                      <MenuLink onClick={closeProfileMenu} href="#"><ApplicationsIcon className="mx-1"/>Your applications</MenuLink> {/* This should be hidden for non-admins */}
+                      <form className="ml-4 mt-4" action={logOut}>
+                          <Button>Logout</Button>
+                      </form>
+                    </ul> 
+                  </ModalDiv>
                 </div>
             </div> 
           </div>
