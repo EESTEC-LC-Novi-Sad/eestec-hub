@@ -17,10 +17,10 @@ import LinkButton from "../LinkButton";
 
 export default function Header() {
     const pathname = usePathname();
-    const [isOpen, setIsOpen] = useState(false);
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-    const closeMenu = () => setIsOpen(false); 
-    const openMenu = () => setIsOpen(true); 
+    const closeMenu = () => setIsMenuOpen(false); 
+    const openMenu = () => setIsMenuOpen(true); 
 
     const MenuLink = ({href, children}) => 
       <li onClick={closeMenu} className="rounded mb-2 mx-2 p-1 hover:bg-gray-200">
@@ -34,9 +34,9 @@ export default function Header() {
         { noHeaderRoutes.includes(pathname) 
           ? <div></div>
           : <div>
-          <div onClick={closeMenu} className={`${isOpen ? "visible" : "hidden"} absolute w-full h-screen bg-gray-950/50`}></div>
+          <div onClick={closeMenu} className={`${isMenuOpen ? "visible" : "hidden"} absolute w-full h-screen bg-gray-950/50`}></div>
             <div className="flex justify-between items-center mb-4 py-2 border border-solid border-gray-300">
-                <div className={`${isOpen ? "visible" : "hidden"} border border-solid border-gray-300 rounded py-4 w-72 absolute top-0 bg-white`}>
+                <div className={`${isMenuOpen ? "visible" : "hidden"} border border-solid border-gray-300 rounded py-4 w-72 absolute top-0 bg-white`}>
                     <Button onClick={closeMenu} className="absolute right-4 top-4"><CloseIcon/></Button>
                     <ul className="mt-10">
                       <MenuLink href="/"><HomeIcon className="mr-1"/> Home</MenuLink>            
