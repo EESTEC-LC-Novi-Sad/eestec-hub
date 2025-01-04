@@ -80,12 +80,12 @@ export default function Header() {
                   </ul>
                   <ModalDiv isLeft={false} isOpen={isProfileMenuOpen} className="top-0 right-0 py-4">
                     <Button onClick={closeProfileMenu} className="absolute right-4 top-4"><CloseIcon/></Button>
-                    <h2 className="ml-3 mr-6 px-1"><b>{session?.user?.email ?? "Unknown email"}</b></h2>
+                    <h2 className="ml-3 mr-6 px-1"><b>{session?.user?.username ?? "Unknown username"}</b></h2>
                     <h2 className="ml-3 mr-6 px-1">
                       {`${session?.user?.firstName} ${session?.user?.lastName}` ?? "Unknown name"}
                     </h2>
                     <ul className="mt-6">
-                      <MenuLink onClick={closeProfileMenu} href="/profile"><ProfileIcon className="mx-1"/> Your profile</MenuLink>
+                      <MenuLink onClick={closeProfileMenu} href={`/profile/${session?.user?.username}`}><ProfileIcon className="mx-1"/> Your profile</MenuLink>
                       <MenuLink onClick={closeProfileMenu} href="#"><ProjectsIcon className="mx-1"/>Your projects</MenuLink>
                       <MenuLink onClick={closeProfileMenu} href="#"><TeamsIcon className="mx-1"/>Your teams</MenuLink>
                       <MenuLink onClick={closeProfileMenu} href="#"><EventsIcon className="mx-1"/>Your events</MenuLink>

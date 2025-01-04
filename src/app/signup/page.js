@@ -15,6 +15,7 @@ export default async function SignUp() {
 
                 const userData = {
                     email: formData.get("email"),
+                    username: formData.get("username"),
                     firstName: formData.get("fname"),
                     lastName: formData.get("lname"),
                     birthDate: new Date(formData.get("birth")),
@@ -26,6 +27,7 @@ export default async function SignUp() {
                 redirect("/login");
             }}>
                 <input required type="email" name="email" placeholder="Email" /><br />
+                <input required type="text" name="username" placeholder="Username" /><br />
                 <input required type="text" name="fname" placeholder="First Name" /><br />
                 <input required type="text" name="lname" placeholder="Last Name" /><br />
                 <input required type="datetime-local" name="birth" placeholder="Date of Birth" /><br />
