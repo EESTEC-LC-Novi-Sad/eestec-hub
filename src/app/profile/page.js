@@ -17,12 +17,6 @@ export default async function ProfilePage() {
             <p><b>Birth date: </b>{Date(session.user.birthDate).toString()}</p>
             <p><b>Role: </b>{session.user.role}</p>
             <p><b>Date created: </b>{session.user.dateCreated ?? "Unknown"}</p>
-            <form action={async () => {
-                "use server";
-                await signOut();
-            }}>
-                <Button>Sign Out</Button>
-            </form>
         </div>
     )
 }
