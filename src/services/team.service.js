@@ -1,6 +1,7 @@
 import dbConnect from "@/app/lib/dbConnect";
 import Team from "@/models/team";
 import TeamApplication from "@/models/teamApplication";
+import { getUserByUsername } from "./user.service";
 
 async function joinTeam(teamId, memberId) {
     await dbConnect();
@@ -23,6 +24,25 @@ async function getTeamApplicationById(id) {
     await dbConnect();
     const app = await TeamApplication.findById(id)
     return app;
+}
+
+/**
+* @param {String} username 
+* */
+async function getAllUserTeams(username) {
+    await dbConnect();
+    const user = await getUserByUsername(username);
+    const userTeamApps = await TeamApplication.find({
+        memberId: user.id,
+        status: "joined"
+    }).select("teamId");
+
+    const teamIds = userTeamApps.map(app => app.teamId);
+    const userTeams = Team.find({
+        _id: { $in: teamIds }
+    });
+
+    return userTeams;
 }
 
 async function respondToTeamApplication(appId, status) {
@@ -58,6 +78,7 @@ export {
     getAllTeams,
     createNewTeam,
     getTeamById,
+    getAllUserTeams,
     joinTeam,
     getAllTeamApplications,
     respondToTeamApplication,
