@@ -15,7 +15,7 @@ import TeamsIcon from "@/app/icons/TeamsIcon";
 import EventsIcon from "@/app/icons/EventsIcon";
 import ApplicationsIcon from "@/app/icons/ApplicationsIcon";
 import LinkButton from "./LinkButton";
-import { logOut } from "@/app/lib/actions";
+import { signOut } from "next-auth/react";
 
 function ModalDiv({children, onClick, isOpen, className, isLeft}) { 
   const translate = isLeft ? "-translate-x-full" : "translate-x-full";
@@ -34,9 +34,8 @@ function MenuLink({href, children, onClick}) {
   </li>
 }
 
-export default function Header() {
+export default function Header({session}) {
     const pathname = usePathname();
-    const { data: session } = useSession();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
 
@@ -90,9 +89,7 @@ export default function Header() {
                       <MenuLink onClick={closeProfileMenu} href="#"><TeamsIcon className="mx-1"/>Your teams</MenuLink>
                       <MenuLink onClick={closeProfileMenu} href="#"><EventsIcon className="mx-1"/>Your events</MenuLink>
                       <MenuLink onClick={closeProfileMenu} href="#"><ApplicationsIcon className="mx-1"/>Your applications</MenuLink> {/* This should be hidden for non-admins */}
-                      <form className="ml-4 mt-4" action={logOut}>
-                          <Button>Logout</Button>
-                      </form>
+                      <Button onClick={() => signOut()} className="ml-4 mt-4">Logout</Button>
                     </ul> 
                   </ModalDiv>
                 </div>

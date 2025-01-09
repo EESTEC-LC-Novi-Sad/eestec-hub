@@ -1,7 +1,7 @@
 import localFont from "next/font/local";
 import "./globals.css";
 import Header from "./components/Header";
-import { SessionProvider } from "next-auth/react";
+import { auth } from "../../auth";
 
 const geistSans = localFont({
     src: "./fonts/GeistVF.woff",
@@ -26,15 +26,14 @@ export const metadata = {
     description: "Made for and by EESETC LC Novi Sad",
 };
 
-export default function RootLayout({ children }) {
+export default async function RootLayout({ children }) {
+    const session = await auth();
     return (
         <html lang="en">
             <body
                 className={`${geistSans.variable} ${geistMono.variable} ${libreBaskerville.variable} antialiased`}
             >
-            <SessionProvider>
-              <Header />
-            </SessionProvider>
+          <Header session={session} />
                 {children}
             </body>
         </html>
