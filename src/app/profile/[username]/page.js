@@ -1,6 +1,13 @@
 import { getUserByUsername } from "@/services/user.service";
+import { auth } from "../../../../auth";
+import { redirect } from "next/navigation";
 
 export default async function ProfilePage({params}) {
+    const session = await auth();
+    if (!session || !session.user) {
+        redirect("/login");
+    }
+
     const user = await getUserByUsername(params.username);
 
     const formatDate = (dateString) => {
