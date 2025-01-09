@@ -2,6 +2,7 @@ import Project from "@/models/project";
 import dbConnect from "@/app/lib/dbConnect";
 import Application from "@/models/application";
 import { auth } from "../../auth";
+import { getUserByUsername } from "./user.service";
 
 
 /**
@@ -18,6 +19,26 @@ async function createProject(projectData) {
 async function getAllProjects() {
     await dbConnect();
     const projects = await Project.find();
+    return projects;
+}
+
+/**
+* @param {String} username 
+* */
+async function getAllProjectsByUsername(username) {
+    await dbConnect();
+    const user = await getUserByUsername(username);
+    const acceptedApplications = await Application.find({
+        memberId: user.id,
+        status: "accepted"
+    }).select("projectId");
+
+    const projectIds = acceptedApplications.map(app => app.projectId);
+
+    const projects = await Project.find({
+        _id: { $in: projectIds}
+    });
+
     return projects;
 }
 
@@ -66,6 +87,7 @@ export {
     getAllProjects,
     getProjectById,
     getApplicationsForProject,
+    getAllProjectsByUsername,
     createProject,
     applyToProject,
     getProjectsCount
