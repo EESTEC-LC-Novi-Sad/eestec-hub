@@ -85,10 +85,10 @@ export default function Header({session}) {
                     </h2>
                     <ul className="mt-6">
                       <MenuLink onClick={closeProfileMenu} href={`/profile/${session?.user?.username}`}><ProfileIcon className="mx-1"/> Your profile</MenuLink>
-                      <MenuLink onClick={closeProfileMenu} href="#"><ProjectsIcon className="mx-1"/>Your projects</MenuLink>
-                      <MenuLink onClick={closeProfileMenu} href="#"><TeamsIcon className="mx-1"/>Your teams</MenuLink>
-                      <MenuLink onClick={closeProfileMenu} href="#"><EventsIcon className="mx-1"/>Your events</MenuLink>
-                      <MenuLink onClick={closeProfileMenu} href="#"><ApplicationsIcon className="mx-1"/>Your applications</MenuLink> {/* This should be hidden for non-admins */}
+                      <MenuLink onClick={closeProfileMenu} href={`/profile/${session?.user?.username}/projects`}><ProjectsIcon className="mx-1"/>Your projects</MenuLink>
+                      <MenuLink onClick={closeProfileMenu} href={`/profile/${session?.user?.username}/teams`}><TeamsIcon className="mx-1"/>Your teams</MenuLink>
+                      <MenuLink onClick={closeProfileMenu} href={`/profile/${session?.user?.username}/events`}><EventsIcon className="mx-1"/>Your events</MenuLink>
+                      <MenuLink onClick={closeProfileMenu} href={`/profile/${session?.user?.username}/applications`}><ApplicationsIcon className="mx-1"/>Your applications</MenuLink> {/* This should be hidden for non-admins */}
                       <Button onClick={() => signOut()} className="ml-4 mt-4">Logout</Button>
                     </ul> 
                   </ModalDiv>
