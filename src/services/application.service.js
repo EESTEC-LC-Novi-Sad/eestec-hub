@@ -1,5 +1,6 @@
 import dbConnect from "@/app/lib/dbConnect";
 import Application from "@/models/application";
+import { getUserByUsername } from "./user.service";
 
 async function getAllApplications() {
     await dbConnect();
@@ -13,6 +14,19 @@ async function getApplicationById(id) {
     return application;
 }
 
+/**
+* @param {String} username
+* */
+async function getApplicationByUsername(username) {
+    await dbConnect();
+    const user = await getUserByUsername(username);
+    const userApplications = await Application.find({
+        memberId: user.id
+    });
+
+    return userApplications;
+}
+
 async function setApplicationStatus(id, status) {
     await dbConnect();
     await Application.findByIdAndUpdate(
@@ -24,5 +38,6 @@ async function setApplicationStatus(id, status) {
 export {
     getAllApplications,
     getApplicationById,
+    getApplicationByUsername,
     setApplicationStatus
 }
