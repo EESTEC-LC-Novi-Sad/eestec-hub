@@ -1,6 +1,7 @@
 import dbConnect from "@/app/lib/dbConnect";
 import Event from "@/models/event";
 import User from "@/models/user";
+import { getUserByUsername } from "./user.service";
 
 /**
 * @param {{name: String, description: String, startDate: Date, endDate: Date, location: String, code: String, attendees: []}} eventData
@@ -16,6 +17,17 @@ async function getAllEvents() {
     await dbConnect();
     const events = await Event.find();
     return events;
+}
+/**
+* @param {String} username 
+* */
+async function getAllEventsByUsername(username) {
+    await dbConnect();
+    const user = await getUserByUsername(username);
+    const userEvents = await Event.find({ 
+        attendees: user.id
+    });
+    return userEvents;
 }
 
 async function getEventById(id) {
@@ -45,6 +57,7 @@ async function joinEvent(eventId, userId) {
 export {
     createEvent,
     getAllEvents,
+    getAllEventsByUsername,
     getEventById,
     joinEvent
 }
