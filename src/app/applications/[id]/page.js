@@ -10,7 +10,7 @@ export default async function ApplicationPage({ params }) {
     const project = await getProjectById(application.projectId);
     return (
         <div>
-            <h1><b>{member.firstName}'s</b> application for <b>{project.name}</b></h1>
+            <h1><b>{member.firstName}&apos;s</b> application for <b>{project.name}</b></h1>
             <br />
             {application.position &&
                 <p><b>{member.firstName}</b> is applying for <b>{application.position}</b></p>}
@@ -31,7 +31,7 @@ export default async function ApplicationPage({ params }) {
                 });
                 redirect("/applications");
             }}>
-                <button><b>Accept {member.firstName}'s application</b></button>
+                <button><b>Accept {member.firstName}&apos;s application</b></button>
             </form>
             <br />
             <form action={async () => {
@@ -46,7 +46,7 @@ export default async function ApplicationPage({ params }) {
                 });
                 redirect("/applications");
             }}>
-                <button><b>Reject {member.firstName}'s application</b></button>
+                <button><b>Reject {member.firstName}&apos;s application</b></button>
             </form>
         </div>
     )

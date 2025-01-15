@@ -3,7 +3,7 @@ import { redirect } from "next/navigation";
 import { getAllEventsByUsername} from "@/services/events.service";
 import Link from "next/link";
 
-export default async function({params}) {
+export default async function EventsByUsernamePage({params}) {
     const session = await auth();
     if (!session || !session.user) {
         redirect("/login");
