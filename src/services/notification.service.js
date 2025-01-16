@@ -1,3 +1,5 @@
+"use server";
+
 import Notification from "../models/notification";
 import dbConnect from "@/app/lib/dbConnect";
 import User from "@/models/user";
@@ -61,11 +63,24 @@ async function getNotificationById(id) {
     const notification = await Notification.findById(id);
     return notification;
 }
+/**
+* @param {ObjectId} userId 
+* @param {[ObjectId]} notificationIds 
+* */
+async function removeNotificationForUser(userId, notificationIds) {
+    await dbConnect();
+    await User.findByIdAndUpdate(
+        userId,
+        { $pull: { notifications: { notificationId: {$in: notificationIds}}}},
+        { new: true}
+    );
+}
 
 export {
     sendNotificationById,
     broadcastNotification,
     multicastNotification,
-    getNotificationById
+    getNotificationById,
+    removeNotificationForUser
 }
 
