@@ -3,6 +3,7 @@
 import * as bcrypt from "bcrypt";
 import dbConnect from "@/app/lib/dbConnect";
 import User from "../models/user";
+import Notification from "../models/notification";
 
 /**
 * @typedef {Object} UserData
@@ -79,13 +80,25 @@ async function getUserByRole(userRole) {
 async function getAllUserNotifications(userId) {
     await dbConnect();
     const user = await User.findById(userId);
-    return user.notifications;
+    const notificationIds = user.notifications.map(n => n.notificationId);
+    const notifications = await Notification.find({_id: { $in: notificationIds}}).lean();
+    return notifications;
+}
+
+async function getNumOfNotifications(userId) {
+    await dbConnect();
+    const user = await User.findById(userId);
+    const notificationIds = user.notifications.map(n => n.notificationId);
+    const numOfNotifications = await Notification.find({_id: { $in: notificationIds}}).countDocuments();
+    return numOfNotifications;
 }
 
 export {
     getUserByEmail,
     getUserById,
     getUserByUsername,
+    getUserByRole,
     createUser,
-    getAllUserNotifications
+    getAllUserNotifications,
+    getNumOfNotifications
 }

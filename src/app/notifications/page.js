@@ -10,12 +10,7 @@ export default async function NotificationsPage() {
         redirect("/login");
     }
 
-    const notificationIds = await getAllUserNotifications(session.user.id);
-    const notifications = await Promise.all(notificationIds
-        .map(async n => {
-            const notification = await getNotificationById(n.notificationId);
-            return notification?._doc ?? undefined;
-        }));
+    const notifications = await getAllUserNotifications(session.user.id);
 
     return (
         <div>
