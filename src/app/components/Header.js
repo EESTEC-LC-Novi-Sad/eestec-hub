@@ -47,7 +47,7 @@ export default function Header({session}) {
         getNumOfNotifications(session.user.id).then(n => {
             setNotificationsNum(n);
         })
-    }, []);
+    }, [session]);
 
     const closeMenu = () => setIsMenuOpen(false); 
     const openMenu = () => setIsMenuOpen(true); 
