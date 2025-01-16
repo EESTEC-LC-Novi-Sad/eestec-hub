@@ -42,6 +42,8 @@ export default function Header({session}) {
     const [notificationsNum, setNotificationsNum] = useState(0);
 
     useEffect(() => {
+        if (!session || !session.user) return;
+
         getNumOfNotifications(session.user.id).then(n => {
             setNotificationsNum(n);
         })
