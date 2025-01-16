@@ -30,11 +30,11 @@ export default async function RootLayout({ children }) {
     const session = await auth();
     return (
         <html lang="en">
-            <body
-                className={`${geistSans.variable} ${geistMono.variable} ${libreBaskerville.variable} antialiased`}
-            >
-          <Header session={session} />
-                {children}
+            <body className={`${geistSans.variable} ${geistMono.variable} ${libreBaskerville.variable} antialiased`}>
+                <div className="relative min-h-screen overflow-x-hidden">
+                    <Header session={session} />
+                    {children}
+                </div>
             </body>
         </html>
     );
