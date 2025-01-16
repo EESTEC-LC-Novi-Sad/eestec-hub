@@ -85,10 +85,20 @@ async function getAllUserNotifications(userId) {
     return notifications;
 }
 
+async function getNumOfNotifications(userId) {
+    await dbConnect();
+    const user = await User.findById(userId);
+    const notificationIds = user.notifications.map(n => n.notificationId);
+    const numOfNotifications = await Notification.find({_id: { $in: notificationIds}}).countDocuments();
+    return numOfNotifications;
+}
+
 export {
     getUserByEmail,
     getUserById,
     getUserByUsername,
+    getUserByRole,
     createUser,
-    getAllUserNotifications
+    getAllUserNotifications,
+    getNumOfNotifications
 }
