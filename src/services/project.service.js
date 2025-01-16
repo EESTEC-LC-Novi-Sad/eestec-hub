@@ -1,3 +1,5 @@
+"use server";
+
 import Project from "@/models/project";
 import dbConnect from "@/app/lib/dbConnect";
 import Application from "@/models/application";

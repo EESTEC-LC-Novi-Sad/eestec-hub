@@ -1,3 +1,5 @@
+"use server";
+
 import dbConnect from "@/app/lib/dbConnect";
 import Event from "@/models/event";
 import User from "@/models/user";
