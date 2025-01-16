@@ -1,3 +1,5 @@
+"use server";
+
 import dbConnect from "@/app/lib/dbConnect";
 import Application from "@/models/application";
 import { getUserByUsername } from "./user.service";

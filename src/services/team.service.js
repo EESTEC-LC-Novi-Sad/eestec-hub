@@ -1,3 +1,5 @@
+"use server";
+
 import dbConnect from "@/app/lib/dbConnect";
 import Team from "@/models/team";
 import TeamApplication from "@/models/teamApplication";
