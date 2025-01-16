@@ -15,6 +15,8 @@ import EventsIcon from "@/app/icons/EventsIcon";
 import ApplicationsIcon from "@/app/icons/ApplicationsIcon";
 import LinkButton from "./LinkButton";
 import { signOut } from "next-auth/react";
+import { getNumOfNotifications } from "@/services/user.service";
+import { useEffect } from "react";
 
 function ModalDiv({children, onClick, isOpen, className, isLeft}) { 
   const translate = isLeft ? "-translate-x-full" : "translate-x-full";
@@ -23,7 +25,7 @@ function ModalDiv({children, onClick, isOpen, className, isLeft}) {
     className={`transform ${isOpen ? "translate-x-0": translate} 
         transition-transform 
         border border-solid border-gray-300 rounded 
-        w-72 absolute bg-white ${className}`}>{children}
+        w-72 absolute z-10 bg-white ${className}`}>{children}
   </div>
 }
 
@@ -37,6 +39,13 @@ export default function Header({session}) {
     const pathname = usePathname();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
+    const [notificationsNum, setNotificationsNum] = useState(0);
+
+    useEffect(() => {
+        getNumOfNotifications(session.user.id).then(n => {
+            setNotificationsNum(n);
+        })
+    }, []);
 
     const closeMenu = () => setIsMenuOpen(false); 
     const openMenu = () => setIsMenuOpen(true); 
@@ -88,7 +97,19 @@ export default function Header({session}) {
                 </div>
                 <div>
                   <ul className="flex items-center">
-                    <li className="mx-2"><LinkButton className="flex" href="/notifications"><NotificationIcon className="mr-1"/> Notifications</LinkButton></li>
+                    <li className="mx-2">
+                        <LinkButton className="flex relative z-0" href="/notifications">
+                            <NotificationIcon className="mr-1"/>
+                            Notifications 
+                            <div className="flex justify-center rounded-full
+                                            items-center absolute 
+                                            -right-2 -bottom-2 
+                                            border border-solid w-5 h-5 
+                                            bg-gray-400 text-gray-100 text-xs">
+                                {notificationsNum}
+                            </div>
+                        </LinkButton>
+                    </li>
                     <li className="mx-2"><Button onClick={openProfileMenu}><ProfileIcon/></Button></li>
                   </ul>
                 </div>
