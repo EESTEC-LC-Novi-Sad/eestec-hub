@@ -1,26 +1,25 @@
 import { getNotificationById } from "@/services/notification.service";
 import { getAllUserNotifications } from "@/services/user.service";
 import { auth } from "../../../auth"
-import Notification from "./notification";
+import { redirect } from "next/navigation";
+import NotificationsTable from "./notificationsTable";
 
 export default async function NotificationsPage() {
     const session = await auth();
-    const notificationIds = await getAllUserNotifications(session.user.id);
+    if (!session || !session.user) {
+        redirect("/login");
+    }
 
+    const notificationIds = await getAllUserNotifications(session.user.id);
     const notifications = await Promise.all(notificationIds
         .map(async n => {
             const notification = await getNotificationById(n.notificationId);
-            return notification;
+            return notification?._doc ?? undefined;
         }));
 
     return (
         <div>
-            <h1>Notifications page</h1><br />
-            {notifications.reverse().map((n, index) => {
-                if (!n) return;
-
-                return <div key={index}><Notification notificationData={n} /><br /></div>
-            })}
+            <NotificationsTable userId={session.user.id} notifications={notifications.reverse()}/>
         </div>
     )
 }
