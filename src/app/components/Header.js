@@ -81,7 +81,7 @@ export default function Header({session}) {
                   <Button onClick={() => signOut()} className="ml-4 mt-4">Logout</Button>
                 </ul> 
             </ModalDiv>
-            <div className="flex justify-between items-center mb-4 py-2 border border-solid border-gray-300">
+            <div className="flex justify-between items-center py-2 border border-solid border-gray-300">
                 <div className="flex items-center">
                   <Button className="mx-2" onClick={openMenu}><MenuIcon/></Button>
                   <h1><b>{pageHeader}</b></h1>
