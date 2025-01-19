@@ -50,15 +50,16 @@ export default function NotificationsTable({notifications, userId}) {
         setCheckedNotifications(newChecked);
     }
 
-    return (<div>
-                <div className="flex items-center p-2 bg-gray-300 h-12">
-                    <input type="checkbox" onChange={onSelectAll} checked={allSelected} />
+    return (<div className="md:p-4 divide-y">
+                <div className="flex items-center px-2 py-4 bg-gray-100 border-t border-l border-r md:rounded-t-lg h-14">
+                    <input className="ml-4" type="checkbox" onChange={onSelectAll} checked={allSelected} />
                     <p className="mx-2"><b> {menuText}</b> </p>
                     <Button onClick={onRemoveNotifications} className={noneSelected ? "hidden": ""}>Remove</Button>
                 </div>
                 {notifications.map((n, index) => {
-                    return <div key={index} className="flex border p-2 hover:bg-gray-100">
+                    return <div key={index} className="flex p-2 hover:bg-gray-100">
                             <input 
+                                className="ml-4"
                                 type="checkbox" 
                                 checked={checkedNotifications[index]} 
                                 onChange={() => onNotificationCheck(index)}
@@ -74,6 +75,7 @@ export default function NotificationsTable({notifications, userId}) {
                             </Link>
                         </div>
                 })}
+                <div></div>
             </div>);
 
 }
