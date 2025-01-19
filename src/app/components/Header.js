@@ -107,7 +107,7 @@ export default function Header({session}) {
                                             items-center absolute 
                                             -right-2 -bottom-2 
                                             border border-solid w-5 h-5 
-                                            bg-gray-400 text-gray-100 text-xs">
+                                            bg-gray-100 text-gray-900 text-xs">
                                 {notificationsNum}
                             </div>
                         </LinkButton>
