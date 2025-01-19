@@ -23,7 +23,7 @@ export default function NotificationsTable({notifications, userId}) {
     const router = useRouter();
     const [checkedNotifications, setCheckedNotifications] = useState(notifications.map(_ => false));
     const selectedNum = checkedNotifications.reduce((acc, curr) => acc + (curr ? 1: 0), 0);
-    const allSelected = selectedNum === checkedNotifications.length - 1;
+    const allSelected = selectedNum === checkedNotifications.length;
     const noneSelected = selectedNum === 0;
 
     const menuText = noneSelected ? "Select all" : `${selectedNum} selected`;
