@@ -103,11 +103,12 @@ export default function Header({session}) {
                         <LinkButton className="flex relative z-0" href="/notifications">
                             <NotificationIcon className="mr-1"/>
                             Notifications 
-                            <div className="flex justify-center rounded-full
+                            <div className={`${notificationsNum === 0 ? "hidden" : ""}
+                                            flex justify-center rounded-full
                                             items-center absolute 
                                             -right-2 -bottom-2 
                                             border border-solid w-5 h-5 
-                                            bg-gray-100 text-gray-900 text-xs">
+                                            bg-gray-100 text-gray-900 text-xs`}>
                                 {notificationsNum}
                             </div>
                         </LinkButton>
