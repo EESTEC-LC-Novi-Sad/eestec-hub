@@ -57,7 +57,7 @@ export default function NotificationsTable({notifications, userId}) {
                     <Button onClick={onRemoveNotifications} className={noneSelected ? "hidden": ""}>Remove</Button>
                 </div>
                 {notifications.map((n, index) => {
-                    return <div key={index} className="flex p-2 hover:bg-gray-100">
+                    return <div key={index} className="flex p-2 border-l border-r hover:bg-gray-100">
                             <input 
                                 className="ml-4"
                                 type="checkbox" 
