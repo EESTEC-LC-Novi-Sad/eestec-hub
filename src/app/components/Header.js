@@ -25,7 +25,7 @@ function ModalDiv({children, onClick, isOpen, className, isLeft}) {
     className={`transform ${isOpen ? "translate-x-0": translate} 
         transition-transform 
         border border-solid border-gray-300 rounded 
-        w-72 absolute z-10 bg-white ${className}`}>{children}
+        w-72 absolute z-20 bg-white ${className}`}>{children}
   </div>
 }
 
@@ -64,8 +64,8 @@ export default function Header({session}) {
         { noHeaderRoutes.includes(pathname) 
           ? <div></div> : 
           <div>
-            <div onClick={closeMenu} className={`${isMenuOpen ? "visible" : "hidden"} absolute w-full h-screen bg-gray-950/50`}></div>
-            <div onClick={closeProfileMenu} className={`${isProfileMenuOpen ? "visible" : "hidden"} absolute w-full h-screen bg-gray-950/50`}></div>
+            <div onClick={closeMenu} className={`${isMenuOpen ? "visible" : "hidden"} z-10 absolute w-full h-screen bg-gray-950/50`}></div>
+            <div onClick={closeProfileMenu} className={`${isProfileMenuOpen ? "visible" : "hidden"} z-10 absolute w-full h-screen bg-gray-950/50`}></div>
             <ModalDiv isLeft={true} isOpen={isMenuOpen} className="top-0 py-4">
                 <Button onClick={closeMenu} className="absolute right-4 top-4"><CloseIcon/></Button>
                 <h2 className="ml-4"><b>EESTEC Hub</b></h2>
