@@ -40,7 +40,18 @@ export default function PositionsInput() {
                 <Button onClick={handleSubmit}>Add</Button>
             </div>
             <div className="flex flex-wrap">
-                {coordinators.map((c, index) => <Tag className="mr-1 mt-1" key={index}>{c}</Tag>)}
+                {coordinators.map((c, index) => 
+                    <Tag className="mr-1 mt-1 border-gray-400" key={index}>
+                       {c}
+                        <button 
+                            className="ml-1 border border-gray-400 w-5 rounded-full" 
+                            onClick={(e) => {
+                                e.preventDefault();
+                                setCoordinators(coordinators.filter((_, i) => i !== index));
+                            }}>
+                            X
+                        </button>
+                    </Tag>)}
             </div>
 
             <input
