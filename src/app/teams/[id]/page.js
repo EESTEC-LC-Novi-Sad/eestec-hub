@@ -14,7 +14,6 @@ export default async function TeamByIdPage({ params }) {
             <p><b>Team descripton: </b>{team.description}</p>
             <p><b>Team members: </b>
                 {team.teamMembers.map(async (applicationId, index) => {
-                    console.log(applicationId);
                     const application = await getTeamApplicationById(applicationId);
                     if (application.status !== "joined") return;
                     
