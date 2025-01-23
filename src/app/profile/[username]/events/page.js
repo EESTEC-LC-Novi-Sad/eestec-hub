@@ -14,14 +14,16 @@ export default async function EventsByUsernamePage({params}) {
     return (
         <div>
             <h1>Events you attended</h1>
-            {userEvents.map((e, index) => <div key={index}>
-                    <Link href={`/events/${e.id}`}>
-                        <p>
-                            <b>{e.name}</b> - starts at {" "}
-                            {e.startDate.toLocaleString('en-GB', { timeZone: 'UTC' })}
-                        </p>
-                    </Link>
-                </div>)}
+            { !userEvents || userEvents.length === 0
+                ? <p>You have not attended any events</p>
+                : userEvents.map((e, index) => <div key={index}>
+                <Link href={`/events/${e.id}`}>
+                    <p>
+                        <b>{e.name}</b> - starts at {" "}
+                        {e.startDate.toLocaleString('en-GB', { timeZone: 'UTC' })}
+                    </p>
+                </Link>
+            </div>)}
 
         </div>
     )

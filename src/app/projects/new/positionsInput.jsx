@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import Button from "../../components/Button";
+import Tag from "../../components/Tag";
 
 export default function PositionsInput() {
     const [coordinators, setCoordinators] = useState([]);
@@ -23,17 +25,34 @@ export default function PositionsInput() {
     }
 
     return (
-        <div>
-            <input
-                type="text"
-                placeholder="Add coordinator"
-                value={inputValue}
-                onChange={(e) => setInputValue(e.target.value)}
-            />
-            <button onClick={handleSubmit}>Add</button>
-            <p>{coordinators.map((c, index) =>
-                `${c}${index === coordinators.length - 1 ? "" : ", "}`)}
-            </p>
+        <div className="flex flex-col">
+            <div className="flex items-baseline">
+                <label className="mr-1"><b>Coordinator positions</b></label>
+                <p className="text-sm text-gray-600">(Optional)</p>
+            </div>
+            <div>
+                <input
+                    className="w-11/12 h-9 border rounded border-gray-300 mb-1 mr-2"
+                    type="text"
+                    value={inputValue}
+                    onChange={(e) => setInputValue(e.target.value)}
+                />
+                <Button onClick={handleSubmit}>Add</Button>
+            </div>
+            <div className="flex flex-wrap">
+                {coordinators.map((c, index) => 
+                    <Tag className="mr-1 mt-1 border-gray-400" key={index}>
+                       {c}
+                        <button 
+                            className="ml-1 border border-gray-400 w-5 rounded-full" 
+                            onClick={(e) => {
+                                e.preventDefault();
+                                setCoordinators(coordinators.filter((_, i) => i !== index));
+                            }}>
+                            X
+                        </button>
+                    </Tag>)}
+            </div>
 
             <input
                 type="hidden"

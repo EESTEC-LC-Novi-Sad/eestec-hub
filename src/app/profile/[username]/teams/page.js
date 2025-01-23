@@ -15,7 +15,9 @@ export default async function UserTeamsPage({params}) {
     return (
         <div>
             <div>Your teams</div>
-            {userTeams.map((team, index) => {
+            { !userTeams || userTeams.length === 0
+                ? <p>You are not in any teams</p>
+                : userTeams.map((team, index) => {
                 return (
                     <Link key={index} href={`/teams/${team.id}`}>
                         <div>

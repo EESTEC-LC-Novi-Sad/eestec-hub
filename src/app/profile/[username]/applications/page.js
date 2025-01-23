@@ -17,8 +17,9 @@ export default async function ApplicationsByUsernamePage({params}) {
         <div>
             <h1>Your personal applications</h1>
             <br />
-            {
-                userApps.map(async (application, index) => {
+            { !userApps || userApps.length === 0
+                ? <p>You have no applications</p>
+                : userApps.map(async (application, index) => {
                     const project = await getProjectById(application.projectId);
                     return <div key={index}>
                         <Link href={`/applications/${application.id}`}>
