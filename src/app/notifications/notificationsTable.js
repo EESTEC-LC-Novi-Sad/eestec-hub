@@ -50,7 +50,7 @@ export default function NotificationsTable({notifications, userId}) {
         setCheckedNotifications(newChecked);
     }
 
-    return (<div className="md:p-4 divide-y">
+    return (<div className="w-full md:w-8/12 md:p-4 divide-y">
                 <div className="flex items-center px-2 py-4 bg-gray-100 border-t border-l border-r md:rounded-t-lg h-14">
                     <input className="ml-4" type="checkbox" onChange={onSelectAll} checked={allSelected} />
                     <p className="mx-2"><b> {menuText}</b> </p>

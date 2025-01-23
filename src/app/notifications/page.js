@@ -13,7 +13,7 @@ export default async function NotificationsPage() {
     const notifications = await getAllUserNotifications(session.user.id);
 
     return (
-        <div>
+        <div className="flex justify-center">
             <NotificationsTable userId={session.user.id} notifications={notifications.reverse()}/>
         </div>
     )
