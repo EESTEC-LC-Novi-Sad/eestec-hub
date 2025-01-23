@@ -15,8 +15,9 @@ export default async function UserProjectPage({params}) {
     return (
         <div>
             <div>These are your projects</div>
-            {
-                userProjects.map((project, index) => {
+            { !userProjects || userProjects.length === 0 
+              ? <p>You have no projects</p> 
+              : userProjects.map((project, index) => {
                     return <div key={index}>
                         <p><b>{project.name}</b></p>
                         <Link href={`/projects/${project.id}`}>Go to project details</Link><br />
