@@ -18,7 +18,7 @@ export default async function EventsByUsernamePage({params}) {
     return (
         <div className="flex justify-center">
             <div className="w-full md:w-7/12">
-                <h1 className="text-2xl"><b>Events you attended</b></h1>
+                <h1 className="text-2xl ml-2"><b>Events you attended</b></h1>
                 { !userEvents || userEvents.length === 0
                     ? <p>You have not attended any events</p>
                     : <div>{ eventsByYear.map((year, index) => {
