@@ -15,8 +15,10 @@ import EventsIcon from "@/app/icons/EventsIcon";
 import ApplicationsIcon from "@/app/icons/ApplicationsIcon";
 import LinkButton from "./LinkButton";
 import { signOut } from "next-auth/react";
-import { getNumOfNotifications } from "@/services/user.service";
+import { getNumOfNotifications, getProfilePictureUri } from "@/services/user.service";
 import { useEffect } from "react";
+import Image from "next/image";
+import backupProfileImage from "../../images/profile.jpeg";
 
 function ModalDiv({children, onClick, isOpen, className, isLeft}) { 
   const translate = isLeft ? "-translate-x-full" : "translate-x-full";
@@ -40,13 +42,18 @@ export default function Header({session}) {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
     const [notificationsNum, setNotificationsNum] = useState(0);
+    const [profileImageUri, setProfileImageUri] = useState(null);
 
     useEffect(() => {
         if (!session || !session.user) return;
 
         getNumOfNotifications(session.user.id).then(n => {
             setNotificationsNum(n);
-        })
+        });
+        getProfilePictureUri(session.user.id).then(uri => {
+            setProfileImageUri(uri);
+        });
+
     }, [session]);
 
     const closeMenu = () => setIsMenuOpen(false); 
@@ -79,10 +86,17 @@ export default function Header({session}) {
             </ModalDiv>
             <ModalDiv isLeft={false} isOpen={isProfileMenuOpen} className="top-0 right-0 py-4">
                 <Button onClick={closeProfileMenu} className="absolute right-4 top-4"><CloseIcon/></Button>
-                <h2 className="ml-3 mr-6 px-1"><b>{session?.user?.username ?? "Unknown username"}</b></h2>
-                <h2 className="ml-3 mr-6 px-1">
-                  {`${session?.user?.firstName} ${session?.user?.lastName}` ?? "Unknown name"}
-                </h2>
+                <div className="flex items-center ml-3">     
+                    <Image src={profileImageUri ?? backupProfileImage} 
+                        width={32} height={32} 
+                        alt="profile image" className="rounded-full h-fit"/>
+                    <div>
+                        <h2 className="ml-1 mr-6 -mb-2 px-1"><b>{session?.user?.username ?? "Unknown username"}</b></h2>
+                        <h2 className="ml-1 mr-6 px-1">
+                        {`${session?.user?.firstName} ${session?.user?.lastName}` ?? "Unknown name"}
+                        </h2>
+                    </div>
+                </div>     
                 <ul className="mt-6">
                   <MenuLink onClick={closeProfileMenu} href={`/profile/${session?.user?.username}`}><ProfileIcon className="mx-1"/> Your profile</MenuLink>
                   <MenuLink onClick={closeProfileMenu} href={`/profile/${session?.user?.username}/projects`}><ProjectsIcon className="mx-1"/>Your projects</MenuLink>
@@ -113,7 +127,13 @@ export default function Header({session}) {
                             </div>
                         </LinkButton>
                     </li>
-                    <li className="mx-2"><Button onClick={openProfileMenu}><ProfileIcon/></Button></li>
+                    <li className="mx-2">
+                        <Button onClick={openProfileMenu}>
+                            <Image src={profileImageUri ?? backupProfileImage} 
+                                width={24} height={24} 
+                                alt="profile image" className="rounded-full"/>
+                        </Button>
+                    </li>
                   </ul>
                 </div>
             </div> 
