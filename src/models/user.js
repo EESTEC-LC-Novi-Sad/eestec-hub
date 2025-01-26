@@ -10,6 +10,7 @@ const user = new Schema({
     password: String,
     dateCreated: Date,
     role: String,
+    imageUri: String,
     notifications: [
         {
             notificationId: { type: Schema.Types.ObjectId, ref: "Notification" },
