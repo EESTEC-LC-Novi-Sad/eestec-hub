@@ -44,6 +44,18 @@ async function getUserById(id) {
     return user;
 }
 
+async function uploadProfilePicture(userId, imageUri) {
+    await dbConnect();
+    await User.findByIdAndUpdate(userId, { imageUri });
+}
+
+async function getProfilePictureUri(userId) {
+    await dbConnect();
+    const user = await User.findById(userId);
+    return user.imageUri;
+}
+
+
 /**
 * @param {UserData} userData
 * */
@@ -101,5 +113,7 @@ export {
     getUserByRole,
     createUser,
     getAllUserNotifications,
-    getNumOfNotifications
+    getNumOfNotifications,
+    uploadProfilePicture,
+    getProfilePictureUri
 }
