@@ -12,6 +12,7 @@ import Notification from "../models/notification";
 * @property {String} password
 * @property {String} firstName
 * @property {String} lastName
+* @property {String} imageUri
 * @property {Date} birthDate
 * */
 
