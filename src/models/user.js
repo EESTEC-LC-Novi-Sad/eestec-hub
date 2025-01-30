@@ -6,11 +6,13 @@ const user = new Schema({
     username: String,
     firstName: String,
     lastName: String,
+    bio: String,
     birthDate: Date,
     password: String,
     dateCreated: Date,
     role: String,
     imageUri: String,
+    socialUrl: String,
     notifications: [
         {
             notificationId: { type: Schema.Types.ObjectId, ref: "Notification" },
