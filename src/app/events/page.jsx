@@ -1,8 +1,5 @@
 import { getAllEvents } from "@/services/events.service";
 import { auth } from "../../../auth";
-import Link from "next/link";
-import Tag from "../components/Tag";
-import ClockIcon from "../icons/ClockIcon";
 import { mapEventToCard } from "../lib/utils";
 
 function Separator() {
