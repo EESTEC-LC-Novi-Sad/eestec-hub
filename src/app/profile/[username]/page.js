@@ -51,7 +51,7 @@ export default async function ProfilePage({params}) {
                             </div>
                         </div>
                         <p className="text-lg mb-2">Software Engineering Student</p>
-                        <Button>Edit profile</Button>
+                        <LinkButton className="w-full text-center" href="/settings/profile">Edit profile</LinkButton>
                         <span className="flex items-center mt-2"><LocationIcon className="mr-1"/> Novi Sad</span>
                         <span className="flex items-center mb-4"><CakeIcon className="mr-1"/> {formatDate(user?.birthDate)}</span>
                         <Separator/>
@@ -124,15 +124,3 @@ function mapEventToSmallCard(event) {
                 </div>
     </div>
 }
-/*
-function mapEventToSmallCard(event) {
-    return <div key={event._id} 
-            className="flex justify-between border 
-                        border-gray-300 rounded p-2 w-full md:w-[48%] min-w-64 h-20 ">
-            <div>
-                <h1 className="text-xl"><b>{event.name}</b></h1>
-                <p className="text-sm text-gray-600">{trimProjectDescription(event.description, 40)}</p>
-            </div>
-            <LinkButton href={`/events/${event.id}`} className="mt-3">View</LinkButton>
-    </div>
-}*/
