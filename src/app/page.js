@@ -3,8 +3,6 @@ import { auth } from "../../auth";
 import { getNumOfNotifications } from "@/services/user.service";
 import { getProjectsCount } from "@/services/project.service";
 import Link from "next/link";
-import { put } from "@vercel/blob";
-import { uploadProfilePicture } from "@/services/user.service";
 
 export default async function Home() {
     const session = await auth();
@@ -23,18 +21,6 @@ export default async function Home() {
             <Link href="/notifications">My notifications: {notifications}</Link>
             <br />
             <Link href="/projects">Available projects: {projectCount}</Link>
-            <form action={async (formData) => {
-                "use server";
-
-                const imageFile = formData.get('image');
-                const blob = await put(imageFile.name, imageFile, {access: "public"});
-                const imageUri = blob.url;
-                await uploadProfilePicture(session.user.id, imageUri);
-            }}>
-                <label htmlFor="image">Upload a profile picture</label>
-                <input type="file" name="image" id="image"/>
-                <button type="submit">Upload</button>
-            </form>
         </div >
     );
 }
