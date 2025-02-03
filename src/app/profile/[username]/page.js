@@ -52,12 +52,13 @@ export default async function ProfilePage({params}) {
                             </div>
                         </div>
                         <p className="text-lg mb-2">{user?.bio ?? "No bio yet..."}</p>
-                        <LinkButton className="w-full text-center" href="/settings/profile">Edit profile</LinkButton>
+                        {session.user.username === user.username &&
+                            <LinkButton className="w-full text-center" href="/settings/profile">Edit profile</LinkButton> }
                         <span className="flex items-center mt-2"><LocationIcon className="mr-1"/> {user?.location ?? "Unknown"}</span>
                         <span className="flex items-center"><CakeIcon className="mr-1"/> {formatDate(user?.birthDate)}</span>
                         <span className="flex items-center mb-4">
                             <ProfileIcon width="18" height="18" className="mr-1"/>
-                            <a className="text-blue-700 hover:underline" target="_blank" rel="noopener noreferrer" href={`https://${getPureUrl(user?.socialUrl)}`}> {user?.socialUrl}</a>
+                            <a className="text-blue-700 hover:underline" target="_blank" rel="noopener noreferrer" href={`https://${getPureUrl(user?.socialUrl)}`}> {user?.socialUrl ?? "No socials"}</a>
                         </span>
                         <Separator/>
                         <h2 className="text-xl"><b>Achivements</b></h2>
@@ -134,6 +135,7 @@ function mapEventToSmallCard(event) {
 * @param {string} url
 * */
 function getPureUrl(url) {
+    if (!url) return "";
     const pureUrl = url.replace(/^https?:\/\//, '');
     console.log(pureUrl);
     return pureUrl;
