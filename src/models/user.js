@@ -12,6 +12,7 @@ const user = new Schema({
     dateCreated: Date,
     role: String,
     imageUri: String,
+    location: String,
     socialUrl: String,
     notifications: [
         {

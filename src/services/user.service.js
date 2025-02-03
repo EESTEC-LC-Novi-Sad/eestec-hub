@@ -13,6 +13,8 @@ import Notification from "../models/notification";
 * @property {String} firstName
 * @property {String} lastName
 * @property {String} imageUri
+* @property {String} bio
+* @property {String} socialUrl
 * @property {Date} birthDate
 * */
 
@@ -51,7 +53,7 @@ async function uploadProfilePicture(userId, imageUri) {
 
 async function getProfilePictureUri(userId) {
     await dbConnect();
-    const user = await User.findById(userId);
+    const user = await User.findById(userId).select("imageUri");
     return user.imageUri;
 }
 
@@ -79,6 +81,33 @@ async function createUser(userData) {
         console.log("There was an error with creating new user entity: ", error);
         return null;
     }
+}
+
+/**
+* @param {UserData} userData
+* @param {ObjectId} userId
+* */
+async function updateUser(userId, userData) {
+    await dbConnect();
+    const newUser = {
+            email: userData.email,
+            username: userData.username,
+            firstName: userData.firstName,
+            lastName: userData.lastName,
+            birthDate: userData.birthDate,
+            location: userData.location,
+            imageUri: userData.imageUri,
+            bio: userData.bio,
+            socialUrl: userData.socialUrl
+        };
+    Object.keys(newUser).forEach((key) => 
+        (newUser[key] === undefined || newUser[key] === "" || newUser[key] === null) 
+        && delete newUser[key]);
+
+    await User.findByIdAndUpdate(
+        userId,
+        newUser
+    );
 }
 
 /**
@@ -112,6 +141,7 @@ export {
     getUserByUsername,
     getUserByRole,
     createUser,
+    updateUser,
     getAllUserNotifications,
     getNumOfNotifications,
     uploadProfilePicture,

@@ -4,10 +4,9 @@ import Button from "@/app/components/Button"
 import PenIcon from "@/app/icons/PenIcon"
 import { useState, useEffect, useRef } from "react";
 
-export default function EditButton({ className, uploadHandler }) {
+export default function EditButton({ className, uploadHandler, removeHandler }) {
     const [menuOpen, setMenuOpen] = useState(false);
     const handleClick = () => {
-        console.log(menuOpen);
         setMenuOpen(!menuOpen);
     };
     const menuRef = useRef(null);
@@ -22,6 +21,11 @@ export default function EditButton({ className, uploadHandler }) {
         if (!file) return;
 
         uploadHandler(file);
+    }
+
+    const handleRemove = () => {
+        const remove = confirm("This will remove your profile picture permanently.");
+        removeHandler();
     }
 
     useEffect(() => {
@@ -46,9 +50,9 @@ export default function EditButton({ className, uploadHandler }) {
         </Button>
         <div className={`${!menuOpen ? "hidden" : ""} py-1 relative -top-10 flex flex-col bg-white border rounded`}>
             <button onClick={uploadPhoto} className="hover:bg-blue-400 hover:text-white">Upload photo...</button>
-            <button className="hover:bg-blue-400 hover:text-white">Remove photo</button>
+            <button onClick={handleRemove} className="hover:bg-blue-400 hover:text-white">Remove photo</button>
         </div>
-        <input ref={fileInputRef} type="file" accept="image/*" className="hidden"/>
+        <input ref={fileInputRef} onChange={handleFileChange} type="file" accept="image/*" className="hidden"/>
     </div>
 }
 

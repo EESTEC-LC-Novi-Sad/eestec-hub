@@ -61,6 +61,8 @@ export default function Header({session}) {
     const closeProfileMenu = () => setIsProfileMenuOpen(false);
     const openProfileMenu = () => setIsProfileMenuOpen(true);
 
+    const profileImage = (profileImageUri === "removed" ? null : profileImageUri) ?? backupProfileImage;
+
     const pageHeader = pathname === "/" ? "Dashboard" 
         : pathname.charAt(1).toUpperCase() + pathname.slice(2).split("/")[0];
 
@@ -87,9 +89,9 @@ export default function Header({session}) {
             <ModalDiv isLeft={false} isOpen={isProfileMenuOpen} className="top-0 right-0 py-4">
                 <Button onClick={closeProfileMenu} className="absolute right-4 top-4"><CloseIcon/></Button>
                 <div className="flex items-center ml-3">     
-                    <Image src={profileImageUri ?? backupProfileImage} 
-                        width={32} height={32} 
-                        alt="profile image" className="rounded-full h-fit"/>
+                    <Image src={profileImage} 
+                        width={50} height={50} 
+                        alt="profile image" className="rounded-full h-10 w-10 object-cover"/>
                     <div>
                         <h2 className="ml-1 mr-6 -mb-2 px-1"><b>{session?.user?.username ?? "Unknown username"}</b></h2>
                         <h2 className="ml-1 mr-6 px-1">
@@ -129,9 +131,9 @@ export default function Header({session}) {
                     </li>
                     <li className="mx-2">
                         <Button onClick={openProfileMenu}>
-                            <Image src={profileImageUri ?? backupProfileImage} 
-                                width={24} height={24} 
-                                alt="profile image" className="rounded-full"/>
+                            <Image src={profileImage} 
+                                width={36} height={36} 
+                                alt="profile image" className="rounded-full w-6 h-6 object-cover"/>
                         </Button>
                     </li>
                   </ul>
