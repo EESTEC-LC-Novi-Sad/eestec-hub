@@ -14,9 +14,17 @@ import Notification from "../models/notification";
 * @property {String} lastName
 * @property {String} imageUri
 * @property {String} bio
+* @property {String} location
 * @property {String} socialUrl
 * @property {Date} birthDate
 * */
+
+
+async function getAllUsers() {
+    await dbConnect();
+    const users = await User.find();
+    return users;
+}
 
 
 /**
@@ -136,6 +144,7 @@ async function getNumOfNotifications(userId) {
 }
 
 export {
+    getAllUsers,
     getUserByEmail,
     getUserById,
     getUserByUsername,
