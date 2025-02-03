@@ -17,7 +17,7 @@ export default async function NewProjectPage() {
 
     return (
         <div className="flex flex-col items-center">
-            <div className="w-5/12">
+            <div className="w-full md:w-5/12 px-2">
                 <h1 className="text-2xl mt-4"><b>Create a new project</b></h1> 
                 <p className="text-gray-600">All your members will be able to see and apply to this project.
                    Make sure the project name and description are descriptive!</p>
@@ -48,7 +48,7 @@ export default async function NewProjectPage() {
                     <Separator />
                     <PositionsInput />
                     <Separator />
-                    <Button className="w-64 mt-4" type="submit">Create new project</Button>
+                    <Button className="w-full md:w-64 mt-4" type="submit">Create new project</Button>
                 </form>
             </div>
         </div>
