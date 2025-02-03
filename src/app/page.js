@@ -11,9 +11,6 @@ export default async function Home() {
     }
     const notifications = await getNumOfNotifications(session.user.id);
     const projectCount = await getProjectsCount();
-    if (!session || !session.user) {
-        redirect('/login');
-    }
 
     return (
         <div>
