@@ -83,6 +83,7 @@ export default function Header({session}) {
                   <MenuLink onClick={closeMenu} href="/projects"><ProjectsIcon className="mr-1"/> Projects</MenuLink>
                   <MenuLink onClick={closeMenu} href="/teams"><TeamsIcon className="mr-1"/> Teams</MenuLink>
                   <MenuLink onClick={closeMenu} href="/events"><EventsIcon className="mr-1"/> Events</MenuLink>
+                  <MenuLink onClick={closeMenu} href="/members"><ProfileIcon className="mr-1"/> Members</MenuLink>
                   <MenuLink onClick={closeMenu} href="/applications"><ApplicationsIcon className="mr-1"/> Applications</MenuLink> {/* This should be hidden for non-admins */}
                 </ul>
             </ModalDiv>
