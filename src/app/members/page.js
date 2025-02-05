@@ -19,12 +19,13 @@ export default async function MembersPage({ searchParams }) {
     }
     const users = await getAllUsers();
     const { search } = searchParams;
-    const filteredUsers = !search ? users : users.filter((user) => filterUsers(user, search));
+    const filteredSearch = search?.replaceAll("+", " ");
+    const filteredUsers = !filteredSearch ? users : users.filter((user) => filterUsers(user, search));
 
     return (
         <div className="flex flex-col items-center pt-2">
             <form method="get" action="/members" className="flex mb-2 gap-1 w-full md:w-9/12 justify-center">
-                <input type="text" defaultValue={search ?? ""} placeholder="Search for members" name="search"
+                <input type="text" defaultValue={filteredSearch ?? ""} placeholder="Search for members" name="search"
                     className="w-full p-2 border border-gray-300 rounded-md" />
                 <Button type="submit" className="flex justify-center items-center w-12"><SearchIcon width="18" height="18"/></Button>
             </form>
@@ -68,20 +69,18 @@ export default async function MembersPage({ searchParams }) {
         </div>
     )
 }
-/*
-                {users.map((user) => (
-                    <li key={user._id}>
-                        <div className="flex items-center gap-2">
-                            <Image src={(user.imageUri === "removed" ? null : user.imageUri) || backupProfileImage} alt={user.username} width={80} height={80} className="w-10 h-10 object-cover rounded-full" />
-                            <Link href={`/profile/${user.username}`}>{user.username}</Link>
-                        </div>
-                    </li>
-                ))}*/
 
 function filterUsers(user, search) {
-        return user.username.toLowerCase().includes(search.toLowerCase()) ||
-            user.firstName.toLowerCase().includes(search.toLowerCase()) ||
-            user.lastName.toLowerCase().includes(search.toLowerCase()) ||
-            user.email.toLowerCase().includes(search.toLowerCase()) ||
-            user.location?.toLowerCase().includes(search.toLowerCase());
+        const searchLower = search.toLowerCase();
+
+        return user.username.toLowerCase().includes(searchLower) ||
+            searchLower.includes(user.username.toLowerCase()) ||
+            user.firstName.toLowerCase().includes(searchLower) ||
+            searchLower.includes(user.firstName.toLowerCase()) ||
+            user.lastName.toLowerCase().includes(searchLower) ||
+            searchLower.includes(user.lastName.toLowerCase()) ||
+            user.email.toLowerCase().includes(searchLower) ||
+            searchLower.includes(user.email.toLowerCase()) ||
+            user.location?.toLowerCase().includes(searchLower) ||
+            searchLower.includes(user.location?.toLowerCase());
     }
