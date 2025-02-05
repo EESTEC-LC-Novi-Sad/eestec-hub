@@ -5,6 +5,8 @@ import { redirect } from "next/navigation";
 import Card from "../components/Card";
 import Tag from "../components/Tag";
 import LinkButton from "../components/LinkButton";
+import CheckAllIcon from "../icons/CheckAllIcon";
+import TextFileIcon from "../icons/TextFileIcon";
 import { trimProjectDescription } from "../lib/utils";
 
 export default async function ProjectsPage() {
@@ -48,8 +50,15 @@ function mapProjectToCard(project, index, isBoard) {
 
                 </div>
                 <div className="flex mt-4">
-                    <LinkButton className="mr-2" href={`/projects/${project.id}/apply`}>Apply</LinkButton><br />
-                    {isBoard && <LinkButton href={`/projects/${project.id}/applications`}>See applications</LinkButton>}
+                    <LinkButton className="mr-2 flex gap-1" href={`/projects/${project.id}/apply`}>
+                        <CheckAllIcon/>
+                        Apply
+                    </LinkButton>
+                    {isBoard && 
+                        <LinkButton className="flex items-center gap-1" href={`/projects/${project.id}/applications`}>
+                            <TextFileIcon width="21" height="21"/>
+                            See applications
+                        </LinkButton> }
                 </div>
             </Card>
         </Link>
