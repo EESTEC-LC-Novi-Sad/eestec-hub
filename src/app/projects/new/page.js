@@ -48,7 +48,9 @@ export default async function NewProjectPage() {
                     <Separator />
                     <PositionsInput />
                     <Separator />
-                    <Button className="w-full md:w-64 mt-4" type="submit">Create new project</Button>
+                    <div className="flex flex-row-reverse">
+                        <Button className="w-full md:w-64 mt-4" type="submit">Create new project</Button>
+                    </div>
                 </form>
             </div>
         </div>
