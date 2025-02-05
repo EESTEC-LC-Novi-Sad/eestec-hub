@@ -5,8 +5,10 @@ import backupProfileImage from "../../images/profile.jpeg";
 import Image from "next/image";
 import Link from "next/link";
 import Tag from "../components/Tag";
+import Button from "../components/Button";
+import SearchIcon from "../icons/SearchIcon";
 
-export default async function MembersPage() {
+export default async function MembersPage({ searchParams }) {
     const session = await auth();
 
     if (!session || !session.user) {
@@ -16,8 +18,16 @@ export default async function MembersPage() {
         redirect("/");
     }
     const users = await getAllUsers();
+    const { search } = searchParams;
+    const filteredUsers = !search ? users : users.filter((user) => filterUsers(user, search));
+
     return (
-        <div className="flex justify-center pt-2">
+        <div className="flex flex-col items-center pt-2">
+            <form method="get" action="/members" className="flex mb-2 gap-1 w-full md:w-9/12 justify-center">
+                <input type="text" defaultValue={search ?? ""} placeholder="Search for members" name="search"
+                    className="w-full p-2 border border-gray-300 rounded-md" />
+                <Button type="submit" className="flex justify-center items-center w-12"><SearchIcon width="18" height="18"/></Button>
+            </form>
             <table className="border-separate border-spacing-0 w-full md:w-9/12">
                 <thead className="text-left">
                     <tr>
@@ -29,7 +39,7 @@ export default async function MembersPage() {
                     </tr>
                 </thead>
                 <tbody>
-                {users.map((user) => (
+                {filteredUsers.map((user) => (
                     <tr key={user._id}>
                         <td className="flex items-center gap-2 p-2 border-r border-b">
                             <Image src={(user.imageUri === "removed" ? null : user.imageUri) || backupProfileImage} alt={user.username} width={80} height={80} className="w-8 h-8 object-cover rounded-full" />
@@ -67,3 +77,11 @@ export default async function MembersPage() {
                         </div>
                     </li>
                 ))}*/
+
+function filterUsers(user, search) {
+        return user.username.toLowerCase().includes(search.toLowerCase()) ||
+            user.firstName.toLowerCase().includes(search.toLowerCase()) ||
+            user.lastName.toLowerCase().includes(search.toLowerCase()) ||
+            user.email.toLowerCase().includes(search.toLowerCase()) ||
+            user.location?.toLowerCase().includes(search.toLowerCase());
+    }
