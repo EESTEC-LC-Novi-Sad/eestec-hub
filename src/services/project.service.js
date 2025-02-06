@@ -28,19 +28,24 @@ async function getAllProjects() {
  * */
 async function getAllProjectsByUsername(username) {
 	await dbConnect();
-	const user = await getUserByUsername(username);
-	const acceptedApplications = await Application.find({
-		memberId: user.id,
-		status: "accepted",
-	}).select("projectId");
+	try {
+		const user = await getUserByUsername(username);
+		const acceptedApplications = await Application.find({
+			memberId: user.id,
+			status: "accepted",
+		}).select("projectId");
 
-	const projectIds = acceptedApplications.map((app) => app.projectId);
+		const projectIds = acceptedApplications.map((app) => app.projectId);
 
-	const projects = await Project.find({
-		_id: { $in: projectIds },
-	});
+		const projects = await Project.find({
+			_id: { $in: projectIds },
+		});
 
-	return projects;
+		return projects;
+	} catch (error) {
+		console.error(error);
+		return;
+	}
 }
 
 async function getProjectsCount() {
