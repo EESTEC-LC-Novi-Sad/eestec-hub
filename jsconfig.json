@@ -1,7 +1,14 @@
 {
-  "compilerOptions": {
-    "paths": {
-      "@/*": ["./src/*"]
-    }
-  }
+    "compilerOptions": {
+        "paths": {
+          "@/*": ["./src/*"]
+        },
+        "module": "commonjs",
+        "target": "es6",
+        "checkJs": false
+    },
+
+    "exclude": [
+      "node_modules"
+    ]
 }
