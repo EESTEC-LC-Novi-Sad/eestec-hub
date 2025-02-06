@@ -16,7 +16,7 @@ import ClockIcon from "@/app/icons/ClockIcon";
 import ProfileIcon from "@/app/icons/ProfileIcon";
 
 function Separator() {
-	return <div className="border-t border-gray-300 my-2"></div>;
+	return <div className="border-t border-gray-300 my-2" />;
 }
 
 export default async function ProfilePage({ params }) {
@@ -24,16 +24,16 @@ export default async function ProfilePage({ params }) {
 	if (!session || !session.user) {
 		redirect("/login");
 	}
-
-	const user = await getUserByUsername(params.username);
+	const username = decodeURI(params.username);
+	const user = await getUserByUsername(username);
 
 	const formatDate = (dateString) => {
 		if (!dateString) return "Unknown";
 		const date = new Date(dateString);
 		return date.toLocaleDateString();
 	};
-	const userProjects = await getAllProjectsByUsername(params.username);
-	const userEvents = (await getAllEventsByUsername(params.username)).sort(
+	const userProjects = await getAllProjectsByUsername(username);
+	const userEvents = (await getAllEventsByUsername(username)).sort(
 		(a, b) => b.startDate - a.startDate,
 	);
 
