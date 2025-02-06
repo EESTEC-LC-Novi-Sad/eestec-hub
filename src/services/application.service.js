@@ -5,41 +5,40 @@ import Application from "@/models/application";
 import { getUserByUsername } from "./user.service";
 
 async function getAllApplications() {
-    await dbConnect();
-    const applications = await Application.find();
-    return applications;
+	await dbConnect();
+	const applications = await Application.find();
+	return applications;
 }
 
 async function getApplicationById(id) {
-    await dbConnect();
-    const application = await Application.findById(id);
-    return application;
+	await dbConnect();
+	const application = await Application.findById(id);
+	return application;
 }
 
 /**
-* @param {String} username
-* */
+ * @param {String} username
+ * */
 async function getApplicationByUsername(username) {
-    await dbConnect();
-    const user = await getUserByUsername(username);
-    const userApplications = await Application.find({
-        memberId: user.id
-    });
+	await dbConnect();
+	const user = await getUserByUsername(username);
+	const userApplications = await Application.find({
+		memberId: user.id,
+	});
 
-    return userApplications;
+	return userApplications;
 }
 
 async function setApplicationStatus(id, status) {
-    await dbConnect();
-    await Application.findByIdAndUpdate(
-        id,
-        { $set: { status: status, responseDate: new Date(Date.now()) } }
-    );
+	await dbConnect();
+	await Application.findByIdAndUpdate(id, {
+		$set: { status: status, responseDate: new Date(Date.now()) },
+	});
 }
 
 export {
-    getAllApplications,
-    getApplicationById,
-    getApplicationByUsername,
-    setApplicationStatus
-}
+	getAllApplications,
+	getApplicationById,
+	getApplicationByUsername,
+	setApplicationStatus,
+};

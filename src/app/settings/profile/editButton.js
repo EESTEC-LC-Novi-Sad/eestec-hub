@@ -1,60 +1,87 @@
 "use client";
 
-import Button from "@/app/components/Button"
-import PenIcon from "@/app/icons/PenIcon"
+import Button from "@/app/components/Button";
+import PenIcon from "@/app/icons/PenIcon";
 import { useState, useEffect, useRef } from "react";
 
-export default function EditButton({ className, uploadHandler, removeHandler }) {
-    const [menuOpen, setMenuOpen] = useState(false);
-    const handleClick = () => {
-        setMenuOpen(!menuOpen);
-    };
-    const menuRef = useRef(null);
-    const fileInputRef = useRef(null);
+export default function EditButton({
+	className,
+	uploadHandler,
+	removeHandler,
+}) {
+	const [menuOpen, setMenuOpen] = useState(false);
+	const handleClick = () => {
+		setMenuOpen(!menuOpen);
+	};
+	const menuRef = useRef(null);
+	const fileInputRef = useRef(null);
 
-    const uploadPhoto = () => {
-        fileInputRef.current.click();
-    }
+	const uploadPhoto = () => {
+		fileInputRef.current.click();
+	};
 
-    const handleFileChange = (e) => {
-        const file = e.target.files[0];
-        if (!file) return;
+	const handleFileChange = (e) => {
+		const file = e.target.files[0];
+		if (!file) return;
 
-        uploadHandler(file);
-    }
+		uploadHandler(file);
+	};
 
-    const handleRemove = () => {
-        const remove = confirm("This will remove your profile picture permanently.");
-        removeHandler();
-    }
+	const handleRemove = () => {
+		const remove = confirm(
+			"This will remove your profile picture permanently.",
+		);
+		removeHandler();
+	};
 
-    useEffect(() => {
-        const handleOutsideClick = (e) => { 
-            if (menuRef.current && !menuRef.current.contains(e.target)) {
-                setMenuOpen(false);
-            }
-        }
+	useEffect(() => {
+		const handleOutsideClick = (e) => {
+			if (menuRef.current && !menuRef.current.contains(e.target)) {
+				setMenuOpen(false);
+			}
+		};
 
-        if (menuOpen) {
-            document.addEventListener("click", handleOutsideClick);
-        }
+		if (menuOpen) {
+			document.addEventListener("click", handleOutsideClick);
+		}
 
-        return () => {
-            document.removeEventListener("click", handleOutsideClick);
-        }
-    }, [menuOpen])
+		return () => {
+			document.removeEventListener("click", handleOutsideClick);
+		};
+	}, [menuOpen]);
 
-    return <div ref={menuRef}>
-        <Button onClick={handleClick} className={`bg-white flex items-center ${className}`}>
-            <PenIcon className="mr-1"/>Edit
-        </Button>
-        <div className={`${!menuOpen ? "hidden" : ""} py-1 relative -top-10 flex flex-col bg-white border rounded`}>
-            <button onClick={uploadPhoto} className="hover:bg-blue-400 hover:text-white">Upload photo...</button>
-            <button onClick={handleRemove} className="hover:bg-blue-400 hover:text-white">Remove photo</button>
-        </div>
-        <input ref={fileInputRef} onChange={handleFileChange} type="file" accept="image/*" className="hidden"/>
-    </div>
+	return (
+		<div ref={menuRef}>
+			<Button
+				onClick={handleClick}
+				className={`bg-white flex items-center ${className}`}
+			>
+				<PenIcon className="mr-1" />
+				Edit
+			</Button>
+			<div
+				className={`${!menuOpen ? "hidden" : ""} py-1 relative -top-10 flex flex-col bg-white border rounded`}
+			>
+				<button
+					onClick={uploadPhoto}
+					className="hover:bg-blue-400 hover:text-white"
+				>
+					Upload photo...
+				</button>
+				<button
+					onClick={handleRemove}
+					className="hover:bg-blue-400 hover:text-white"
+				>
+					Remove photo
+				</button>
+			</div>
+			<input
+				ref={fileInputRef}
+				onChange={handleFileChange}
+				type="file"
+				accept="image/*"
+				className="hidden"
+			/>
+		</div>
+	);
 }
-
-
-

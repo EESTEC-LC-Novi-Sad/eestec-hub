@@ -2,24 +2,23 @@
 @tailwind components;
 @tailwind utilities;
 
-
 :root {
-    /*
+	/*
     --background: #ffffff;
     --foreground: #171717;
     */
-    --foreground: black;
-    --font-libre-baskerville: 'Libre Baskerville', serif;
+	--foreground: black;
+	--font-libre-baskerville: "Libre Baskerville", serif;
 }
 
 body {
-    color: var(--foreground);
-    font-family: var(--font-libre-baskerville);
-    overflow-x: clip;
+	color: var(--foreground);
+	font-family: var(--font-libre-baskerville);
+	overflow-x: clip;
 }
 
 table {
-    overflow: hidden;
+	overflow: hidden;
 }
 
 /*
