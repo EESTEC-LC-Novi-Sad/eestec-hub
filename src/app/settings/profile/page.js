@@ -4,10 +4,7 @@ import { getUserById } from "@/services/user.service";
 import Image from "next/image";
 import backupProfileImage from "../../../images/profile.jpeg";
 import ProfileForm from "./ProfileForm";
-
-function Separator() {
-	return <div className="border-t border-gray-300 my-2"></div>;
-}
+import { Separator } from "@/app/lib/utils";
 
 export default async function ProfileSettingsPage() {
 	const session = await auth();

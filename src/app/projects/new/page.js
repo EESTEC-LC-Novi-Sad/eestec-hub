@@ -4,10 +4,7 @@ import { redirect } from "next/navigation";
 import { auth } from "../../../../auth";
 import PositionsInput from "./positionsInput";
 import Button from "../../components/Button";
-
-function Separator() {
-	return <div className="border-t border-gray-300 my-2"></div>;
-}
+import { Separator } from "@/app/lib/utils";
 
 export default async function NewProjectPage() {
 	const session = await auth();

@@ -10,10 +10,7 @@ import backupProfileImage from "../../../images/profile.jpeg";
 import Image from "next/image";
 import Link from "next/link";
 import Button from "../../components/Button";
-
-function Separator() {
-	return <div className="border-t border-gray-300 my-2" />;
-}
+import { Separator } from "@/app/lib/utils";
 
 export default async function ApplicationPage({ params }) {
 	const application = await getApplicationById(params.id);

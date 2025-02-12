@@ -3,10 +3,7 @@ import { redirect } from "next/navigation";
 import Button from "../../../components/Button";
 import LinkButton from "../../../components/LinkButton";
 import CheckAllIcon from "@/app/icons/CheckAllIcon";
-
-function Separator() {
-	return <div className="border-t border-gray-300 my-2"></div>;
-}
+import { Separator } from "@/app/lib/utils";
 
 export default async function ApplyProjectPage({ params, searchParams }) {
 	const project = await getProjectById(params.id);

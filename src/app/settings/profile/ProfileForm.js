@@ -6,10 +6,7 @@ import { useFormState } from "react-dom";
 import { updateProfile } from "../../lib/actions";
 import Button from "@/app/components/Button";
 import LinkButton from "@/app/components/LinkButton";
-
-function Separator() {
-	return <div className="border-t border-gray-300 my-2"></div>;
-}
+import { Separator } from "@/app/lib/utils";
 
 export default function ProfileForm({ userStr }) {
 	const [user, setUser] = useState(JSON.parse(userStr));

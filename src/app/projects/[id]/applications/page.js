@@ -7,10 +7,7 @@ import { getUserById } from "@/services/user.service";
 import Tag from "@/app/components/Tag";
 import LinkButton from "@/app/components/LinkButton";
 import Button from "@/app/components/Button";
-
-function Separator() {
-	return <div className="md:hidden border-t border-gray-400 my-2"></div>;
-}
+import { Separator } from "@/app/lib/utils";
 
 export default async function ProjectApplicationsPage({ params }) {
 	const applications = await getApplicationsForProject(params.id);

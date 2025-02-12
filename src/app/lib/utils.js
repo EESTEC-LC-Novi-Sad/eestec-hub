@@ -9,7 +9,11 @@ import ClockIcon from "../icons/ClockIcon";
 function trimProjectDescription(def, n) {
 	if (def.length <= n) return def;
 
-	return def.slice(0, n - 3) + "...";
+	return `${def.slice(0, n - 3)}...`;
+}
+
+function Separator() {
+	return <div className="border-t border-gray-300 my-2" />;
 }
 
 /**
@@ -52,4 +56,4 @@ function mapEventToCard(event, index) {
 	);
 }
 
-export { trimProjectDescription, mapEventToCard };
+export { trimProjectDescription, mapEventToCard, Separator };

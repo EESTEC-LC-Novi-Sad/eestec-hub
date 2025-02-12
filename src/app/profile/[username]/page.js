@@ -14,10 +14,7 @@ import { trimProjectDescription } from "../../lib/utils";
 import Tag from "@/app/components/Tag";
 import ClockIcon from "@/app/icons/ClockIcon";
 import ProfileIcon from "@/app/icons/ProfileIcon";
-
-function Separator() {
-	return <div className="border-t border-gray-300 my-2" />;
-}
+import { Separator } from "@/app/lib/utils";
 
 export default async function ProfilePage({ params }) {
 	const session = await auth();

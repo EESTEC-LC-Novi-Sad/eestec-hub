@@ -7,10 +7,7 @@ import Tag from "../../components/Tag";
 import LinkButton from "../../components/LinkButton";
 import { auth } from "../../../../auth";
 import { redirect } from "next/navigation";
-
-function Separator() {
-	return <div className="border-t border-gray-300 my-2"></div>;
-}
+import { Separator } from "@/app/lib/utils";
 
 export default async function ProjectByIdPage({ params }) {
 	const session = await auth();
