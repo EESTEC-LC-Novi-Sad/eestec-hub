@@ -1,36 +1,32 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# EESTEC Hub
 
-## Getting Started
+EESTEC Hub is a Human Resource Management tool designed specifically for 
+the needs of the student accossiation EESTEC LC Novi Sad.
 
-First, run the development server:
+This project is led by [mihna123](https://github.com/mihna123) (Mihailo Vojinović).
+It will always stay open sourced, the idea is that other student orgs can simply fork it
+and make it their own. All PR's are welcome!
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Table of contents
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- [Main features](#features)
+- [Tech stach](#tech-stack)
+- [How to contribute](#how-to-contribute)
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## Main features
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+- Members
+- Projects
+- Events
+- Point system (will be implemented in the future)
 
-## Learn More
+## Tech stack
 
-To learn more about Next.js, take a look at the following resources:
+EESTEC Hub is built on Next.js and deployed on Vercel. Our main database is 
+MongoDB hosted on Atlas.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## How to contribute
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Everybody is welcome to leave a PR or an Issue. Right now the main focus should
+be finding and fixing bugs, writing documantation and writing tests 
+(we currently have 0 test coverage). 
