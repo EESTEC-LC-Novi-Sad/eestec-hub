@@ -30,9 +30,8 @@ export default async function ProfilePage({ params }) {
 		return date.toLocaleDateString();
 	};
 	const userProjects = await getAllProjectsByUsername(username);
-	const userEvents = (await getAllEventsByUsername(username)).sort(
-		(a, b) => b.startDate - a.startDate,
-	);
+	const events = await getAllEventsByUsername(username);
+	const userEvents = events?.sort((a, b) => b.startDate - a.startDate);
 
 	return (
 		<div className="flex justify-center">

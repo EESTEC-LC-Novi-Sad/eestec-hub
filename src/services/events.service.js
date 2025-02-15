@@ -25,11 +25,16 @@ async function getAllEvents() {
  * */
 async function getAllEventsByUsername(username) {
 	await dbConnect();
-	const user = await getUserByUsername(username);
-	const userEvents = await Event.find({
-		attendees: user.id,
-	});
-	return userEvents;
+	try {
+		const user = await getUserByUsername(username);
+		const userEvents = await Event.find({
+			attendees: user.id,
+		});
+		return userEvents;
+	} catch (error) {
+		console.error(error);
+		return;
+	}
 }
 
 async function getEventById(id) {

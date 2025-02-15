@@ -39,7 +39,7 @@ async function mapApplicationToCard(application, index) {
 		<div key={`application-${index}`} className="md:flex justify-between p-2">
 			<div className="flex flex-wrap mb-1 md:mb-0 items-center">
 				<Link
-					href={`/profile/${member.username}`}
+					href={`/profile/${encodeURI(member.username)}`}
 					className="text-blue-700 hover:underline mr-1"
 				>
 					{member.username}

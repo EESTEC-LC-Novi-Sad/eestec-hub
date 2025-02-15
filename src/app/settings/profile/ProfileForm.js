@@ -131,7 +131,7 @@ export default function ProfileForm({ userStr }) {
 						Save changes
 					</Button>
 					<LinkButton
-						href={`/profile/${user.username}`}
+						href={`/profile/${encodeURI(user.username)}`}
 						className=" border-red-700 text-red-700"
 					>
 						Cancel

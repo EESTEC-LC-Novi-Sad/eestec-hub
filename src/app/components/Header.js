@@ -157,34 +157,34 @@ export default function Header({ session }) {
 						<ul className="mt-6">
 							<MenuLink
 								onClick={closeProfileMenu}
-								href={`/profile/${session?.user?.username}`}
+								href={`/profile/${encodeURI(session?.user?.username)}`}
 							>
 								<ProfileIcon className="mx-1" /> Your profile
 							</MenuLink>
 							<MenuLink
 								onClick={closeProfileMenu}
-								href={`/profile/${session?.user?.username}/projects`}
+								href={`/profile/${encodeURI(session?.user?.username)}/projects`}
 							>
 								<ProjectsIcon className="mx-1" />
 								Your projects
 							</MenuLink>
 							<MenuLink
 								onClick={closeProfileMenu}
-								href={`/profile/${session?.user?.username}/teams`}
+								href={`/profile/${encodeURI(session?.user?.username)}/teams`}
 							>
 								<TeamsIcon className="mx-1" />
 								Your teams
 							</MenuLink>
 							<MenuLink
 								onClick={closeProfileMenu}
-								href={`/profile/${session?.user?.username}/events`}
+								href={`/profile/${encodeURI(session?.user?.username)}/events`}
 							>
 								<EventsIcon className="mx-1" />
 								Your events
 							</MenuLink>
 							<MenuLink
 								onClick={closeProfileMenu}
-								href={`/profile/${session?.user?.username}/applications`}
+								href={`/profile/${encodeURI(session?.user?.username)}/applications`}
 							>
 								<ApplicationsIcon className="mx-1" />
 								Your applications

@@ -78,7 +78,7 @@ export default async function MembersPage({ searchParams }) {
 								/>
 								<Link
 									className="text-blue-700 hover:underline"
-									href={`/profile/${user.username}`}
+									href={`/profile/${encodeURI(user.username)}`}
 								>
 									{user.username}
 								</Link>
