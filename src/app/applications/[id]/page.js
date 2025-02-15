@@ -30,7 +30,7 @@ export default async function ApplicationPage({ params }) {
 						height={50}
 					/>
 					<Link
-						href={`/profile/${member.username}`}
+						href={`/profile/${encodeURI(member.username)}`}
 						className="text-blue-700 hover:underline"
 					>
 						{member.username}
