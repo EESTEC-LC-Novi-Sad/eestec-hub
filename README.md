@@ -3,7 +3,7 @@
 EESTEC Hub is a Human Resource Management tool designed specifically for 
 the needs of the student accossiation EESTEC LC Novi Sad.
 
-This project is led by [mihna123](https://github.com/mihna123) (Mihailo Vojinović).
+This project is led by [mihna123](https://github.com/mihna123).
 It will always stay open sourced, the idea is that other student orgs can simply fork it
 and make it their own. All PR's are welcome!
 
