@@ -47,7 +47,7 @@ export default async function NewProjectPage() {
 						redirect("/projects");
 					}}
 				>
-					<label>
+					<label htmlFor="pname">
 						<b>Project name*</b>
 					</label>
 					<input
@@ -56,7 +56,7 @@ export default async function NewProjectPage() {
 						type="text"
 						name="pname"
 					/>
-					<label>
+					<label htmlFor="description">
 						<b>Description*</b>
 					</label>
 					<textarea
