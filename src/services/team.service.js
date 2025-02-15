@@ -3,7 +3,7 @@
 import dbConnect from "@/app/lib/dbConnect";
 import Team from "@/models/team";
 import TeamApplication from "@/models/teamApplication";
-import { getUserByUsername } from "./user.service";
+import { getUserByUsername, getUserById } from "./user.service";
 
 async function joinTeam(teamId, memberId) {
 	await dbConnect();
@@ -14,6 +14,21 @@ async function joinTeam(teamId, memberId) {
 	});
 
 	await Team.findByIdAndUpdate(teamId, { $addToSet: { teamMembers: app.id } });
+}
+
+async function getTeamMembers(teamId) {
+	await dbConnect();
+	const team = await getTeamById(teamId);
+	const members = [];
+	for (const applicationId of team.teamMembers) {
+		const application = await getTeamApplicationById(applicationId);
+		if (application.status !== "joined") continue;
+
+		const member = await getUserById(application.memberId);
+		if (!member) continue;
+		members.push(member);
+	}
+	return members;
 }
 
 async function getAllTeamApplications() {
@@ -74,6 +89,7 @@ async function createNewTeam(teamData) {
 
 export {
 	getAllTeams,
+	getTeamMembers,
 	createNewTeam,
 	getTeamById,
 	getAllUserTeams,
