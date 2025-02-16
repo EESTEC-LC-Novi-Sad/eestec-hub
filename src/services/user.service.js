@@ -67,6 +67,20 @@ async function getProfilePictureUri(userId) {
  * */
 async function createUser(userData) {
 	await dbConnect();
+	const sameEmail = await User.findOne({ email: userData.email });
+	if (sameEmail) {
+		throw Error(
+			`There is already an account with an email address "${userData.email}"`,
+		);
+	}
+
+	const sameUsername = await User.findOne({ username: userData.username });
+	if (sameUsername) {
+		throw Error(
+			`There is already an account with a username "${userData.username}"`,
+		);
+	}
+
 	const passHash = await bcrypt.hash(userData.password, 10);
 	try {
 		const user = await User.create({
@@ -81,8 +95,7 @@ async function createUser(userData) {
 		});
 		return user;
 	} catch (error) {
-		console.log("There was an error with creating new user entity: ", error);
-		return null;
+		throw Error("There was an error with the database: ", error);
 	}
 }
 
