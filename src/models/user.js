@@ -2,8 +2,8 @@ import mongoose from "mongoose";
 import { Schema } from "mongoose";
 
 const user = new Schema({
-	email: String,
-	username: String,
+	email: { type: String, unique: true },
+	username: { type: String, unique: true },
 	firstName: String,
 	lastName: String,
 	bio: String,
@@ -14,6 +14,7 @@ const user = new Schema({
 	imageUri: String,
 	location: String,
 	socialUrl: String,
+	registered: Boolean,
 	notifications: [
 		{
 			notificationId: { type: Schema.Types.ObjectId, ref: "Notification" },
