@@ -1,5 +1,6 @@
 import { getAllTeams } from "@/services/team.service";
 import { auth } from "../../../auth";
+import { redirect } from "next/navigation";
 import Link from "next/link";
 import Card from "../components/Card";
 import Tag from "../components/Tag";
