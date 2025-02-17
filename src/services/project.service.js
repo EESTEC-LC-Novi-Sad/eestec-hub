@@ -55,9 +55,14 @@ async function getProjectsCount() {
 }
 
 async function getProjectById(id) {
-	await dbConnect();
-	const project = await Project.findById(id);
-	return project;
+	try {
+		await dbConnect();
+		const project = await Project.findById(id);
+		return project;
+	} catch (e) {
+		console.error(e);
+		return null;
+	}
 }
 
 async function applyToProject(projectId, applicationData) {
@@ -90,9 +95,14 @@ async function applyToProject(projectId, applicationData) {
 }
 
 async function getApplicationsForProject(projectId) {
-	await dbConnect();
-	const applications = Application.find({ projectId });
-	return applications;
+	try {
+		await dbConnect();
+		const applications = Application.find({ projectId });
+		return applications;
+	} catch (e) {
+		console.error(e);
+		return null;
+	}
 }
 
 export {

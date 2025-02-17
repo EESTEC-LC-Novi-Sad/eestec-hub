@@ -10,8 +10,23 @@ import Button from "@/app/components/Button";
 import { Separator } from "@/app/lib/utils";
 
 export default async function ProjectApplicationsPage({ params }) {
-	const applications = await getApplicationsForProject(params.id);
 	const project = await getProjectById(params.id);
+	if (!project) {
+		return (
+			<div className="flex justify-center">
+				<h1 className="text-2xl mt-4">Project not found</h1>
+			</div>
+		);
+	}
+
+	const applications = await getApplicationsForProject(params.id);
+	if (!applications) {
+		return (
+			<div className="flex justify-center">
+				<h1 className="text-2xl mt-4">Applications not found</h1>
+			</div>
+		);
+	}
 
 	return (
 		<div className="flex flex-col items-center px-2">

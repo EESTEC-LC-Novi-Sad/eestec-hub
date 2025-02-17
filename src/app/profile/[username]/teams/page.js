@@ -12,6 +12,13 @@ export default async function UserTeamsPage({ params }) {
 	}
 
 	const { username } = params;
+	if (session.user.username !== username) {
+		return (
+			<div className="flex justify-center">
+				<h1 className="text-2xl mt-4">You are not allowed on this page</h1>
+			</div>
+		);
+	}
 	const userTeams = await getAllUserTeams(username);
 
 	return (

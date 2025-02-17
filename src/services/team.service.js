@@ -47,19 +47,24 @@ async function getTeamApplicationById(id) {
  * @param {String} username
  * */
 async function getAllUserTeams(username) {
-	await dbConnect();
-	const user = await getUserByUsername(username);
-	const userTeamApps = await TeamApplication.find({
-		memberId: user.id,
-		status: "joined",
-	}).select("teamId");
+	try {
+		await dbConnect();
+		const user = await getUserByUsername(username);
+		const userTeamApps = await TeamApplication.find({
+			memberId: user.id,
+			status: "joined",
+		}).select("teamId");
 
-	const teamIds = userTeamApps.map((app) => app.teamId);
-	const userTeams = Team.find({
-		_id: { $in: teamIds },
-	});
+		const teamIds = userTeamApps.map((app) => app.teamId);
+		const userTeams = Team.find({
+			_id: { $in: teamIds },
+		});
 
-	return userTeams;
+		return userTeams;
+	} catch (e) {
+		console.error(e);
+		return null;
+	}
 }
 
 async function respondToTeamApplication(appId, status) {
@@ -67,9 +72,14 @@ async function respondToTeamApplication(appId, status) {
 }
 
 async function getTeamById(id) {
-	await dbConnect();
-	const team = await Team.findById(id);
-	return team;
+	try {
+		await dbConnect();
+		const team = await Team.findById(id);
+		return team;
+	} catch (e) {
+		console.error(e);
+		return null;
+	}
 }
 
 async function getAllTeams() {

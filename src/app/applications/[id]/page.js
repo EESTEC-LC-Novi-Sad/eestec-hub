@@ -14,8 +14,29 @@ import { Separator } from "@/app/lib/utils";
 
 export default async function ApplicationPage({ params }) {
 	const application = await getApplicationById(params.id);
+	if (!application) {
+		return (
+			<div className="flex justify-center px-2 pt-2">
+				<h1 className="text-2xl mt-4">Application not found</h1>
+			</div>
+		);
+	}
 	const member = await getUserById(application.memberId);
+	if (!member) {
+		return (
+			<div className="flex justify-center px-2 pt-2">
+				<h1 className="text-2xl mt-4">Member not found</h1>
+			</div>
+		);
+	}
 	const project = await getProjectById(application.projectId);
+	if (!project) {
+		return (
+			<div className="flex justify-center px-2 pt-2">
+				<h1 className="text-2xl mt-4">Member not found</h1>
+			</div>
+		);
+	}
 	return (
 		<div className="flex justify-center px-2 pt-2">
 			<div className="w-full md:w-7/12">

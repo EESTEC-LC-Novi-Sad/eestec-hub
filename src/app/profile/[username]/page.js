@@ -131,7 +131,7 @@ export default async function ProfilePage({ params }) {
 					</div>
 				</div>
 			) : (
-				<p>User not found</p>
+				<h1 className="text-2xl mt-4">User not found</h1>
 			)}
 		</div>
 	);

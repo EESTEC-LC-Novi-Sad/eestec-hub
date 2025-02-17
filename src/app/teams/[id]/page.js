@@ -20,6 +20,13 @@ export default async function TeamByIdPage({ params }) {
 		redirect("/login");
 	}
 	const team = await getTeamById(params.id);
+	if (!team) {
+		return (
+			<div className="flex justify-center px-2">
+				<h1 className="text-2xl mt-4">Team is missing</h1>
+			</div>
+		);
+	}
 	const teamMembers = await getTeamMembers(params.id);
 
 	return (

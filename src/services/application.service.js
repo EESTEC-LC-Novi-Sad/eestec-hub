@@ -11,9 +11,14 @@ async function getAllApplications() {
 }
 
 async function getApplicationById(id) {
-	await dbConnect();
-	const application = await Application.findById(id);
-	return application;
+	try {
+		await dbConnect();
+		const application = await Application.findById(id);
+		return application;
+	} catch (e) {
+		console.error(e);
+		return null;
+	}
 }
 
 /**

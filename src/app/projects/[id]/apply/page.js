@@ -7,6 +7,13 @@ import { Separator } from "@/app/lib/utils";
 
 export default async function ApplyProjectPage({ params, searchParams }) {
 	const project = await getProjectById(params.id);
+	if (!project) {
+		return (
+			<div className="flex justify-center">
+				<h1 className="text-2xl mt-4">Project not found</h1>
+			</div>
+		);
+	}
 	const { success, failure } = searchParams;
 	console.log(searchParams);
 	return (

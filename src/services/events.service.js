@@ -38,9 +38,14 @@ async function getAllEventsByUsername(username) {
 }
 
 async function getEventById(id) {
-	await dbConnect();
-	const event = await Event.findById(id);
-	return event;
+	try {
+		await dbConnect();
+		const event = await Event.findById(id);
+		return event;
+	} catch (e) {
+		console.error(e);
+		return null;
+	}
 }
 
 async function joinEvent(eventId, userId) {

@@ -23,37 +23,41 @@ export default async function EventByIdPage({ params }) {
 
 	return (
 		<div className="flex justify-center px-2">
-			<div className="w-full md:w-6/12">
-				<h1 className="text-3xl my-2">
-					<b>{event.name}</b>
-				</h1>
-				<Separator />
-				<span className="flex gap-1 mb-2 text-sm text-gray-600">
-					<TeamsIcon width="18" height="18" />
-					{event.attendees.length}
-					{event.attendees.length === 1 ? " attendee" : " attendees"}
-				</span>
-				<p className="text-lg">{event.description}</p>
-				<div className="flex gap-2">
-					<Tag className="w-fit flex items-center gap-1">
-						<EventsIcon width="16" height="16" />
-						{event.startDate.toDateString()}
-					</Tag>
-					<Tag className="w-fit flex items-center gap-1">
-						<ClockIcon width="16" height="16" />
-						{event.startDate.toLocaleTimeString("en-US")}
-					</Tag>
+			{!event ? (
+				<h1 className="text-2xl mt-4">Event not found</h1>
+			) : (
+				<div className="w-full md:w-6/12">
+					<h1 className="text-3xl my-2">
+						<b>{event.name}</b>
+					</h1>
+					<Separator />
+					<span className="flex gap-1 mb-2 text-sm text-gray-600">
+						<TeamsIcon width="18" height="18" />
+						{event.attendees.length}
+						{event.attendees.length === 1 ? " attendee" : " attendees"}
+					</span>
+					<p className="text-lg">{event.description}</p>
+					<div className="flex gap-2">
+						<Tag className="w-fit flex items-center gap-1">
+							<EventsIcon width="16" height="16" />
+							{event.startDate.toDateString()}
+						</Tag>
+						<Tag className="w-fit flex items-center gap-1">
+							<ClockIcon width="16" height="16" />
+							{event.startDate.toLocaleTimeString("en-US")}
+						</Tag>
+					</div>
+					<div className="flex gap-2 mt-4">
+						{isBoard && <ShowCodeButton secretCode={event.code} />}
+						<LinkButton
+							className="text-green-700 border-green-700"
+							href={`/events/${event.id}/join`}
+						>
+							Join the event
+						</LinkButton>
+					</div>
 				</div>
-				<div className="flex gap-2 mt-4">
-					{isBoard && <ShowCodeButton secretCode={event.code} />}
-					<LinkButton
-						className="text-green-700 border-green-700"
-						href={`/events/${event.id}/join`}
-					>
-						Join the event
-					</LinkButton>
-				</div>
-			</div>
+			)}
 		</div>
 	);
 }
