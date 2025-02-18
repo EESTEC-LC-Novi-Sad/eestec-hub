@@ -47,7 +47,7 @@ export default async function EventsPage() {
 							return (
 								<div key={`year-${index}`}>
 									<h1 className="text-center text-3xl mt-2">
-										<b>{year[0].startDate.getFullYear()}</b>
+										<b>{year[0]?.startDate.getFullYear()}</b>
 									</h1>
 									{year.map(mapEventToCard)}
 								</div>
@@ -67,7 +67,7 @@ export default async function EventsPage() {
 							return (
 								<div key={`year-${index}`}>
 									<h1 className="text-center text-3xl mt-2">
-										<b>{year[0].startDate.getFullYear()}</b>
+										<b>{year[0]?.startDate.getFullYear()}</b>
 									</h1>
 									{year.map(mapEventToCard)}
 								</div>
