@@ -39,6 +39,20 @@ async function getUserByEmail(email) {
 	}
 }
 
+async function registerUser(userId) {
+	try {
+		await dbConnect();
+		const user = await User.findByIdAndUpdate(
+			userId,
+			{ $set: { registered: true } },
+			{ new: true },
+		);
+		return user;
+	} catch (e) {
+		console.error(e);
+	}
+}
+
 async function getUserByUsername(username) {
 	await dbConnect();
 	const user = await User.findOne({ username });
@@ -168,4 +182,5 @@ export {
 	getNumOfNotifications,
 	uploadProfilePicture,
 	getProfilePictureUri,
+    registerUser,
 };
