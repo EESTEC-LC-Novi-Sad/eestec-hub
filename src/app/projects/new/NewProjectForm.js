@@ -5,18 +5,22 @@ import Button from "../../components/Button";
 import { Separator } from "@/app/lib/utils";
 import { createNewProject } from "@/app/lib/actions";
 import { useFormState } from "react-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import LoadingIcon from "../../icons/LoadingIcon";
 
 export default function NewProjectForm() {
 	const [formState, formAction] = useFormState(createNewProject, null);
 	const [submitting, setSubmitting] = useState(false);
-	const [formResult, setFormResult] = useState(null);
+	const formRef = useRef(null);
 	const router = useRouter();
 
-	const handleSubmit = async (formState) => {
+	const handleButtonClick = () => {
 		setSubmitting(true);
+		formRef.current.requestSubmit();
+	};
+
+	const handleSubmit = async (formState) => {
 		formAction(formState);
 	};
 
@@ -44,7 +48,11 @@ export default function NewProjectForm() {
 				<p className="mb-4">
 					<i>Required fields are marked with an asterix (*)</i>
 				</p>
-				<form action={handleSubmit} className="inline-flex flex-col w-full">
+				<form
+					ref={formRef}
+					action={handleSubmit}
+					className="inline-flex flex-col w-full"
+				>
 					<label htmlFor="pname">
 						<b>Project name*</b>
 					</label>
@@ -68,6 +76,7 @@ export default function NewProjectForm() {
 					<div className="flex flex-row-reverse">
 						<Button
 							disabled={submitting}
+							onClick={handleButtonClick}
 							className={`${submitting ? "bg-gray-300 text-white hover:bg-gray-300" : ""} w-full md:w-64 mt-4 h-10 flex justify-center items-center`}
 							type="submit"
 						>
