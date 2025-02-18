@@ -6,6 +6,8 @@ import { auth } from "../../../auth";
 import { updateUser, getProfilePictureUri } from "../../services/user.service";
 import { createProject } from "../../services/project.service";
 import { broadcastNotification } from "../../services/notification.service";
+import { createNewTeam } from "../../services/team.service";
+import { createEvent } from "../../services/events.service";
 
 export async function logOut() {
 	await signOut();
@@ -89,5 +91,54 @@ export async function createNewProject(prevState, formData) {
 	} catch (err) {
 		console.error("Error while creating new profile: ", err);
 		return { error: "Failed to create new project!" };
+	}
+}
+
+/**
+ * @param {FormData} formData
+ * @param {any} prevState
+ * */
+export async function createNewTeamAction(precState, formData) {
+	try {
+		const teamData = {
+			name: formData.get("tname"),
+			description: formData.get("description"),
+		};
+
+		const newTeam = await createNewTeam(teamData);
+		broadcastNotification({
+			text: `New team has been created: ${newTeam.name}`,
+			notificationType: "New team",
+			dateReceived: new Date(Date.now()),
+			link: `/teams/${newTeam.id}`,
+		});
+		return { success: `Successfuly created team "${teamData.name}"!` };
+	} catch (err) {
+		console.error("Error while creating a new team", err);
+		return { error: "Failed to create a new team!" };
+	}
+}
+
+export async function createNewEvent(prevState, formData) {
+	try {
+		const eventData = {
+			name: formData.get("ename"),
+			description: formData.get("description"),
+			startDate: formData.get("start-date"),
+			endDate: formData.get("end-date"),
+			location: formData.get("location"),
+			attendees: [],
+		};
+		const event = await createEvent(eventData);
+		broadcastNotification({
+			text: `New event: ${eventData.name} at ${(new Date(eventData.startDate)).toDateString()}`,
+			notificationType: "New events",
+			dateReceived: new Date(Date.now()),
+			link: `/events/${event.id}`,
+		});
+		return { success: "Successfuly created a new event!" };
+	} catch (err) {
+		console.error(err);
+		return { error: "Failed to create a new event!" };
 	}
 }
