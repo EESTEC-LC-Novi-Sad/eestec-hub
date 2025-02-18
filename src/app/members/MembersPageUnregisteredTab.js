@@ -8,6 +8,8 @@ import LinkButton from "../components/LinkButton";
 import SearchIcon from "../icons/SearchIcon";
 import TeamsIcon from "../icons/TeamsIcon";
 import ProfileIcon from "../icons/ProfileIcon";
+import { registerUser } from "../../services/user.service";
+import { redirect } from "next/navigation";
 
 export default async function MembersPageUnregisteredTab({ searchParams }) {
 	const allUsers = await getAllUsers();
@@ -18,6 +20,14 @@ export default async function MembersPageUnregisteredTab({ searchParams }) {
 	const filteredUsers = !filteredSearch
 		? users
 		: users.filter((user) => filterUsers(user, search));
+
+	const handleRegisterClick = async (userId) => {
+		"use server";
+		const user = await registerUser(userId);
+		if (!user) return;
+
+		redirect("/members?tab=unregistered");
+	};
 
 	return (
 		<div className="flex flex-col md:flex-row justify-center pt-2">
@@ -114,7 +124,17 @@ export default async function MembersPageUnregisteredTab({ searchParams }) {
 									{user.email}
 								</td>
 								<td className="p-2 border-b">
-									<Button>Register</Button>
+									<form
+										action={async () => {
+											"use server";
+											const updatedUser = await registerUser(user.id);
+											if (!updatedUser) return;
+
+											redirect("/members?tab=unregistered");
+										}}
+									>
+										<Button>Register</Button>
+									</form>
 								</td>
 							</tr>
 						))}
