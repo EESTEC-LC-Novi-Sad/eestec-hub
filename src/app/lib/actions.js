@@ -4,6 +4,8 @@ import { signOut } from "../../../auth";
 import { put, del } from "@vercel/blob";
 import { auth } from "../../../auth";
 import { updateUser, getProfilePictureUri } from "../../services/user.service";
+import { createProject } from "../../services/project.service";
+import { broadcastNotification } from "../../services/notification.service";
 
 export async function logOut() {
 	await signOut();
@@ -59,5 +61,33 @@ export async function updateProfile(prevState, formData) {
 	} catch (err) {
 		console.error("Error parsing form data: ", err);
 		return { error: "Profile update failed!" };
+	}
+}
+
+/**
+ * @param {FormData} formData
+ * @param {any} prevState
+ * */
+export async function createNewProject(prevState, formData) {
+	console.log("formData: ", formData);
+	try {
+		const projectData = {
+			name: formData.get("pname"),
+			description: formData.get("description"),
+			coordinatorPositions: JSON.parse(formData.get("coordinators")),
+			applications: [],
+		};
+
+		const proj = await createProject(projectData);
+		await broadcastNotification({
+			text: `New project is available: ${formData.get("pname")}`,
+			notificationType: "New projects",
+			dateReceived: new Date(Date.now()),
+			link: `/projects/${proj.id}`,
+		});
+		return { success: "New project successfully created!" };
+	} catch (err) {
+		console.error("Error while creating new profile: ", err);
+		return { error: "Failed to create new project!" };
 	}
 }
