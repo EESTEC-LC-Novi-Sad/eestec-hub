@@ -15,16 +15,16 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 				const user = await getUserByEmail(credentials.email);
 
 				if (!user) {
-					throw new Error(`No user found with email ${credentials.email}`);
+					throw new Error(`No account found with email ${credentials.email}`);
 				}
 
 				if (!user.registered) {
-					throw new Error(`The user ${user.username} is not registered yet!`);
+					throw new Error(`You are not registered yet!`);
 				}
 
 				const passEqual = await compare(credentials.password, user.password);
 				if (!passEqual) {
-					throw new Error("Passwords are not equal");
+					throw new Error("Wrong password!");
 				}
 
 				return user;
