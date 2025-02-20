@@ -127,6 +127,7 @@ export async function createNewEvent(prevState, formData) {
 			startDate: formData.get("start-date"),
 			endDate: formData.get("end-date"),
 			location: formData.get("location"),
+			pointsPerAttend: formData.get("points"),
 			attendees: [],
 		};
 		const event = await createEvent(eventData);

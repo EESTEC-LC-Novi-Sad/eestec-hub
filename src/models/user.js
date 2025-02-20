@@ -15,6 +15,7 @@ const user = new Schema({
 	location: String,
 	socialUrl: String,
 	registered: Boolean,
+	points: Number,
 	notifications: [
 		{
 			notificationId: { type: Schema.Types.ObjectId, ref: "Notification" },

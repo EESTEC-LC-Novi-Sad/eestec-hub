@@ -57,6 +57,12 @@ async function joinEvent(eventId, userId) {
 		return;
 	}
 	const event = await Event.findById(eventId);
+	if (event.attendees.includes(user.id)) {
+		console.log(
+			`User with id=${userId} is already attending the event with id=${eventId}`,
+		);
+		return;
+	}
 
 	if (event.startDate > Date.now() || event.endDate < Date.now()) {
 		return;
@@ -65,6 +71,12 @@ async function joinEvent(eventId, userId) {
 	const updatedEvent = await Event.findByIdAndUpdate(eventId, {
 		$addToSet: { attendees: user.id },
 	});
+	if (event.pointsPerAttend) {
+		await User.findByIdAndUpdate(userId, {
+			$inc: { points: event.pointsPerAttend },
+		});
+	}
+
 	return updatedEvent;
 }
 
