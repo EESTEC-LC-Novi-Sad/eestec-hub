@@ -7,10 +7,14 @@ import Button from "../../components/Button";
 import NewEventForm from "./NewEventForm";
 
 export default async function NewEventPage() {
-	const session = await auth();
-	if (!session || !session.user || session.user.role !== "board") {
-		redirect("/login");
-	}
+    const session = await auth();
+    if (!session || !session.user) {
+        redirect("/login");
+    }
 
-	return <NewEventForm />;
+    if (session.user.role !== "board") {
+        redirect("/");
+    }
+
+    return <NewEventForm />;
 }
