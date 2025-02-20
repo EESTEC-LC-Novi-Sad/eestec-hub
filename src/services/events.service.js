@@ -65,6 +65,12 @@ async function joinEvent(eventId, userId) {
 	const updatedEvent = await Event.findByIdAndUpdate(eventId, {
 		$addToSet: { attendees: user.id },
 	});
+	if (event.pointsPerAttend) {
+		await User.findByIdAndUpdate(userId, {
+			$inc: { points: event.pointsPerAttend },
+		});
+	}
+
 	return updatedEvent;
 }
 
