@@ -54,6 +54,7 @@ export default function Header({ session }) {
 	const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
 	const [notificationsNum, setNotificationsNum] = useState(0);
 	const [profileImageUri, setProfileImageUri] = useState(null);
+	const isBoard = session?.user?.role === "board";
 
 	useEffect(() => {
 		if (!session || !session.user) return;
@@ -85,17 +86,19 @@ export default function Header({ session }) {
 	return (
 		<div>
 			{noHeaderRoutes.includes(pathname) ? (
-				<div></div>
+				<div />
 			) : (
 				<div>
 					<div
 						onClick={closeMenu}
+						onKeyPress={closeMenu}
 						className={`${isMenuOpen ? "visible" : "hidden"} z-10 absolute w-full h-screen bg-gray-950/50`}
-					></div>
+					/>
 					<div
 						onClick={closeProfileMenu}
+						onKeyPress={closeProfileMenu}
 						className={`${isProfileMenuOpen ? "visible" : "hidden"} z-10 absolute w-full h-screen bg-gray-950/50`}
-					></div>
+					/>
 					<ModalDiv isLeft={true} isOpen={isMenuOpen} className="top-0 py-4">
 						<Button onClick={closeMenu} className="absolute right-4 top-4">
 							<CloseIcon />
@@ -119,10 +122,11 @@ export default function Header({ session }) {
 							<MenuLink onClick={closeMenu} href="/members">
 								<ProfileIcon className="mr-1" /> Members
 							</MenuLink>
-							<MenuLink onClick={closeMenu} href="/applications">
-								<ApplicationsIcon className="mr-1" /> Applications
-							</MenuLink>{" "}
-							{/* This should be hidden for non-admins */}
+							{isBoard && (
+								<MenuLink onClick={closeMenu} href="/applications">
+									<ApplicationsIcon className="mr-1" /> Applications
+								</MenuLink>
+							)}
 						</ul>
 					</ModalDiv>
 					<ModalDiv
