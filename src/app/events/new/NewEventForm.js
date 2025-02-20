@@ -100,6 +100,21 @@ export default function NewEventForm() {
 						defaultValue={getTodaysDateString()}
 						min={getTodaysDateString()}
 					/>
+					<div className="flex gap-1 items-baseline">
+						<b>Points per attend</b>
+						<p className="text-sm text-gray-600">(Optional)</p>
+					</div>
+					<input
+						required
+						className="border h-9 px-2 rounded border-gray-300"
+						name="points"
+						type="number"
+						defaultValue="1"
+					/>
+					<p className="mt-1 mb-4 text-sm text-gray-600">
+						Usually, events like member gatherings are worth 1 point. If you
+						want to make this event special, you can set the points higher!
+					</p>
 					<div className="flex flex-row-reverse">
 						<Button
 							onClick={handleButtonClick}
@@ -108,7 +123,7 @@ export default function NewEventForm() {
 							type="submit"
 						>
 							{!submitting ? (
-								"Create a new team"
+								"Create a new event"
 							) : (
 								<LoadingIcon width="24" height="24" className="animate-spin" />
 							)}
