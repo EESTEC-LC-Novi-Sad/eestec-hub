@@ -1,0 +1,13 @@
+name: Score Calculation
+on:
+  schedule:
+    - cron: '0 0 * * *' # Daily at midnight
+
+jobs:
+  calculate-points:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger score calculation
+        run: |
+          curl -X GET "https://eestec-hub.vercel.app/api/members/calculate" \
+          -H "Authorization: Bearer ${{ secrets.CRON_SECRET }}"
