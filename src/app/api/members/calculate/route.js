@@ -23,7 +23,6 @@ export async function GET(req) {
 
 	const session = await mongoose.startSession();
 	let message;
-	let pointsAdded = 0;
 
 	try {
 		await session.withTransaction(async () => {
@@ -49,16 +48,21 @@ export async function GET(req) {
 						update: { $inc: { points: project.pointsPerDay } },
 					},
 				}));
+				bulkOps.push({
+					update: {
+						filter: { role: "board" },
+						update: { $inc: { points: 0.5 } },
+					},
+				});
 
 				if (bulkOps.length > 0) {
 					const result = await mongoose.models.User.bulkWrite(bulkOps, {
 						session,
 					});
-					pointsAdded += result.modifiedCount * project.pointsPerDay;
 				}
 			}
 		});
-		message = `Added ${pointsAdded} points to users`;
+		message = "Successfuly added points to users";
 	} catch (error) {
 		await session.abortTransaction();
 		message = `Error calculating points: ${error.message}`;
