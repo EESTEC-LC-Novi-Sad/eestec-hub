@@ -18,9 +18,10 @@ export default function ShowCodeButton({ secretCode }) {
 			{isShown && (
 				<div
 					onClick={closeCode}
+					onKeyUp={closeCode}
 					className="absolute left-0 top-0 z-50 w-screen h-screen bg-gray-900/50 flex justify-center"
 				>
-					<div className="bg-white flex flex-col items-center py-4 h-fit mt-32 rounded w-96">
+					<div className="bg-white flex flex-col items-center py-4 h-fit mt-32 rounded w-full md:w-96">
 						<p className="text-2xl">The secret event code is </p>
 						<b className="text-5xl">{secretCode}</b>
 						<Button onClick={closeCode} className="mt-4">

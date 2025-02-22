@@ -10,6 +10,7 @@ import ClockIcon from "../../icons/ClockIcon";
 import EventsIcon from "../../icons/EventsIcon";
 import ShowCodeButton from "./ShowCodeButton";
 import { Separator } from "@/app/lib/utils";
+import JoinEventButton from "./JoinEventButton";
 
 export default async function EventByIdPage({ params }) {
 	const session = await auth();
@@ -49,12 +50,7 @@ export default async function EventByIdPage({ params }) {
 					</div>
 					<div className="flex gap-2 mt-4">
 						{isBoard && <ShowCodeButton secretCode={event.code} />}
-						<LinkButton
-							className="text-green-700 border-green-700"
-							href={`/events/${event.id}/join`}
-						>
-							Join the event
-						</LinkButton>
+						<JoinEventButton event={event} session={session} />
 					</div>
 				</div>
 			)}

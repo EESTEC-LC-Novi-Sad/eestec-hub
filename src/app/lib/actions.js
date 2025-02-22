@@ -7,7 +7,7 @@ import { updateUser, getProfilePictureUri } from "../../services/user.service";
 import { createProject } from "../../services/project.service";
 import { broadcastNotification } from "../../services/notification.service";
 import { createNewTeam } from "../../services/team.service";
-import { createEvent } from "../../services/events.service";
+import { createEvent, joinEvent } from "../../services/events.service";
 
 export async function logOut() {
 	await signOut();
@@ -116,6 +116,28 @@ export async function createNewTeamAction(precState, formData) {
 	} catch (err) {
 		console.error("Error while creating a new team", err);
 		return { error: "Failed to create a new team!" };
+	}
+}
+
+export async function joinEventFormAction(prevState, formData) {
+	try {
+		const code = Number(formData.get("code"));
+		const eventId = formData.get("eventId");
+		const userId = formData.get("userId");
+		const eventCode = Number(formData.get("eventCode"));
+		console.log({ code, eventId, userId, eventCode });
+		if (!code || !eventCode) {
+			return { error: "Not a valid number" };
+		}
+		if (eventCode !== code) {
+			return { error: "Invalid event code!" };
+		}
+
+		const res = await joinEvent(eventId, userId);
+		return res;
+	} catch (err) {
+		console.error("Error while joining event: ", err);
+		return { error: "ERROR: Failed to join event!" };
 	}
 }
 
