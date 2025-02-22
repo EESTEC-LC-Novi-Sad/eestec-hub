@@ -3,11 +3,23 @@
 import { signOut } from "../../../auth";
 import { put, del } from "@vercel/blob";
 import { auth } from "../../../auth";
-import { updateUser, getProfilePictureUri } from "../../services/user.service";
+import {
+	updateUser,
+	getProfilePictureUri,
+	getUserByEmail,
+	changeUserPassword,
+} from "../../services/user.service";
 import { createProject } from "../../services/project.service";
 import { broadcastNotification } from "../../services/notification.service";
 import { createNewTeam } from "../../services/team.service";
 import { createEvent, joinEvent } from "../../services/events.service";
+import nodemailer from "nodemailer";
+import {
+	createPasswordToken,
+	getValidPasswordToken,
+	invalidatePasswordToken,
+} from "@/services/passwordToken.service";
+import { redirect } from "next/navigation";
 
 export async function logOut() {
 	await signOut();
@@ -90,6 +102,61 @@ export async function createNewProject(prevState, formData) {
 	} catch (err) {
 		console.error("Error while creating new profile: ", err);
 		return { error: "Failed to create new project!" };
+	}
+}
+
+export async function sendResetPasswordEmail(prevState, formData) {
+	try {
+		const email = formData.get("email");
+		const user = await getUserByEmail(email);
+		if (!user) {
+			return { error: "User with that email does not exist!" };
+		}
+		const token = await createPasswordToken(user.id);
+		const transporter = nodemailer.createTransport({
+			host: "smtp.gmail.com",
+			port: 587,
+			secure: false,
+			auth: {
+				user: process.env.SMTP_MAIL,
+				pass: process.env.SMTP_PASSWORD,
+			},
+		});
+		const info = await transporter.sendMail({
+			from: '"Mihailo Vojinović" <mihailo.vojinovic@eestecns.org>',
+			to: email,
+			subject: "EESTEC Hub - Password reset",
+			html: `<h1>Reset your password</h1> 
+                <p>
+                    Enter this link to reset your password: 
+                    <a href="https://eestec-hub.vercel.app/password-reset/token/${token}">https://eestec-hub.vercel.app/password-reset/token/${token}</a>
+                </p>`,
+		});
+		return { success: "Email sent!" };
+	} catch (err) {
+		console.error(err);
+		return { error: "Failed to send email!" };
+	}
+}
+
+export async function resetPassword(prevState, formData) {
+	try {
+		const token = formData.get("token");
+		const password = formData.get("password");
+		const rpassword = formData.get("rpassword");
+		if (password !== rpassword) {
+			return { error: "Passwords do not match!" };
+		}
+		const passwordToken = await getValidPasswordToken(token);
+		if (!passwordToken) {
+			return { error: "Invalid token!" };
+		}
+		await changeUserPassword(passwordToken.userId, password);
+		await invalidatePasswordToken(token);
+		return { success: "Password successfully reset!" };
+	} catch (err) {
+		console.error(err);
+		return { error: "Failed to reset password!" };
 	}
 }
 

@@ -28,7 +28,7 @@ export default function CheckAllIcon({ className, width, height }) {
 						</path>
 						<path
 							stroke="#000"
-							stroke-width="4"
+							strokeWidth="4"
 							d="M7.5 13.5l4 4l10.75 -10.75"
 							opacity="0"
 						>

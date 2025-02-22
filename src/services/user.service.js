@@ -113,6 +113,13 @@ async function createUser(userData) {
 	}
 }
 
+async function changeUserPassword(userId, newPassword) {
+	await dbConnect();
+	const passHash = await bcrypt.hash(newPassword, 10);
+	const user = await User.findByIdAndUpdate(userId, { password: passHash });
+	return user;
+}
+
 /**
  * @param {UserData} userData
  * @param {ObjectId} userId
@@ -182,5 +189,6 @@ export {
 	getNumOfNotifications,
 	uploadProfilePicture,
 	getProfilePictureUri,
-    registerUser,
+	registerUser,
+	changeUserPassword,
 };

@@ -89,12 +89,25 @@ export default function LoginForm() {
 						)}
 					</Button>
 				</form>
-				<span>
-					Dont have an account yet?
-					<Link className="ml-1 text-blue-700 hover:underline" href="/signup">
-						Signup here
-					</Link>
-				</span>
+				<div className="text-center mt-2">
+					<span>
+						Dont have an account yet?
+						<Link className="ml-1 text-blue-700 hover:underline" href="/signup">
+							Signup here
+						</Link>
+					</span>
+				</div>
+				<div className="text-center text-sm mt-4">
+					<span>
+						Forgot your password?
+						<Link
+							className="ml-1 text-blue-700 hover:underline"
+							href="/password-reset"
+						>
+							Reset it here
+						</Link>
+					</span>
+				</div>
 			</div>
 		</div>
 	);
