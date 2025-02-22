@@ -49,35 +49,41 @@ async function getEventById(id) {
 }
 
 async function joinEvent(eventId, userId) {
-	await dbConnect();
-	const user = await User.findById(userId);
+	try {
+		await dbConnect();
+		const user = await User.findById(userId);
 
-	if (!user) {
-		console.log(`User with id=${userId} doesn't exist`);
-		return;
-	}
-	const event = await Event.findById(eventId);
-	if (event.attendees.includes(user.id)) {
-		console.log(
-			`User with id=${userId} is already attending the event with id=${eventId}`,
-		);
-		return;
-	}
+		if (!user) {
+			console.error(`User with id=${userId} doesn't exist`);
+			return { error: "User doesn't exist" };
+		}
+		const event = await Event.findById(eventId);
+		if (event.attendees.includes(user.id)) {
+			return { error: "You already joined this event" };
+		}
 
-	if (event.startDate > Date.now() || event.endDate < Date.now()) {
-		return;
-	}
+		if (event.endDate < Date.now()) {
+			return { error: "Event has already ended" };
+		}
 
-	const updatedEvent = await Event.findByIdAndUpdate(eventId, {
-		$addToSet: { attendees: user.id },
-	});
-	if (event.pointsPerAttend) {
-		await User.findByIdAndUpdate(userId, {
-			$inc: { points: event.pointsPerAttend },
+		if (event.startDate > Date.now()) {
+			return { error: "Event has not started yet" };
+		}
+
+		const updatedEvent = await Event.findByIdAndUpdate(eventId, {
+			$addToSet: { attendees: user.id },
 		});
-	}
+		if (event.pointsPerAttend) {
+			await User.findByIdAndUpdate(userId, {
+				$inc: { points: event.pointsPerAttend },
+			});
+		}
 
-	return updatedEvent;
+		return { success: "Successfully joined event", event: updatedEvent };
+	} catch (e) {
+		console.error(e);
+		return { error: "Failed to join event" };
+	}
 }
 
 export {
