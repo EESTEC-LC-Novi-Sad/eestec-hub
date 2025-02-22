@@ -71,7 +71,6 @@ export async function updateProfile(prevState, formData) {
  * @param {any} prevState
  * */
 export async function createNewProject(prevState, formData) {
-	console.log("formData: ", formData);
 	try {
 		const projectData = {
 			name: formData.get("pname"),
@@ -125,7 +124,6 @@ export async function joinEventFormAction(prevState, formData) {
 		const eventId = formData.get("eventId");
 		const userId = formData.get("userId");
 		const eventCode = Number(formData.get("eventCode"));
-		console.log({ code, eventId, userId, eventCode });
 		if (!code || !eventCode) {
 			return { error: "Not a valid number" };
 		}

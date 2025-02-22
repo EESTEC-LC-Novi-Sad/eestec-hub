@@ -207,6 +207,5 @@ function mapEventToSmallCard(event) {
 function getPureUrl(url) {
 	if (!url) return "";
 	const pureUrl = url.replace(/^https?:\/\//, "");
-	console.log(pureUrl);
 	return pureUrl;
 }
