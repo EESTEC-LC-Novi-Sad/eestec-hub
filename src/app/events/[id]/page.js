@@ -50,7 +50,10 @@ export default async function EventByIdPage({ params }) {
 					</div>
 					<div className="flex gap-2 mt-4">
 						{isBoard && <ShowCodeButton secretCode={event.code} />}
-						<JoinEventButton event={event} session={session} />
+						<JoinEventButton
+							eventStr={JSON.stringify(event)}
+							session={session}
+						/>
 					</div>
 				</div>
 			)}

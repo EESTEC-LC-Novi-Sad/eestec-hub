@@ -9,11 +9,13 @@ import TeamsIcon from "@/app/icons/TeamsIcon";
 import LoadingIcon from "@/app/icons/LoadingIcon";
 import Button from "../../components/Button";
 
-export default function JoinEventButton({ event, session }) {
+export default function JoinEventButton({ eventStr, session }) {
 	const [isShown, setIsShown] = useState(false);
 	const [formState, formAction] = useFormState(joinEventFormAction, null);
 	const [submitting, setSubmitting] = useState(false);
 	const [inputValue, setInputValue] = useState("");
+	const [event, setEvent] = useState(JSON.parse(eventStr));
+
 	const formRef = useRef(null);
 	const router = useRouter();
 	const canPressJoin = inputValue.length > 0;
