@@ -91,6 +91,7 @@ export default function Header({ session }) {
 		"Profile",
 		"Settings",
 		"Projects",
+		"Notifications",
 		"Teams",
 		"Events",
 		"Members",
