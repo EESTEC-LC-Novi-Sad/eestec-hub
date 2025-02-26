@@ -8,6 +8,7 @@ import LinkButton from "../components/LinkButton";
 import SearchIcon from "../icons/SearchIcon";
 import TeamsIcon from "../icons/TeamsIcon";
 import ProfileIcon from "../icons/ProfileIcon";
+import RegisterUserButton from "./RegisterUserButton";
 import { registerUser } from "../../services/user.service";
 import { redirect } from "next/navigation";
 
@@ -124,17 +125,7 @@ export default async function MembersPageUnregisteredTab({ searchParams }) {
 									{user.email}
 								</td>
 								<td className="p-2 border-b">
-									<form
-										action={async () => {
-											"use server";
-											const updatedUser = await registerUser(user.id);
-											if (!updatedUser) return;
-
-											redirect("/members?tab=unregistered");
-										}}
-									>
-										<Button>Register</Button>
-									</form>
+									<RegisterUserButton userId={user._id} />
 								</td>
 							</tr>
 						))}
