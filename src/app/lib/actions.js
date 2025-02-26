@@ -5,6 +5,7 @@ import { put, del } from "@vercel/blob";
 import { auth } from "../../../auth";
 import {
 	updateUser,
+	createUser,
 	getProfilePictureUri,
 	getUserByEmail,
 	changeUserPassword,
@@ -28,6 +29,70 @@ export async function logOut() {
 export async function uploadBlob(file) {
 	const blob = await put(file.name, file, { access: "public" });
 	return blob.url;
+}
+
+export async function signUpAction(prevState, formData) {
+	const password = formData.get("password");
+	const rpassword = formData.get("rpassword");
+	const email = formData.get("email");
+	const username = formData.get("username");
+	const fname = formData.get("fname");
+	const lname = formData.get("lname");
+	const birth = formData.get("birth");
+
+	if (password !== rpassword) {
+		return { error: "Passwords do not match!" };
+	}
+
+	if (password.length < 8) {
+		return { error: "Password must be at least 8 characters long!" };
+	}
+
+	if (username.includes(" ")) {
+		return { error: "Username must not contain spaces!" };
+	}
+
+	if (username.length < 4) {
+		return { error: "Username must be at least 4 characters long!" };
+	}
+
+	if (fname.includes(" ")) {
+		return { error: "First name must not contain spaces!" };
+	}
+
+	if (lname.includes(" ")) {
+		return { error: "Last name must not contain spaces!" };
+	}
+
+	if (fname.length < 2) {
+		return { error: "First name must be at least 2 characters long!" };
+	}
+
+	if (lname.length < 2) {
+		return { error: "Last name must be at least 2 characters long!" };
+	}
+
+	const userData = {
+		email,
+		username,
+		firstName: fname,
+		lastName: lname,
+		birthDate: new Date(birth),
+		password,
+		rpassword,
+	};
+
+	const newUser = await createUser(userData);
+	if (newUser) {
+		return {
+			success:
+				"Successfully sent a signup request! Now wait until the board registers your account to log in.",
+		};
+	}
+
+	return {
+		error: "ERROR: Couldn't sign you up! Check if the fields are valid",
+	};
 }
 
 /**
