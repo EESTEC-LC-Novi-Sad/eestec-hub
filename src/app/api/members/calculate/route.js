@@ -30,6 +30,7 @@ export async function GET(req) {
 			const projects = await mongoose.models.Project.find()
 				.session(session)
 				.lean();
+			let bulkOps = [];
 			for (const project of projects) {
 				if (!project.pointsPerDay) {
 					continue;
@@ -42,24 +43,24 @@ export async function GET(req) {
 					.session(session)
 					.lean();
 
-				const bulkOps = applications.map((app) => ({
+				bulkOps = applications.map((app) => ({
 					updateOne: {
 						filter: { _id: app.memberId },
 						update: { $inc: { points: project.pointsPerDay } },
 					},
 				}));
-				bulkOps.push({
-					update: {
-						filter: { role: "board" },
-						update: { $inc: { points: 0.5 } },
-					},
-				});
+			}
+			bulkOps.push({
+				updateMany: {
+					filter: { role: "board" },
+					update: { $inc: { points: 0.5 } },
+				},
+			});
 
-				if (bulkOps.length > 0) {
-					const result = await mongoose.models.User.bulkWrite(bulkOps, {
-						session,
-					});
-				}
+			if (bulkOps.length > 0) {
+				const result = await mongoose.models.User.bulkWrite(bulkOps, {
+					session,
+				});
 			}
 		});
 		message = "Successfuly added points to users";
