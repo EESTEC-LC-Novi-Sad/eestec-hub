@@ -17,7 +17,10 @@ export default async function MembersPage({ searchParams }) {
 		redirect("/login");
 	}
 	const { tab } = searchParams;
-	if (tab === "unregistered") {
+	if (tab === "unregistered" && session.user.role !== "board") {
+		return <MembersPageRegisteredTab searchParams={searchParams} />;
+	}
+	if (tab === "unregistered" && session.user.role === "board") {
 		return <MembersPageUnregisteredTab searchParams={searchParams} />;
 	}
 	return <MembersPageRegisteredTab searchParams={searchParams} />;
