@@ -13,6 +13,7 @@ import backupProfileImage from "../../images/profile.jpeg";
 import TeamsIcon from "../icons/TeamsIcon";
 import ProjectsIcon from "../icons/ProjectsIcon";
 import { redirect } from "next/navigation";
+import RespondToApplicationButton from "./RespondToApplicationButton";
 
 export default async function ApplicationsPageTeamsTab() {
 	const applications = await getAllTeamApplications();
@@ -90,34 +91,15 @@ async function mapApplicationToCard(application, index) {
 			>
 				{application.status ? application.status : "pending"}
 			</Tag>
-			<div className="flex items-center">
-				<form
-					action={async () => {
-						"use server";
-
-						await respondToTeamApplication(application.id, "joined");
-						redirect("/applications?tab=teams");
-					}}
-				>
-					<Button
-						type="submit"
-						className="mr-1 text-green-700 border-green-700"
-					>
-						Accept
-					</Button>
-				</form>
-				<form
-					action={async () => {
-						"use server";
-
-						await respondToTeamApplication(application.id, "denied");
-						redirect("/applications?tab=teams");
-					}}
-				>
-					<Button type="sumbit" className="text-red-700 border-red-700">
-						Reject
-					</Button>
-				</form>
+			<div className="flex gap-1 items-center">
+				<RespondToApplicationButton
+					applicationId={application.id}
+					status="joined"
+				/>
+				<RespondToApplicationButton
+					applicationId={application.id}
+					status="denied"
+				/>
 			</div>
 		</div>
 	);

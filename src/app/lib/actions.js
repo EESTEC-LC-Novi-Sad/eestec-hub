@@ -13,7 +13,10 @@ import {
 } from "../../services/user.service";
 import { createProject } from "../../services/project.service";
 import { broadcastNotification } from "../../services/notification.service";
-import { createNewTeam } from "../../services/team.service";
+import {
+	createNewTeam,
+	respondToTeamApplication,
+} from "../../services/team.service";
 import { createEvent, joinEvent } from "../../services/events.service";
 import nodemailer from "nodemailer";
 import {
@@ -41,6 +44,21 @@ export async function registerUserAction(prevState, formData) {
 	} catch (err) {
 		console.error("Error while registering user: ", err);
 		return { error: "Failed to register user!" };
+	}
+}
+
+export async function respondToTeamApplicationAction(prevState, formData) {
+	try {
+		const applicationId = formData.get("applicationId");
+		const status = formData.get("status");
+		await respondToTeamApplication(applicationId, status);
+		if (status === "joined") {
+			return { success: "Application accepted!" };
+		}
+		return { success: "Application rejected!" };
+	} catch (err) {
+		console.error("Error while accepting application: ", err);
+		return { error: "Failed to accept application!" };
 	}
 }
 
