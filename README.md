@@ -9,7 +9,7 @@ and make it their own. All PR's are welcome!
 
 ## Table of contents
 
-- [Main features](#features)
+- [Main features](#main-features)
 - [Tech stach](#tech-stack)
 - [How to contribute](#how-to-contribute)
 
@@ -18,7 +18,8 @@ and make it their own. All PR's are welcome!
 - Members
 - Projects
 - Events
-- Point system (will be implemented in the future)
+- Teams (needs some work)
+- Point system
 
 ## Tech stack
 
