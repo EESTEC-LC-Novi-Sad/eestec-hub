@@ -11,7 +11,11 @@ import {
 	registerUser,
 	changeUserPassword,
 } from "../../services/user.service";
-import { createProject, getProjectById } from "../../services/project.service";
+import {
+	createProject,
+	getProjectById,
+	applyToProject,
+} from "../../services/project.service";
 import {
 	broadcastNotification,
 	sendNotificationById,
@@ -74,6 +78,23 @@ export async function respondToApplicationAction(prevState, formData) {
 	} catch (err) {
 		console.error("Error while accepting application: ", err);
 		return { error: "Failed to accept application!" };
+	}
+}
+
+export async function applyToProjectAction(prevState, formData) {
+	try {
+		const projectId = formData.get("projectId");
+		const applicationData = {
+			motivationalLetter: formData.get("motivation"),
+			position: formData.get("position"),
+		};
+		const success = await applyToProject(projectId, applicationData);
+		if (success) {
+			return { success: "Application sent!" };
+		}
+	} catch (err) {
+		console.error("Error while applying to project: ", err);
+		return { error: "Failed to apply to project!" };
 	}
 }
 
