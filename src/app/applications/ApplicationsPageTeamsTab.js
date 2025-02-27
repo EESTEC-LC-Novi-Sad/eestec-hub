@@ -13,7 +13,7 @@ import backupProfileImage from "../../images/profile.jpeg";
 import TeamsIcon from "../icons/TeamsIcon";
 import ProjectsIcon from "../icons/ProjectsIcon";
 import { redirect } from "next/navigation";
-import RespondToApplicationButton from "./RespondToApplicationButton";
+import RespondToTeamApplicationButton from "./RespondToTeamApplicationButton";
 
 export default async function ApplicationsPageTeamsTab() {
 	const applications = await getAllTeamApplications();
@@ -92,11 +92,11 @@ async function mapApplicationToCard(application, index) {
 				{application.status ? application.status : "pending"}
 			</Tag>
 			<div className="flex gap-1 items-center">
-				<RespondToApplicationButton
+				<RespondToTeamApplicationButton
 					applicationId={application.id}
 					status="joined"
 				/>
-				<RespondToApplicationButton
+				<RespondToTeamApplicationButton
 					applicationId={application.id}
 					status="denied"
 				/>

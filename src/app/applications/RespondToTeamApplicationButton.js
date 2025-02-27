@@ -1,20 +1,15 @@
 "use client";
 
 import Button from "@/app/components/Button";
-import { respondToApplicationAction } from "@/app/lib/actions";
+import { respondToTeamApplicationAction } from "@/app/lib/actions";
 import { useFormState } from "react-dom";
 import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import LoadingIcon from "@/app/icons/LoadingIcon";
 
-export default function RespondToApplicationButton({
-	applicationId,
-	memberId,
-	projectId,
-	status,
-}) {
+export default function RespondToApplicationButton({ applicationId, status }) {
 	const [formState, formAction] = useFormState(
-		respondToApplicationAction,
+		respondToTeamApplicationAction,
 		null,
 	);
 	const [submitting, setSubmitting] = useState(false);
@@ -40,8 +35,6 @@ export default function RespondToApplicationButton({
 		<form ref={formRef} action={formAction}>
 			<input type="hidden" name="applicationId" value={applicationId} />
 			<input type="hidden" name="status" value={status} />
-			<input type="hidden" name="memberId" value={memberId} />
-			<input type="hidden" name="projectId" value={projectId} />
 			<Button
 				onClick={handleButtonClick}
 				disabled={submitting || isSuccess}
@@ -49,7 +42,7 @@ export default function RespondToApplicationButton({
 				type="submit"
 			>
 				{!submitting ? (
-					status === "accepted" ? (
+					status === "joined" ? (
 						"Accept"
 					) : (
 						"Reject"

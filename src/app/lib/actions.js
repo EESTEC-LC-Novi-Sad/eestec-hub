@@ -11,8 +11,12 @@ import {
 	registerUser,
 	changeUserPassword,
 } from "../../services/user.service";
-import { createProject } from "../../services/project.service";
-import { broadcastNotification } from "../../services/notification.service";
+import { createProject, getProjectById } from "../../services/project.service";
+import {
+	broadcastNotification,
+	sendNotificationById,
+} from "../../services/notification.service";
+import { setApplicationStatus } from "@/services/application.service";
 import {
 	createNewTeam,
 	respondToTeamApplication,
@@ -44,6 +48,32 @@ export async function registerUserAction(prevState, formData) {
 	} catch (err) {
 		console.error("Error while registering user: ", err);
 		return { error: "Failed to register user!" };
+	}
+}
+
+export async function respondToApplicationAction(prevState, formData) {
+	try {
+		const applicationId = formData.get("applicationId");
+		const status = formData.get("status");
+		const memberId = formData.get("memberId");
+		const projectId = formData.get("projectId");
+		const project = await getProjectById(projectId);
+
+		await setApplicationStatus(applicationId, status);
+		const notificationText =
+			status === "accepted"
+				? "Congratulations! You have been accepted to the project!"
+				: "Your application has been rejected!";
+		await sendNotificationById(memberId, {
+			text: `Congratulations! You have been accepted to the ${project.name} project`,
+			notificationType: "Application status",
+			dateReceived: new Date(),
+			link: `/projects/${project.id}`,
+		});
+		return { success: "Application status updated!" };
+	} catch (err) {
+		console.error("Error while accepting application: ", err);
+		return { error: "Failed to accept application!" };
 	}
 }
 

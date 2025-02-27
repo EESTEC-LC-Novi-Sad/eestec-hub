@@ -15,6 +15,7 @@ import Image from "next/image";
 import backupProfileImage from "../../images/profile.jpeg";
 import TeamsIcon from "../icons/TeamsIcon";
 import ProjectsIcon from "../icons/ProjectsIcon";
+import RespondToApplicationButton from "./RespondToApplicationButton";
 
 export default async function ApplicationsPageProjectsTab() {
 	const applications = await getAllApplications();
@@ -78,67 +79,28 @@ async function mapApplicationToCard(application, index) {
 				>
 					{project.name}
 				</Link>
-				<Tag
-					className={`w-fit mb-2 md:mb-0 flex items-center hidden md:block border-gray-300
-                        ${getBgFromStatus(application.status)} `}
-				>
+				<Tag className="w-fit mb-2 md:mb-0 flex items-center hidden md:block border-gray-300">
 					{application.status ? application.status : "pending"}
 				</Tag>
 			</div>
-			<Tag
-				className={`w-fit mb-2 md:mb-0 flex items-center md:hidden border-gray-300
-                    ${getBgFromStatus(application.status)} `}
-			>
+			<Tag className="w-fit mb-2 md:mb-0 flex items-center md:hidden border-gray-300">
 				{application.status ? application.status : "pending"}
 			</Tag>
-			<div className="flex items-center">
-				<LinkButton href={`/applications/${application.id}`} className="mr-1">
-					View
-				</LinkButton>
-
-				<form
-					action={async () => {
-						"use server";
-
-						await setApplicationStatus(application.id, "accepted");
-						await sendNotificationById(member.id, {
-							text: `Congratulations! You have been accepted to the ${project.name} project`,
-							notificationType: "Application status",
-							dateReceived: new Date(Date.now()),
-							link: `/projects/${project.id}`,
-						});
-						redirect("/applications?tab=projects");
-					}}
-				>
-					<Button
-						type="submit"
-						className="mr-1 text-green-700 border-green-700"
-					>
-						Accept
-					</Button>
-				</form>
-				<form
-					action={async () => {
-						"use server";
-
-						await setApplicationStatus(application.id, "rejected");
-						await sendNotificationById(member.id, {
-							text: `We are sorry! You have been rejected from the ${project.name} project`,
-							notificationType: "Application status",
-							dateReceived: new Date(Date.now()),
-							link: `/projects/${project.id}`,
-						});
-						redirect("/applications?tab=projects");
-					}}
-				>
-					<Button className="text-red-700 border-red-700">Reject</Button>
-				</form>
+			<div className="flex items-center gap-1">
+				<LinkButton href={`/applications/${application.id}`}>View</LinkButton>
+				<RespondToApplicationButton
+					applicationId={application.id}
+					status="accepted"
+					projectId={project.id}
+					memberId={member.id}
+				/>
+				<RespondToApplicationButton
+					applicationId={application.id}
+					status="rejected"
+					projectId={project.id}
+					memberId={member.id}
+				/>
 			</div>
 		</div>
 	);
-}
-function getBgFromStatus(status) {
-	if (!status) return "bg-yellow-100";
-	if (status === "accepted") return "bg-green-200";
-	if (status === "rejected") return "bg-red-200";
 }
