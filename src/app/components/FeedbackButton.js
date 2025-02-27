@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation";
 import LoadingIcon from "@/app/icons/LoadingIcon";
 import CloseIcon from "@/app/icons/CloseIcon";
 
-export default function FeedbackButton({ userId }) {
+export default function FeedbackButton({ userId, className }) {
 	const [isFeedbackOpen, setIsFeedbackOpen] = useState(false);
 	const [feedback, setFeedback] = useState("");
 	const [formState, formAction] = useFormState(sendFeedbackAction, null);
@@ -97,7 +97,9 @@ export default function FeedbackButton({ userId }) {
 					</Button>
 				</form>
 			</div>
-			<Button onClick={() => setIsFeedbackOpen(true)}>Feedback</Button>
+			<Button className={className} onClick={() => setIsFeedbackOpen(true)}>
+				Feedback
+			</Button>
 		</div>
 	);
 }

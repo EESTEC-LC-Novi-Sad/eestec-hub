@@ -223,15 +223,18 @@ export default function Header({ session }) {
 								</h1>
 							</div>
 							<div>
-								<ul className="flex items-center">
+								<ul className="flex gap-1 text-sm items-center">
 									{session?.user?.id && (
-										<li className="mx-2">
-											<FeedbackButton userId={session.user.id} />
+										<li>
+											<FeedbackButton
+												className="h-9"
+												userId={session.user.id}
+											/>
 										</li>
 									)}
-									<li className="mx-2">
+									<li>
 										<LinkButton
-											className="flex relative z-0"
+											className="flex relative items-center z-0 h-9"
 											href="/notifications"
 										>
 											<NotificationIcon className="mr-1" />
@@ -248,7 +251,7 @@ export default function Header({ session }) {
 											</div>
 										</LinkButton>
 									</li>
-									<li className="mx-2">
+									<li>
 										<Button onClick={openProfileMenu}>
 											<Image
 												src={profileImage}
