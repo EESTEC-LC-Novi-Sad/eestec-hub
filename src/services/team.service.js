@@ -7,6 +7,14 @@ import { getUserByUsername, getUserById } from "./user.service";
 
 async function joinTeam(teamId, memberId) {
 	await dbConnect();
+	if (!teamId || !memberId) {
+		throw new Error("Missing teamId or memberId");
+	}
+
+	if (TeamApplication.exists({ teamId, memberId })) {
+		throw new Error("You already applied to this team");
+	}
+
 	const app = await TeamApplication.create({
 		teamId,
 		memberId,

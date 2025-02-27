@@ -13,6 +13,7 @@ import Image from "next/image";
 import Link from "next/link";
 import backupProfileImage from "../../../images/profile.jpeg";
 import TeamsIcon from "../../icons/TeamsIcon";
+import TeamJoinButton from "./TeamJoinButton";
 
 export default async function TeamByIdPage({ params }) {
 	const session = await auth();
@@ -69,25 +70,7 @@ export default async function TeamByIdPage({ params }) {
 						})}
 					</div>
 				</div>
-
-				<form
-					className="w-full flex flex-row-reverse"
-					action={async () => {
-						"use server";
-						const memberId = session.user.id;
-						const teamId = params.id;
-
-						await joinTeam(teamId, memberId);
-						redirect("/teams");
-					}}
-				>
-					<Button
-						className="md:w-20 text-green-700 border-green-700 mt-4 w-full"
-						type="submit"
-					>
-						Join
-					</Button>
-				</form>
+				<TeamJoinButton teamId={team.id} memberId={session.user.id} />
 			</div>
 		</div>
 	);

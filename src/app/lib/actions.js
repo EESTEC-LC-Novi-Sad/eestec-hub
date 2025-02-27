@@ -23,6 +23,7 @@ import {
 import { setApplicationStatus } from "@/services/application.service";
 import {
 	createNewTeam,
+	joinTeam,
 	respondToTeamApplication,
 } from "../../services/team.service";
 import { createEvent, joinEvent } from "../../services/events.service";
@@ -95,6 +96,21 @@ export async function applyToProjectAction(prevState, formData) {
 	} catch (err) {
 		console.error("Error while applying to project: ", err);
 		return { error: "Failed to apply to project!" };
+	}
+}
+
+export async function joinTeamAction(prevState, formData) {
+	try {
+		const teamId = formData.get("teamId");
+		const memberId = formData.get("memberId");
+		await joinTeam(teamId, memberId);
+		return {
+			success:
+				"Successfully sent a join request! Please wait untill the team admin reviews it",
+		};
+	} catch (err) {
+		console.error("Error while joining team: ", err);
+		return { error: err.message };
 	}
 }
 
