@@ -78,17 +78,11 @@ async function mapApplicationToCard(application, index) {
 				>
 					{team.name}
 				</Link>
-				<Tag
-					className={`w-fit mb-2 md:mb-0 flex items-center hidden md:block border-gray-300
-                        ${getBgFromStatus(application.status)} `}
-				>
+				<Tag className="w-fit mb-2 md:mb-0 flex items-center hidden md:block border-gray-300">
 					{application.status ? application.status : "pending"}
 				</Tag>
 			</div>
-			<Tag
-				className={`w-fit mb-2 md:mb-0 flex items-center md:hidden border-gray-300
-                    ${getBgFromStatus(application.status)} `}
-			>
+			<Tag className="w-fit mb-2 md:mb-0 flex items-center md:hidden border-gray-300">
 				{application.status ? application.status : "pending"}
 			</Tag>
 			<div className="flex gap-1 items-center">
@@ -103,10 +97,4 @@ async function mapApplicationToCard(application, index) {
 			</div>
 		</div>
 	);
-}
-
-function getBgFromStatus(status) {
-	if (!status) return "bg-yellow-100";
-	if (status === "accepted") return "bg-green-200";
-	if (status === "rejected") return "bg-red-200";
 }
