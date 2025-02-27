@@ -12,6 +12,8 @@ export default function RespondToApplicationButton({
 	memberId,
 	projectId,
 	status,
+	className,
+	redirectTo,
 }) {
 	const [formState, formAction] = useFormState(
 		respondToApplicationAction,
@@ -20,6 +22,7 @@ export default function RespondToApplicationButton({
 	const [submitting, setSubmitting] = useState(false);
 	const [isSuccess, setIsSuccess] = useState(false);
 	const formRef = useRef(null);
+	const router = useRouter();
 
 	const handleButtonClick = () => {
 		setSubmitting(true);
@@ -29,7 +32,11 @@ export default function RespondToApplicationButton({
 	useEffect(() => {
 		if (formState?.success) {
 			alert(formState.success);
-			window.location.reload();
+			if (redirectTo) {
+				router.push(redirectTo);
+			} else {
+				window.location.reload();
+			}
 		} else if (formState?.error) {
 			alert(formState.error);
 		}
@@ -45,7 +52,7 @@ export default function RespondToApplicationButton({
 			<Button
 				onClick={handleButtonClick}
 				disabled={submitting || isSuccess}
-				className={`${submitting || isSuccess ? "bg-gray-300 text-white hover:bg-gray-300" : ""} h-8 w-16 flex justify-center items-center`}
+				className={`${submitting || isSuccess ? "bg-gray-300 text-white hover:bg-gray-300" : ""} h-8 w-16 flex justify-center items-center ${className}`}
 				type="submit"
 			>
 				{!submitting ? (

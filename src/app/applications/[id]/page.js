@@ -11,6 +11,7 @@ import Image from "next/image";
 import Link from "next/link";
 import Button from "../../components/Button";
 import { Separator } from "@/app/lib/utils";
+import RespondToApplicationButton from "../RespondToApplicationButton";
 
 export default async function ApplicationPage({ params }) {
 	const application = await getApplicationById(params.id);
@@ -79,52 +80,24 @@ export default async function ApplicationPage({ params }) {
 					{application.motivationalLetter}
 				</p>
 				<div className="md:flex gap-2 flex-row-reverse">
-					<form
-						action={async () => {
-							"use server";
-
-							await setApplicationStatus(params.id, "accepted");
-							await sendNotificationById(member.id, {
-								text: `Congratulations! You have been accepted to the ${project.name} project`,
-								notificationType: "Application status",
-								dateReceived: new Date(Date.now()),
-								link: `/projects/${project.id}`,
-							});
-							redirect("/applications");
-						}}
-					>
-						<Button
-							className="w-full md:w-fit mb-2 text-green-700 border-green-700"
-							type="submit"
-						>
-							Accept
-						</Button>
-					</form>
-					<form
-						action={async () => {
-							"use server";
-
-							await setApplicationStatus(params.id, "rejected");
-							await sendNotificationById(member.id, {
-								text: `We are sorry! You have been rejected from the ${project.name} project`,
-								notificationType: "Application status",
-								dateReceived: new Date(Date.now()),
-								link: `/projects/${project.id}`,
-							});
-							redirect("/applications");
-						}}
-					>
-						<Button
-							className="w-full md:w-fit text-red-600 border-red-600"
-							type="submit"
-						>
-							Reject
-						</Button>
-					</form>
+					<RespondToApplicationButton
+						applicationId={application.id}
+						redirectTo="/applications"
+						status="accepted"
+						projectId={project.id}
+						memberId={member.id}
+						className="w-full md:w-20 border-green-700 text-green-700 mb-2"
+					/>
+					<RespondToApplicationButton
+						applicationId={application.id}
+						redirectTo="/applications"
+						status="rejected"
+						projectId={project.id}
+						memberId={member.id}
+						className="w-full md:w-20 border-red-700 text-red-700"
+					/>
 				</div>
 			</div>
 		</div>
 	);
-
-	//TODO: make accept and decline buttons work! Before that, alter project model to hold this info
 }

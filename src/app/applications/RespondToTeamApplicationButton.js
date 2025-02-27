@@ -7,7 +7,10 @@ import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import LoadingIcon from "@/app/icons/LoadingIcon";
 
-export default function RespondToApplicationButton({ applicationId, status }) {
+export default function RespondToTeamApplicationButton({
+	applicationId,
+	status,
+}) {
 	const [formState, formAction] = useFormState(
 		respondToTeamApplicationAction,
 		null,
