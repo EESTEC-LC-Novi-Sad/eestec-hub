@@ -22,6 +22,7 @@ import {
 import { useEffect } from "react";
 import Image from "next/image";
 import backupProfileImage from "../../images/profile.jpeg";
+import FeedbackButton from "./FeedbackButton";
 
 function ModalDiv({ children, onClick, isOpen, className, isLeft }) {
 	const translate = isLeft ? "-translate-x-full" : "translate-x-full";
@@ -223,6 +224,11 @@ export default function Header({ session }) {
 							</div>
 							<div>
 								<ul className="flex items-center">
+									{session?.user?.id && (
+										<li className="mx-2">
+											<FeedbackButton userId={session.user.id} />
+										</li>
+									)}
 									<li className="mx-2">
 										<LinkButton
 											className="flex relative z-0"

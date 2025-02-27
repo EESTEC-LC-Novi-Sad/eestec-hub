@@ -3,6 +3,7 @@
 import { signOut } from "../../../auth";
 import { put, del } from "@vercel/blob";
 import { auth } from "../../../auth";
+import { sendFeedback } from "@/services/feedback.service";
 import {
 	updateUser,
 	createUser,
@@ -53,6 +54,21 @@ export async function registerUserAction(prevState, formData) {
 	} catch (err) {
 		console.error("Error while registering user: ", err);
 		return { error: "Failed to register user!" };
+	}
+}
+
+export async function sendFeedbackAction(prevState, formData) {
+	try {
+		const feedbackText = formData.get("feedback");
+		const userId = formData.get("userId");
+		const feedback = await sendFeedback(userId, feedbackText);
+		if (!feedback) {
+			return { error: "There has been an error! Please try later!" };
+		}
+		return { success: "Feedback successfuly sent!" };
+	} catch (err) {
+		console.error(err);
+		return { error: "There has been an error! Please try later!" };
 	}
 }
 
