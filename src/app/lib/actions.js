@@ -83,12 +83,12 @@ export async function respondToApplicationAction(prevState, formData) {
 		await setApplicationStatus(applicationId, status);
 		const notificationText =
 			status === "accepted"
-				? "Congratulations! You have been accepted to the project!"
-				: "Your application has been rejected!";
+				? `Congratulations! You have been accepted to the ${project.name} project!`
+				: `Your application has been rejected from the ${project.name} project!`;
+
 		await sendNotificationById(memberId, {
-			text: `Congratulations! You have been accepted to the ${project.name} project`,
+			text: notificationText,
 			notificationType: "Application status",
-			dateReceived: new Date(),
 			link: `/projects/${project.id}`,
 		});
 		return { success: "Application status updated!" };
@@ -281,7 +281,6 @@ export async function createNewProject(prevState, formData) {
 		await broadcastNotification({
 			text: `New project is available: ${formData.get("pname")}`,
 			notificationType: "New projects",
-			dateReceived: new Date(Date.now()),
 			link: `/projects/${proj.id}`,
 		});
 		return { success: "New project successfully created!" };
@@ -358,10 +357,9 @@ export async function createNewTeamAction(precState, formData) {
 		};
 
 		const newTeam = await createNewTeam(teamData);
-		broadcastNotification({
+		await broadcastNotification({
 			text: `New team has been created: ${newTeam.name}`,
 			notificationType: "New team",
-			dateReceived: new Date(Date.now()),
 			link: `/teams/${newTeam.id}`,
 		});
 		return { success: `Successfuly created team "${teamData.name}"!` };
@@ -404,10 +402,9 @@ export async function createNewEvent(prevState, formData) {
 			attendees: [],
 		};
 		const event = await createEvent(eventData);
-		broadcastNotification({
+		await broadcastNotification({
 			text: `New event: ${eventData.name} at ${(new Date(eventData.startDate)).toDateString()}`,
 			notificationType: "New events",
-			dateReceived: new Date(Date.now()),
 			link: `/events/${event.id}`,
 		});
 		return { success: "Successfuly created a new event!" };

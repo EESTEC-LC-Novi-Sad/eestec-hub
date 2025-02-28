@@ -137,13 +137,14 @@ async function updateUser(userId, userData) {
 		bio: userData.bio,
 		socialUrl: userData.socialUrl,
 	};
-	Object.keys(newUser).forEach(
-		(key) =>
-			(newUser[key] === undefined ||
-				newUser[key] === "" ||
-				newUser[key] === null) &&
-			delete newUser[key],
-	);
+	for (const key of Object.keys[newUser]) {
+		if (
+			newUser[key] === undefined ||
+			newUser[key] === "" ||
+			newUser[key] === null
+		)
+			delete newUser[key];
+	}
 
 	await User.findByIdAndUpdate(userId, newUser);
 }
@@ -159,22 +160,14 @@ async function getUserByRole(userRole) {
 
 async function getAllUserNotifications(userId) {
 	await dbConnect();
-	const user = await User.findById(userId);
-	const notificationIds = user.notifications.map((n) => n.notificationId);
-	const notifications = await Notification.find({
-		_id: { $in: notificationIds },
-	}).lean();
-	return notifications;
+	const user = await User.findById(userId).select("notifications").lean();
+	return user.notifications;
 }
 
 async function getNumOfNotifications(userId) {
 	await dbConnect();
-	const user = await User.findById(userId);
-	const notificationIds = user.notifications.map((n) => n.notificationId);
-	const numOfNotifications = await Notification.find({
-		_id: { $in: notificationIds },
-	}).countDocuments();
-	return numOfNotifications;
+	const user = await User.findById(userId).select("notifications");
+	return user.notifications.length;
 }
 
 export {

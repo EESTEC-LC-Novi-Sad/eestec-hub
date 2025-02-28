@@ -18,8 +18,9 @@ const user = new Schema({
 	points: Number,
 	notifications: [
 		{
-			notificationId: { type: Schema.Types.ObjectId, ref: "Notification" },
-			isRead: Boolean,
+			text: String,
+			notificationType: String,
+			link: String,
 		},
 	],
 });

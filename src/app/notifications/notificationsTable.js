@@ -10,9 +10,7 @@ import { useRouter } from "next/navigation";
  * @typedef NotificationData
  * @property {String} text
  * @property {String} notificationType
- * @property {Date} dateReceived
  * @property {String} link
- * @property {Boolean} isChecked
  *
  *
  *
@@ -78,7 +76,7 @@ export default function NotificationsTable({ notifications, userId }) {
 			{notifications.map((n, index) => {
 				return (
 					<div
-						key={index}
+						key={n._id}
 						className="flex p-2 border-l border-r hover:bg-gray-100"
 					>
 						<input
@@ -95,7 +93,7 @@ export default function NotificationsTable({ notifications, userId }) {
 										{n.notificationType}{" "}
 									</p>
 									<p className="text-sm text-gray-600">
-										{getDateText(n.dateReceived)}
+										{getDateFromId(n._id)}
 									</p>
 								</div>
 								<p> {n.text} </p>
@@ -104,14 +102,15 @@ export default function NotificationsTable({ notifications, userId }) {
 					</div>
 				);
 			})}
-			<div></div>
 		</div>
 	);
 }
 
 /**
- * @param {Date} date
+ * @param {require("mongoose").types.ObjectId} id
  * */
-function getDateText(date) {
-	return "on " + date.toDateString();
+function getDateFromId(id) {
+	const timestamp = id.toString().substring(0, 8);
+	const date = new Date(Number.parseInt(timestamp, 16) * 1000);
+	return `on ${date.toDateString()}`;
 }

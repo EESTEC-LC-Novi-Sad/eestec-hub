@@ -1,4 +1,3 @@
-import { getNotificationById } from "@/services/notification.service";
 import { getAllUserNotifications } from "@/services/user.service";
 import { auth } from "../../../auth";
 import { redirect } from "next/navigation";
@@ -11,7 +10,6 @@ export default async function NotificationsPage() {
 	}
 
 	const notifications = await getAllUserNotifications(session.user.id);
-
 	return (
 		<div className="flex justify-center">
 			<NotificationsTable
